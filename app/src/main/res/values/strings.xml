@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Eloquent</string>
+    <string name="welcom">Welcome To Eloquent</string>
+    <string name="started">Let\'s get started</string>
+    <string name="create_account">Create Account</string>
+    <string name="login">Login</string>
+    <string name="diagnostic_test">Diagnostic Test</string>
+    <string name="instruction_for_the_diagnostic_test">Read the text below after the press on the record icon.</string>
+    <string name="diagnostic_test_text">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature
+                from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure
+                Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.
+                Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC.
+                This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", c
+                omes from a line in section 1.10.32. The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32
+                and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914
+                translation by H. Rackham.</string>
+    <string name="forget_pass">Forget password</string>
+    <string name="diagnostic_test_result">Your stuttering severity is</string>
+    <string name="exercises">Exercises</string>
+    <string name="monitor">Monitor the performance</string>
+    <string name="ScenariosInstructions">-The exercise contains a complete scenario.\n\n-The scenario is divided into small sections.\n\n-Each section contains a phrase or question that requires your response.\n\n-To hear the text click the speaker icon.\n\n-Click on the microphone icon to record your answer.\n\n-To to stop the recording press the square icon.\n\n-If you want to rerecord your answer press the microphone icon again to start a new record.\n\n-If you finished recording all sections, click the Done icon.\n\n</string>
+
+</resources>

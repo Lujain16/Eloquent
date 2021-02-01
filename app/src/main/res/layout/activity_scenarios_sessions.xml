@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ScenariosSessions">
+
+    <View
+        android:id="@+id/topView"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:background="#5AA9E6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view8"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:background="@drawable/wave_pic"
+        android:backgroundTint="#5AA9E6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topView" />
+
+    <ImageView
+        android:id="@+id/imageView3Previous"
+        android:layout_width="44dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24" />
+
+    <ScrollView
+        android:id="@+id/scrollView3"
+        android:layout_width="411dp"
+        android:layout_height="550dp"
+        android:layout_marginTop="56dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.892">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardAtSchool"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:layout_margin="30dp"
+                android:backgroundTint="#86e3ce"
+                app:cardCornerRadius="20dp">
+
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="192dp"
+                    android:layout_height="154dp"
+                    android:layout_gravity="center|right"
+                    app:srcCompat="@drawable/school_pic" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="182dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Scenarios At School"
+                    android:textColor="@color/white"
+                    android:textSize="28sp" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardAtRestaurant"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:layout_margin="30dp"
+                android:backgroundTint="#aad576"
+                app:cardCornerRadius="20dp">
+
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="160dp"
+                    android:layout_height="132dp"
+                    android:layout_gravity="center|right"
+                    app:srcCompat="@drawable/pizza_pic" />
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="182dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Scenarios At Restaurant"
+
+                    android:textColor="@color/white"
+                    android:textSize="28sp" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardAtLibrary"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:layout_margin="30dp"
+                android:backgroundTint="#ffdd94"
+                app:cardCornerRadius="20dp">
+
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="187dp"
+                    android:layout_height="177dp"
+                    android:layout_gravity="center|right"
+                    app:srcCompat="@drawable/library_pic" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="182dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Scenarios At Library"
+
+                    android:textColor="@color/white"
+                    android:textSize="28sp" />
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+
+    </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_navigation" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
