@@ -54,5 +54,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view8" />
 
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="215dp"
+        android:layout_height="94dp"
+        android:gravity="center"
+        android:text="low"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        app:layout_constraintVertical_bias="0.113" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
