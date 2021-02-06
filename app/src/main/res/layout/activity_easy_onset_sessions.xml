@@ -54,7 +54,7 @@
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardeasyonset"
+                android:id="@+id/cardeasyonsetWord"
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
                 android:layout_margin="30dp"

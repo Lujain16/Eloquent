@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Eloquent">
-        <activity android:name=".Scenarios"></activity>
+        <activity android:name=".EasyOnsetPhrases"></activity>
+        <activity android:name=".EasyOnsetWord" />
+        <activity android:name=".EasyOnsetInstructions" />
+        <activity android:name=".Scenarios" />
         <activity android:name=".ScenariosSessions" />
         <activity android:name=".ScenariosInstructions" />
         <activity android:name=".EasyOnsetBreathing" />

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Scenarios">
+    tools:context=".EasyOnsetPhrases">
 
     <View
         android:id="@+id/topView"
@@ -54,9 +54,10 @@
             android:layout_height="132dp"
             android:layout_gravity="center_horizontal|center_vertical|fill_vertical"
             android:gravity="center_horizontal|center_vertical"
-            android:text="A: How's it going?\n\n B: I'm doing well. How about you?"
+            android:text="Are you busy?"
+
             android:textColor="#000000"
-            android:textSize="24sp" />
+            android:textSize="50sp" />
 
         <ImageButton
             android:id="@+id/imageButton_mic"

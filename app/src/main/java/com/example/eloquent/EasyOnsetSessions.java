@@ -2,6 +2,7 @@ package com.example.eloquent;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,9 @@ public class EasyOnsetSessions extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_easy_onset_sessions);
+        // exercises sessions button
+        CardView cardViewWord , cardViewPhrases;
+
         // previous button
         ImageView imageView;
 
@@ -79,6 +83,17 @@ public class EasyOnsetSessions extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent(EasyOnsetSessions.this, Exercises.class);
+                startActivity(intent);
+            }
+        });
+
+        //cardViewWord button
+        //when user click on cardViewWord button  this code will move them to the EasyOnsetBreathing page
+        cardViewWord = findViewById(R.id.cardeasyonsetWord);
+        cardViewWord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(EasyOnsetSessions.this, EasyOnsetBreathing.class);
                 startActivity(intent);
             }
         });

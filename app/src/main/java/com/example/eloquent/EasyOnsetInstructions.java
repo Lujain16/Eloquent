@@ -7,15 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class EasyOnsetBreathing extends AppCompatActivity {
+public class EasyOnsetInstructions extends AppCompatActivity {
     // start button
     TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_easy_onset_breathing);
-
+        setContentView(R.layout.activity_easy_onset_instructions);
 
         //cardViewWord button
         //when user click on cardViewWord button  this code will move them to the EasyOnsetBreathing page
@@ -23,7 +22,7 @@ public class EasyOnsetBreathing extends AppCompatActivity {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(EasyOnsetBreathing.this, EasyOnsetInstructions.class);
+                Intent intent =new Intent(EasyOnsetInstructions.this, EasyOnsetWord.class);
                 startActivity(intent);
             }
         });
