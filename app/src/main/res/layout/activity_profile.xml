@@ -118,5 +118,18 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView10"
         app:srcCompat="@drawable/ic_mail" />
 
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="171dp"
+        android:layout_height="59dp"
+        android:text="contact us"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.104"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView19"
+        app:layout_constraintVertical_bias="0.456" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
