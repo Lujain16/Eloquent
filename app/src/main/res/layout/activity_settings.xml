@@ -10,12 +10,12 @@
         android:id="@+id/textView30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="28dp"
         android:text="Delete Account"
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.036"
+        app:layout_constraintHorizontal_bias="0.075"
         app:layout_constraintStart_toEndOf="@+id/imageView17"
         app:layout_constraintTop_toBottomOf="@+id/textView29" />
 
@@ -23,7 +23,7 @@
         android:id="@+id/imageView17"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="24dp"
         android:background="#FFFFFF"
         android:backgroundTint="#FFFFFF"
@@ -40,7 +40,7 @@
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.035"
+        app:layout_constraintHorizontal_bias="0.059"
         app:layout_constraintStart_toEndOf="@+id/imageView16"
         app:layout_constraintTop_toBottomOf="@+id/textView27" />
 
@@ -48,7 +48,7 @@
         android:id="@+id/imageView16"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="24dp"
         android:background="#FFFFFF"
         android:backgroundTint="#FFFFFF"
@@ -60,12 +60,12 @@
         android:id="@+id/textView27"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="32dp"
         android:text="Microphone Setting"
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.074"
+        app:layout_constraintHorizontal_bias="0.087"
         app:layout_constraintStart_toEndOf="@+id/imageView15"
         app:layout_constraintTop_toBottomOf="@+id/textView24" />
 
@@ -73,7 +73,7 @@
         android:id="@+id/imageView15"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="28dp"
         android:background="#FFFFFF"
         android:backgroundTint="#FFFFFF"
@@ -98,7 +98,7 @@
         android:id="@+id/imageView14"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="24dp"
         android:background="#FFFFFF"
         android:backgroundTint="#FFFFFF"
@@ -138,31 +138,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView13" />
 
+
     <TextView
         android:id="@+id/textView17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="324dp"
-        android:layout_marginEnd="200dp"
+        android:layout_marginTop="116dp"
         android:text="How to use the app"
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.075"
+        app:layout_constraintStart_toEndOf="@+id/imageView9"
+        app:layout_constraintTop_toBottomOf="@+id/topView" />
 
     <ImageView
         android:id="@+id/imageView9"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginTop="320dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="112dp"
         android:background="#FFFFFF"
         android:backgroundTint="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@+id/textView17"
-        app:layout_constraintHorizontal_bias="0.557"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topView"
         app:srcCompat="@drawable/ic_baseline_info_24" />
-
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
