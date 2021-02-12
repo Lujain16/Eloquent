@@ -97,5 +97,16 @@ public class EasyOnsetSessions extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //cardViewWord button
+        //when user click on cardViewWord button  this code will move them to the EasyOnsetBreathing page
+        cardViewPhrases = findViewById(R.id.cardeasyonsetPhrases);
+        cardViewPhrases.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(EasyOnsetSessions.this, EasyOnsetPhrasesBreathing.class);
+                startActivity(intent);
+            }
+        });
     }
 }

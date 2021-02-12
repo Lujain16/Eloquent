@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -20,6 +21,8 @@ public class EasyOnsetWord extends AppCompatActivity {
     MediaPlayer mediaPlayer ;
     private String outputFile = null;
     Button button;
+    // previous button
+    ImageView imageView;
 
 
     @Override
@@ -104,6 +107,17 @@ public class EasyOnsetWord extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent(EasyOnsetWord.this, StutteringSeverity.class);// change StutteringSeverity.class ****
+                startActivity(intent);
+            }
+        });
+
+        //prev
+        //when user click on previous button this code will move them to the previous page
+        imageView = findViewById(R.id.imageView3Previous);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(EasyOnsetWord.this, EasyOnsetInstructions.class);
                 startActivity(intent);
             }
         });

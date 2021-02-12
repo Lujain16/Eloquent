@@ -51,6 +51,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
@@ -80,7 +81,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardscenario"
+                android:id="@+id/cardeasyonsetPhrases"
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
                 android:layout_margin="30dp"
@@ -106,32 +107,7 @@
                     android:textSize="28sp" />
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardparaghraph"
-                android:layout_width="match_parent"
-                android:layout_height="130dp"
-                android:layout_margin="30dp"
-                android:backgroundTint="#f9d44d"
-                app:cardCornerRadius="20dp">
 
-
-                <ImageView
-                    android:id="@+id/imageView5"
-                    android:layout_width="187dp"
-                    android:layout_height="177dp"
-                    android:layout_gravity="center|right"
-                    app:srcCompat="@drawable/phrases_pic" />
-
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="182dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="Paragraph"
-
-                    android:textColor="@color/white"
-                    android:textSize="28sp" />
-            </androidx.cardview.widget.CardView>
         </LinearLayout>
 
 
