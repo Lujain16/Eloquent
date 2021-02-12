@@ -10,17 +10,26 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
+import DataBase.UserDBHelper;
+import Model.UserInformation;
+
 public class CreateAccount extends AppCompatActivity {
 
-    EditText dateTxt;
+    EditText dateTxt, FnameTxt, LnameTxt, EmailTxt, passwordTxt, RePasswordTxt;
+
     private int mdate, mmonth, myear;
     //prev button
     ImageView imageView;
     // create account button
-    Button button;
+    Button createAccountButton;
+    //Database
+    UserDBHelper dbHelper;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,11 +49,12 @@ public class CreateAccount extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(CreateAccount.this, android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        month = month+1;
-                        dateTxt.setText(dayOfMonth+"-"+month+"-"+year);
+                        mmonth = month+1;
+                        dateTxt.setText(mdate+"-"+mmonth+"-"+myear);
 
                     }
                 },myear,mmonth,mdate);
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis()-1000);
                 datePickerDialog.show();
 
             }
@@ -62,15 +72,77 @@ public class CreateAccount extends AppCompatActivity {
             }
         });
 
-        //create account button
-        //when user click on create account button  this code will move them to the diagnostic test page
-        button = findViewById(R.id.buttonCreateAccount2);
-        button.setOnClickListener(new View.OnClickListener() {
+
+
+        //database////////////////////////
+        //DATABASE------------
+        dateTxt = (EditText) findViewById(R.id.editTextDate);
+        FnameTxt = (EditText) findViewById(R.id.editTextTextPersonName);
+        LnameTxt = (EditText) findViewById(R.id.editTextTextPersonName2);
+        EmailTxt = (EditText) findViewById(R.id.editTextTextEmailAddress);
+        passwordTxt = (EditText) findViewById(R.id.editTextTextPassword);
+        RePasswordTxt = (EditText) findViewById(R.id.editTextTextPassword2);
+        createAccountButton = (Button) findViewById(R.id.buttonCreateAccount2);
+        dbHelper = new UserDBHelper(this);
+
+        //if click in create account button
+        createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(CreateAccount.this, DiagnosticTest.class);
-                startActivity(intent);
+                UserInformation userInformation;
+
+                String Fname = FnameTxt.getText().toString();
+                String Lname = LnameTxt.getText().toString();
+                String Email = EmailTxt.getText().toString();
+                String Bdate = dateTxt.getText().toString();
+                String pass = passwordTxt.getText().toString();
+                String Repass = RePasswordTxt.getText().toString();
+
+                try {
+
+
+//                    // if there is empty field
+//                    if (Fname.equals("") || Lname.equals("") || Email.equals("") || Bdate.equals("") || pass.equals("") || Repass.equals("")) {
+//                        Toast.makeText(CreateAccount.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
+//                    }
+//                     if  (!pass.equals(Repass)) {
+//                        Toast.makeText(CreateAccount.this, "Passwords are not matched, please retype them correctly", Toast.LENGTH_SHORT).show();
+//                    }
+                    //check exist email
+                    Boolean checkEmail = dbHelper.checkEmail(Email);
+                    if (checkEmail == true) {
+                        Toast.makeText(CreateAccount.this, "Email is existing, Please change it", Toast.LENGTH_SHORT).show();
+                    }
+
+                    else {
+                        if(!(Fname.equals("") || Lname.equals("") || Email.equals("") || Bdate.equals("") || pass.equals("") || Repass.equals(""))&&pass.equals(Repass)&&(checkEmail==false)) {
+                            userInformation = new UserInformation(Fname, Lname, Email, Bdate, pass);
+                            Boolean insert = dbHelper.AddUser(userInformation);
+                            Toast.makeText(CreateAccount.this, "success= " + insert, Toast.LENGTH_SHORT).show();
+
+                            if (insert == true) {
+                                Toast.makeText(CreateAccount.this, "Your account has been created", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(CreateAccount.this, DiagnosticTest.class);
+                                intent.putExtra("KeyMail", Email);
+                                startActivity(intent);
+                            }
+
+                        }else {
+                            Toast.makeText(CreateAccount.this, "Your account has not!!! been created", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+
+
+
+                }catch (Exception e){
+                    Toast.makeText(CreateAccount.this, "Your account has not!!! been created", Toast.LENGTH_SHORT).show();
+
+
+                }
+
             }
         });
+
     }
 }
