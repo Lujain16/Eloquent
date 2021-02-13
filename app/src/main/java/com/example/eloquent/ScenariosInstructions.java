@@ -3,11 +3,13 @@ package com.example.eloquent;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.TimedText;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.Locale;
 
 public class ScenariosInstructions extends AppCompatActivity {
 
@@ -16,6 +18,10 @@ public class ScenariosInstructions extends AppCompatActivity {
 
     //previous button
     ImageView imageView;
+
+    private TextToSpeech textToSpeech;
+    private TextView textViewInstructions;
+    private ImageView imageViewSpeaker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,5 +50,28 @@ public class ScenariosInstructions extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // ------------------Start Text To Speech
+        textViewInstructions = findViewById(R.id.textViewBreathing);
+        imageViewSpeaker = findViewById(R.id.imageViewSpeaker);
+
+        textToSpeech=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                textToSpeech.setLanguage(Locale.US);
+                textToSpeech.setSpeechRate((float) 0.9);
+
+            }
+        });
+        imageViewSpeaker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // textToSpeech.speak(textToRead, TextToSpeech.QUEUE_FLUSH, null,null);
+
+                textToSpeech.speak(textViewInstructions.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
+            }
+        });
+
+        // ------------------End Text To Speech
     }
 }

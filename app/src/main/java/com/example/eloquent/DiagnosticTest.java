@@ -11,14 +11,18 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class DiagnosticTest extends AppCompatActivity {
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
@@ -27,7 +31,12 @@ public class DiagnosticTest extends AppCompatActivity {
     private MediaRecorder myAudioRecorder;
     MediaPlayer mediaPlayer ;
     private String outputFile = null;
+
     Button button;
+    private TextToSpeech textToSpeech;
+    private TextView textView;
+    private ImageView imageViewSpeaker;
+
 
 
     @Override
@@ -117,6 +126,29 @@ public class DiagnosticTest extends AppCompatActivity {
 
 
         }
+
+        // ------------------Start Text To Speech
+        textView = findViewById(R.id.textViewDT);
+        imageViewSpeaker = findViewById(R.id.imageViewSpeaker);
+
+        textToSpeech=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                textToSpeech.setLanguage(Locale.US);
+                textToSpeech.setSpeechRate((float) 0.9);
+
+            }
+        });
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // textToSpeech.speak(textToRead, TextToSpeech.QUEUE_FLUSH, null,null);
+
+                textToSpeech.speak(textView.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
+            }
+        });
+
+        // ------------------End Text To Speech
 
         //Done button on diagnostic test page
         //when user click on Done button  this code will move them to the stuttering severity page

@@ -7,13 +7,16 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.Locale;
 
 public class EasyOnsetWord extends AppCompatActivity {
     private ImageButton Record,Stop, Play;
@@ -23,6 +26,11 @@ public class EasyOnsetWord extends AppCompatActivity {
     Button button;
     // previous button
     ImageView imageView;
+
+    private TextToSpeech textToSpeech;
+    private TextView textViewEasyOnset;
+    private ImageView imageViewSpeaker;
+
 
 
     @Override
@@ -121,6 +129,29 @@ public class EasyOnsetWord extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // ------------------Start Text To Speech
+        textViewEasyOnset = findViewById(R.id.textViewBreathing);
+        imageViewSpeaker = findViewById(R.id.imageViewSpeaker);
+
+        textToSpeech=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                textToSpeech.setLanguage(Locale.US);
+                textToSpeech.setSpeechRate((float) 0.9);
+
+            }
+        });
+        imageViewSpeaker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // textToSpeech.speak(textToRead, TextToSpeech.QUEUE_FLUSH, null,null);
+
+                textToSpeech.speak(textViewEasyOnset.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
+            }
+        });
+
+        // ------------------End Text To Speech
     }
 
 

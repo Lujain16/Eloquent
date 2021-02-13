@@ -6,21 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".EasyOnsetPhrasesInstructions">
 
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:gravity="center_horizontal"
-        android:text="Exercise instructions"
-
-        android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view8" />
-
-
     <View
         android:id="@+id/topView"
         android:layout_width="0dp"
@@ -40,6 +25,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topView" />
 
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Exercise instructions"
+
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/topView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/topView"
+        app:layout_constraintTop_toTopOf="@+id/topView" />
+
+    <ImageView
+        android:id="@+id/imageViewSpeaker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="124dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/topView"
+        app:srcCompat="@drawable/speaker_icon" />
+
     <ImageView
         android:id="@+id/imageView3Previous"
         android:layout_width="44dp"
@@ -52,44 +61,19 @@
         app:srcCompat="@drawable/ic_baseline_arrow_back_ios_24" />
 
     <TextView
-        android:id="@+id/textView21"
-        android:layout_width="362dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="52dp"
-        android:text="1.  Start by breathing out with a gentle sigh. This will produce a quiet /hhhh/ sound. "
+        android:id="@+id/textView1"
+        android:layout_width="369dp"
+        android:layout_height="278dp"
+        android:layout_marginTop="112dp"
+        android:justificationMode="inter_word"
 
+        android:text='1.  Start by breathing out with a gentle sigh. This will produce a quiet "h" sound.\n\n\n\n\n2.  As the gentled sigh continues, gradually shape the first word. For example, the phrase "Excuse me" will become "hexcuse me".\n\n\n\n\n Apply the technique above to the next exercise and record your voice'
         android:textColor="#000000"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
-
-    <TextView
-        android:id="@+id/textView22"
-        android:layout_width="372dp"
-        android:layout_height="73dp"
-        android:layout_marginTop="44dp"
-
-        android:text='2.  As the gentled sigh continues, gradually shape the first word.For example, the phrase "Excuse me" will become "hhhhheeexcuse me".'
-        android:textColor="#000000"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView21" />
-
-    <TextView
-        android:id="@+id/textView23"
-        android:layout_width="365dp"
-        android:layout_height="43dp"
-
-        android:layout_marginTop="40dp"
-        android:text="Apply the technique above to the next exercise, and record your voice."
-        android:textColor="#000000"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+        app:layout_constraintTop_toBottomOf="@+id/topView" />
 
     <TextView
         android:id="@+id/textViewStart"
