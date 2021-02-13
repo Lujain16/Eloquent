@@ -131,7 +131,7 @@ public class EasyOnsetWord extends AppCompatActivity {
         });
 
         // ------------------Start Text To Speech
-        textViewEasyOnset = findViewById(R.id.textViewBreathing);
+        textViewEasyOnset = findViewById(R.id.textViewEasyOnset1);
         imageViewSpeaker = findViewById(R.id.imageViewSpeaker);
 
         textToSpeech=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {

@@ -19,7 +19,7 @@ public class EasyOnsetPhrasesBreathing extends AppCompatActivity {
     ImageView imageView;
 
     private TextToSpeech textToSpeech;
-    private TextView textViewEasyOnset;
+    private TextView textViewBreathing;
     private ImageView imageViewSpeaker;
 
     @Override
@@ -50,7 +50,7 @@ public class EasyOnsetPhrasesBreathing extends AppCompatActivity {
         });
 
         // ------------------Start Text To Speech
-        textViewEasyOnset = findViewById(R.id.textViewBreathing);
+        textViewBreathing = findViewById(R.id.textViewBreathing);
         imageViewSpeaker = findViewById(R.id.imageViewSpeaker);
 
         textToSpeech=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -66,7 +66,7 @@ public class EasyOnsetPhrasesBreathing extends AppCompatActivity {
             public void onClick(View v) {
                 // textToSpeech.speak(textToRead, TextToSpeech.QUEUE_FLUSH, null,null);
 
-                textToSpeech.speak(textViewEasyOnset.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
+                textToSpeech.speak(textViewBreathing.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
             }
         });
 

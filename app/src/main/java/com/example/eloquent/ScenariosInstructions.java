@@ -52,7 +52,7 @@ public class ScenariosInstructions extends AppCompatActivity {
         });
 
         // ------------------Start Text To Speech
-        textViewInstructions = findViewById(R.id.textViewBreathing);
+        textViewInstructions = findViewById(R.id.textView1);
         imageViewSpeaker = findViewById(R.id.imageViewSpeaker);
 
         textToSpeech=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {

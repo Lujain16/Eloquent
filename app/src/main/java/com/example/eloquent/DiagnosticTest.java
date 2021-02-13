@@ -34,7 +34,7 @@ public class DiagnosticTest extends AppCompatActivity {
 
     Button button;
     private TextToSpeech textToSpeech;
-    private TextView textView;
+    private TextView textViewDT;
     private ImageView imageViewSpeaker;
 
 
@@ -128,7 +128,7 @@ public class DiagnosticTest extends AppCompatActivity {
         }
 
         // ------------------Start Text To Speech
-        textView = findViewById(R.id.textViewDT);
+        textViewDT = findViewById(R.id.textViewDT);
         imageViewSpeaker = findViewById(R.id.imageViewSpeaker);
 
         textToSpeech=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -144,7 +144,7 @@ public class DiagnosticTest extends AppCompatActivity {
             public void onClick(View v) {
                 // textToSpeech.speak(textToRead, TextToSpeech.QUEUE_FLUSH, null,null);
 
-                textToSpeech.speak(textView.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
+                textToSpeech.speak(textViewDT.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
             }
         });
 
