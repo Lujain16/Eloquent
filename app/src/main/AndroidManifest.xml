@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Eloquent">
         <activity android:name=".EasyOnsetPhrasesBreathing"></activity>
+        <activity android:name=".MyInfo" />
         <activity android:name=".EasyOnsetPhrasesInstructions" />
         <activity android:name=".EasyOnsetPhrases" />
         <activity android:name=".EasyOnsetWord" />

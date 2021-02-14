@@ -17,6 +17,8 @@ import java.util.Calendar;
 import DataBase.UserDBHelper;
 import Model.UserInformation;
 
+import static com.example.eloquent.Login.intent2;
+
 public class CreateAccount extends AppCompatActivity {
 
     EditText dateTxt, FnameTxt, LnameTxt, EmailTxt, passwordTxt, RePasswordTxt;
@@ -122,9 +124,10 @@ public class CreateAccount extends AppCompatActivity {
 
                             if (insert == true) {
                                 Toast.makeText(CreateAccount.this, "Your account has been created", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(CreateAccount.this, DiagnosticTest.class);
-                                intent.putExtra("KeyMail", Email);
-                                startActivity(intent);
+                             //   Intent
+                                        intent2 = new Intent(CreateAccount.this, DiagnosticTest.class);
+                                intent2.putExtra("KeyMail", Email);
+                                startActivity(intent2);
                             }
 
                         }else {

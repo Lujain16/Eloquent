@@ -67,7 +67,7 @@
         android:layout_marginTop="112dp"
         android:justificationMode="inter_word"
 
-        android:text='1.  Start by breathing out with a gentle sigh. This will produce a quiet "h" sound.\n\n\n\n\n2.  As the gentled sigh continues, gradually shape the first word. For example, the phrase "Excuse me" will become "hexcuse me".\n\n\n\n\n Apply the technique above to the next exercise and record your voice'
+        android:text='1.  Start by breathing out with a gentle sigh. This will produce a quiet "h" sound.\n\n\n\n\n2.  As the gentled sigh continues, gradually shape the first word. For example, the phrase "Excuse me" will become "hexcuse me".\n\n\n\n\nApply the technique above to the next exercise and record your voice'
         android:textColor="#000000"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"

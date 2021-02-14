@@ -13,6 +13,7 @@ import android.widget.Toast;
 import DataBase.UserDBHelper;
 
 public class Login extends AppCompatActivity {
+    public static Intent intent2;
     //textview
     EditText EmailText, passwordText;
     //database
@@ -61,8 +62,10 @@ public class Login extends AppCompatActivity {
                     Boolean checkEmailAndPass = dbHelper.checkEmailAndPassword(Email, pass);
                     if (checkEmailAndPass==true){
                         Toast.makeText(Login.this, "login successfull", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(),HomePage.class);
-                        startActivity(intent);
+
+                                intent2 = new Intent(getApplicationContext(),HomePage.class);
+                        intent2.putExtra("LoginEmailInfo",Email);
+                        startActivity(intent2);
                     }else{
                         Toast.makeText(Login.this, "invaled login", Toast.LENGTH_SHORT).show();
 

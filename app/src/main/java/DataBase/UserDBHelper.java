@@ -82,15 +82,12 @@ public class UserDBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public List<UserInformation> getAllInfo(){
-
+    public List<UserInformation> getuserinfo(String Email) {
         List<UserInformation> returList = new ArrayList<>();
-
         //get data from the database
         String Query = "SELECT * FROM "+USERS_TABLE;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(Query,null);
-
         if (cursor.moveToFirst()){
             do {
                 String userFname = cursor.getString(0);
@@ -99,21 +96,54 @@ public class UserDBHelper extends SQLiteOpenHelper {
                 String userBdate = cursor.getString(3);
                 String userPassword = cursor.getString(4);
 
-                UserInformation NewuserInformation = new UserInformation(userFname,userLname,userEmail,userBdate,userPassword);
+                if(userEmail.equalsIgnoreCase(Email)) {
+                    UserInformation NewuserInformation = new UserInformation(userFname, userLname, userEmail, userBdate, userPassword);
+                    returList.add(NewuserInformation);
+                }
 
-                returList.add(NewuserInformation);
+
             }while (cursor.moveToNext());
 
-
         }
-        else{
-
-        }
-
         cursor.close();
         db.close();
-
         return returList;
     }
+
+    public Boolean EditName (String Email, String Fname, String Lname){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_FIRST_NAME,Fname);
+        contentValues.put(COLUMN_LAST_NAME,Lname);
+
+        Cursor cursor = db.rawQuery("SELECT * FROM USERS_TABLE WHERE Email =?", new String[]{Email});
+        if (cursor.getCount() > 0){
+            long result = db.update(USERS_TABLE,contentValues,COLUMN_EMAIL+" = ? ",new String[] {Email});
+            if (result==-1){
+                return false;
+            }else {
+                return true;
+            }
+        }else {
+            return false;
+        }
+
+    }
+
+    public Boolean DeleteAccount (String Email){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM USERS_TABLE WHERE Email =?", new String[]{Email});
+        if (cursor.getCount() > 0){
+            long result = db.delete(USERS_TABLE,COLUMN_EMAIL+" = ? ",new String[] {Email});
+            if (result == -1){
+                return false;
+            }else {
+                return true;
+            }
+        }else {
+            return false;
+        }
+    }
+
 
 }

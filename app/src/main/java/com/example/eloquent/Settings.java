@@ -6,10 +6,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import DataBase.UserDBHelper;
+
+import static com.example.eloquent.Login.intent2;
+
 public class Settings extends AppCompatActivity {
+    TextView DeleteAccount;
+    UserDBHelper dbHelper;
+    String emailLogin = intent2.getStringExtra("LoginEmailInfo");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +75,31 @@ public class Settings extends AppCompatActivity {
                 }
 
                 return false;
+            }
+        });
+
+        //Delete Account
+        System.out.println("emailLogin----------------------------------"+emailLogin);
+        DeleteAccount = findViewById(R.id.textViewDeletAccount);
+        DeleteAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // System.out.println("dbHelper.DeleteAccount(emailLogin);----------------------------------"+dbHelper.DeleteAccount(emailLogin));
+
+                dbHelper = new UserDBHelper(Settings.this);
+               Boolean result = dbHelper.DeleteAccount(emailLogin);
+                System.out.println("result----------------------------------"+result);
+
+
+                if (result == true){
+                    Intent intent =new Intent(Settings.this,MainActivity.class);
+                    startActivity(intent);
+                    Toast.makeText(Settings.this, "Delete Account is success", Toast.LENGTH_LONG).show();
+                }
+                else {
+
+                    Toast.makeText(Settings.this, "Delete Account is failed", Toast.LENGTH_LONG).show();
+                }
             }
         });
 

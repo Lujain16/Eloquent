@@ -32,7 +32,7 @@ public class DiagnosticTest extends AppCompatActivity {
     MediaPlayer mediaPlayer ;
     private String outputFile = null;
 
-    Button button;
+    Button Donebutton;
     private TextToSpeech textToSpeech;
     private TextView textViewDT;
     private ImageView imageViewSpeaker;
@@ -56,9 +56,7 @@ public class DiagnosticTest extends AppCompatActivity {
 
         // If the user grants all permission the user can start using the program
         if(checkAndPermissionsRequest()) {
-            // carry on the normal flow, as the case of  permissions  granted.
-            Toast.makeText(getApplicationContext(), "Permission Done Ok ...",Toast.LENGTH_LONG).show();
-            //now user able to Record , Stop And play
+            //permissions  granted. now user able to Record , Stop And play
 
             // Start Recording
             Record.setOnClickListener(new View.OnClickListener() {
@@ -139,7 +137,7 @@ public class DiagnosticTest extends AppCompatActivity {
 
             }
         });
-        button.setOnClickListener(new View.OnClickListener() {
+        imageViewSpeaker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // textToSpeech.speak(textToRead, TextToSpeech.QUEUE_FLUSH, null,null);
@@ -152,8 +150,8 @@ public class DiagnosticTest extends AppCompatActivity {
 
         //Done button on diagnostic test page
         //when user click on Done button  this code will move them to the stuttering severity page
-        button = findViewById(R.id.buttonDone);
-        button.setOnClickListener(new View.OnClickListener() {
+        Donebutton = findViewById(R.id.buttonDone);
+        Donebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent(DiagnosticTest.this, StutteringSeverity.class);

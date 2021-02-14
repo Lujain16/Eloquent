@@ -6,10 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Profile extends AppCompatActivity {
+    TextView textViewInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +69,17 @@ public class Profile extends AppCompatActivity {
                 return false;
             }
         });
+
+        //My information
+        textViewInfo = findViewById(R.id.textViewMyinformation);
+        textViewInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Profile.this,MyInfo.class);
+                startActivity(intent);
+            }
+        });
+
 
 
     }
