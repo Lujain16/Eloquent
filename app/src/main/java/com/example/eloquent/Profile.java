@@ -11,8 +11,19 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.List;
+
+import DataBase.UserDBHelper;
+import Model.UserInformation;
+
+import static com.example.eloquent.Login.intent2;
+
+
 public class Profile extends AppCompatActivity {
-    TextView textViewInfo;
+    TextView textViewInfo, username;
+
+    String UserEmailLogin = intent2.getStringExtra("LoginEmailInfo");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +81,16 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+        //user name
+        username = findViewById(R.id.textView14);
+        UserDBHelper dbHelper;
+        dbHelper = new UserDBHelper(Profile.this);
+
+        List<UserInformation> Usersinfo = dbHelper.getuserinfo(UserEmailLogin);
+        String UserFName = Usersinfo.get(0).getFName();
+        String UserLName = Usersinfo.get(0).getLName();
+        username.setText(UserFName+" "+UserLName);
+
         //My information
         textViewInfo = findViewById(R.id.textViewMyinformation);
         textViewInfo.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +100,9 @@ public class Profile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
 
 
 

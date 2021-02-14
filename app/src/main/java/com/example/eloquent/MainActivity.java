@@ -32,8 +32,7 @@ Button button_createAccount , button_Login;
             public void onClick(View v) {
                 Intent intent =new Intent(MainActivity.this, Login.class);
                 startActivity(intent);
-                //the same function with diffrent code
-                //startActivity(new Intent((MainActivity.this, CreateAccount.class));
+
 
             }
         });

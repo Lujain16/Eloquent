@@ -19,6 +19,7 @@ import static com.example.eloquent.Login.intent2;
 public class Settings extends AppCompatActivity {
     TextView DeleteAccount;
     UserDBHelper dbHelper;
+    //error////////////////////////////////////////
     String emailLogin = intent2.getStringExtra("LoginEmailInfo");
 
 
@@ -87,7 +88,7 @@ public class Settings extends AppCompatActivity {
                // System.out.println("dbHelper.DeleteAccount(emailLogin);----------------------------------"+dbHelper.DeleteAccount(emailLogin));
 
                 dbHelper = new UserDBHelper(Settings.this);
-               Boolean result = dbHelper.DeleteAccount(emailLogin);
+                boolean result = dbHelper.DeleteAccount(emailLogin);
                 System.out.println("result----------------------------------"+result);
 
 

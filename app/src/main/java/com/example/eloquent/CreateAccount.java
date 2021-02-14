@@ -69,8 +69,9 @@ public class CreateAccount extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(CreateAccount.this, MainActivity.class);
-                startActivity(intent);
+               // Intent
+               intent2 =new Intent(CreateAccount.this, MainActivity.class);
+                startActivity(intent2);
             }
         });
 
@@ -111,7 +112,7 @@ public class CreateAccount extends AppCompatActivity {
 //                        Toast.makeText(CreateAccount.this, "Passwords are not matched, please retype them correctly", Toast.LENGTH_SHORT).show();
 //                    }
                     //check exist email
-                    Boolean checkEmail = dbHelper.checkEmail(Email);
+                    boolean checkEmail = dbHelper.checkEmail(Email);
                     if (checkEmail == true) {
                         Toast.makeText(CreateAccount.this, "Email is existing, Please change it", Toast.LENGTH_SHORT).show();
                     }
@@ -119,14 +120,14 @@ public class CreateAccount extends AppCompatActivity {
                     else {
                         if(!(Fname.equals("") || Lname.equals("") || Email.equals("") || Bdate.equals("") || pass.equals("") || Repass.equals(""))&&pass.equals(Repass)&&(checkEmail==false)) {
                             userInformation = new UserInformation(Fname, Lname, Email, Bdate, pass);
-                            Boolean insert = dbHelper.AddUser(userInformation);
+                            boolean insert = dbHelper.AddUser(userInformation);
                             Toast.makeText(CreateAccount.this, "success= " + insert, Toast.LENGTH_SHORT).show();
 
                             if (insert == true) {
                                 Toast.makeText(CreateAccount.this, "Your account has been created", Toast.LENGTH_SHORT).show();
                              //   Intent
                                         intent2 = new Intent(CreateAccount.this, DiagnosticTest.class);
-                                intent2.putExtra("KeyMail", Email);
+                                intent2.putExtra("LoginEmailInfo", Email);
                                 startActivity(intent2);
                             }
 

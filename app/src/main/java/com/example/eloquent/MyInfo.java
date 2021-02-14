@@ -34,6 +34,7 @@ import static com.example.eloquent.Login.intent2;
     UserDBHelper dbHelper;
     String EditUserFName;
     String EditUserLName;
+String UserEmailForIntent= "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +58,7 @@ import static com.example.eloquent.Login.intent2;
             String UserLName = Usersinfo.get(0).getLName();
             String UserEmail = Usersinfo.get(0).getEmail();
             String UserBdate = Usersinfo.get(0).getBirthDate();
-
+            UserEmailForIntent =UserEmail;
             EditUserFName = UserFName;
             EditUserLName = UserLName;
 
@@ -80,9 +81,12 @@ import static com.example.eloquent.Login.intent2;
                 Lname.setText(EditUserLName);
                 boolean result = dbHelper.EditName(emailLogin, EditUserFName,EditUserLName);
 
+
                 if (result){
-                    Intent intentProfile =new Intent(getApplicationContext(),Profile.class);
-                    startActivity(intentProfile);
+                  //  Intent intentProfile
+                            intent2 =new Intent(getApplicationContext(),Profile.class);
+                    intent2.putExtra("LoginEmailInfo", UserEmailForIntent);
+                    startActivity(intent2);
                 }else {
                     Toast.makeText(MyInfo.this, "update is failed", Toast.LENGTH_LONG).show();
                 }

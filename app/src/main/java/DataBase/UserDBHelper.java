@@ -59,7 +59,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
     }
 
     //check email
-    public Boolean checkEmail(String Email){
+    public boolean checkEmail(String Email){
         SQLiteDatabase EloquentDB = this.getWritableDatabase();
         Cursor cursor = EloquentDB.rawQuery("Select * from USERS_TABLE where Email = ?", new String[]{Email});
         // if user exist
@@ -70,7 +70,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
     }
 
     // check email and password for login
-    public Boolean checkEmailAndPassword(String Email, String Password){
+    public boolean checkEmailAndPassword(String Email, String Password){
         SQLiteDatabase EloquentDB = this.getWritableDatabase();
         Cursor cursor = EloquentDB.rawQuery("Select * from USERS_TABLE where Email = ? and Password = ?",new String[] {Email, Password});
 
@@ -110,7 +110,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
         return returList;
     }
 
-    public Boolean EditName (String Email, String Fname, String Lname){
+    public boolean EditName (String Email, String Fname, String Lname){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_FIRST_NAME,Fname);
@@ -130,7 +130,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     }
 
-    public Boolean DeleteAccount (String Email){
+    public boolean DeleteAccount (String Email){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM USERS_TABLE WHERE Email =?", new String[]{Email});
         if (cursor.getCount() > 0){

@@ -53,13 +53,13 @@ public class Login extends AppCompatActivity {
                 if (Email.equals("")||pass.equals("")) {
                     Toast.makeText(Login.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
                 } else {
-                    Boolean checkEmail = dbHelper.checkEmail(Email);
+                    boolean checkEmail = dbHelper.checkEmail(Email);
                     if (checkEmail==true) {
                         Toast.makeText(Login.this, "email exist", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(Login.this, HomePage.class);
                         startActivity(intent);
                     }
-                    Boolean checkEmailAndPass = dbHelper.checkEmailAndPassword(Email, pass);
+                    boolean checkEmailAndPass = dbHelper.checkEmailAndPassword(Email, pass);
                     if (checkEmailAndPass==true){
                         Toast.makeText(Login.this, "login successfull", Toast.LENGTH_SHORT).show();
 
