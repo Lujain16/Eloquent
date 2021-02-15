@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,9 +18,8 @@ import DataBase.UserDBHelper;
 import static com.example.eloquent.Login.intent2;
 
 public class Settings extends AppCompatActivity {
-    TextView DeleteAccount;
+    TextView DeleteAccount, Logout;
     UserDBHelper dbHelper;
-    //error////////////////////////////////////////
     String emailLogin = intent2.getStringExtra("LoginEmailInfo");
 
 
@@ -82,7 +82,7 @@ public class Settings extends AppCompatActivity {
         //Delete Account
         System.out.println("emailLogin----------------------------------"+emailLogin);
         DeleteAccount = findViewById(R.id.textViewDeletAccount);
-        DeleteAccount.setOnClickListener(new View.OnClickListener() {
+        DeleteAccount.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                // System.out.println("dbHelper.DeleteAccount(emailLogin);----------------------------------"+dbHelper.DeleteAccount(emailLogin));
@@ -101,6 +101,16 @@ public class Settings extends AppCompatActivity {
 
                     Toast.makeText(Settings.this, "Delete Account is failed", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        //Logout
+        Logout = findViewById(R.id.textView29);
+        Logout.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(Settings.this,MainActivity.class);
+                startActivity(intent);
             }
         });
 

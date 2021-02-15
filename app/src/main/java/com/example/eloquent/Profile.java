@@ -2,11 +2,16 @@ package com.example.eloquent;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -21,6 +26,9 @@ import static com.example.eloquent.Login.intent2;
 
 public class Profile extends AppCompatActivity {
     TextView textViewInfo, username;
+    ImageView Picture;
+    UserDBHelper dbHelper;
+
 
     String UserEmailLogin = intent2.getStringExtra("LoginEmailInfo");
 
@@ -83,7 +91,7 @@ public class Profile extends AppCompatActivity {
 
         //user name
         username = findViewById(R.id.textView14);
-        UserDBHelper dbHelper;
+
         dbHelper = new UserDBHelper(Profile.this);
 
         List<UserInformation> Usersinfo = dbHelper.getuserinfo(UserEmailLogin);
@@ -100,6 +108,10 @@ public class Profile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //add pic
+//        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
+//        Picture = findViewById(R.id.imageViewPic);
 
 
 

@@ -23,7 +23,7 @@ public class CreateAccount extends AppCompatActivity {
 
     EditText dateTxt, FnameTxt, LnameTxt, EmailTxt, passwordTxt, RePasswordTxt;
 
-    private int mdate, mmonth, myear;
+    private int mday, mmonth, myear;
     //prev button
     ImageView imageView;
     // create account button
@@ -44,18 +44,18 @@ public class CreateAccount extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final Calendar cal = Calendar.getInstance();
-                mdate = cal.get(Calendar.DATE);
+                mday = cal.get(Calendar.DAY_OF_MONTH);
                 mmonth = cal.get(Calendar.MONTH);
                 myear = cal.get(Calendar.YEAR);
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(CreateAccount.this, android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(CreateAccount.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        mmonth = month+1;
-                        dateTxt.setText(mdate+"-"+mmonth+"-"+myear);
+                        month = month+1;
+                        dateTxt.setText(dayOfMonth+"-"+month+"-"+year);
 
                     }
-                },myear,mmonth,mdate);
+                },myear,mmonth,mday);
                 datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis()-1000);
                 datePickerDialog.show();
 
