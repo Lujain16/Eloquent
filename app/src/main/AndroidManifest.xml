@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.eloquent">
 
-
-
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
@@ -18,7 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Eloquent">
-        <activity android:name=".EasyOnsetPhrasesBreathing"></activity>
+        <activity android:name=".ScenarioAtSchoolInstructions"></activity>
+        <activity android:name=".ScenariosAtSchool" />
+        <activity android:name=".EasyOnsetPhrasesBreathing" />
         <activity android:name=".MyInfo" />
         <activity android:name=".EasyOnsetPhrasesInstructions" />
         <activity android:name=".EasyOnsetPhrases" />
