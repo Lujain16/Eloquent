@@ -58,12 +58,11 @@ public class DiagnosticTest extends AppCompatActivity {
         if(checkAndPermissionsRequest()) {
             //permissions  granted. now user able to Record , Stop And play
 
+
             // Start Recording
             Record.setOnClickListener(new View.OnClickListener() {
-
                 @Override
                 public void onClick(View v) {
-
                     try {
                         myAudioRecorder = new MediaRecorder();
                         myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -75,13 +74,13 @@ public class DiagnosticTest extends AppCompatActivity {
                         myAudioRecorder.start();
 
                     } catch (IllegalStateException ise){
-                        //..
-                    }catch (IOException ioe){
-                        //...
+                        ise.printStackTrace();
+                    }
+                    catch (IOException ioe){
+                        // catch input and output exception
                     }
                     Record.setEnabled(false);
                     Stop.setEnabled(true);
-
                     Toast.makeText(getApplicationContext(), "Recording started...",Toast.LENGTH_LONG).show();
                 }
             });
@@ -93,11 +92,10 @@ public class DiagnosticTest extends AppCompatActivity {
                     try{
                         myAudioRecorder.stop();
                         myAudioRecorder.reset();
-                        //myAdioRecorder.release();
                         myAudioRecorder = null;
-                    }catch (Exception e){}
-
-
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                     Record.setEnabled(true);
                     Stop.setEnabled(false);
                     Play.setEnabled(true);
@@ -108,7 +106,6 @@ public class DiagnosticTest extends AppCompatActivity {
             // Play Recorded Audio
             Play.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-
                     try {
                         mediaPlayer = new MediaPlayer();
                         mediaPlayer.setDataSource(outputFile);
@@ -117,15 +114,13 @@ public class DiagnosticTest extends AppCompatActivity {
 
                         Toast.makeText(getApplicationContext(), "Playing Audio", Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
-                        // make something
+                       e.printStackTrace();
                     }
                 }
             });
-
-
         }
 
-        // ------------------Start Text To Speech
+        // Text To Speech
         textViewDT = findViewById(R.id.textViewDT);
         imageViewSpeaker = findViewById(R.id.imageViewSpeaker);
 
@@ -134,14 +129,11 @@ public class DiagnosticTest extends AppCompatActivity {
             public void onInit(int i) {
                 textToSpeech.setLanguage(Locale.US);
                 textToSpeech.setSpeechRate((float) 0.9);
-
             }
         });
         imageViewSpeaker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // textToSpeech.speak(textToRead, TextToSpeech.QUEUE_FLUSH, null,null);
-
                 textToSpeech.speak(textViewDT.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
             }
         });

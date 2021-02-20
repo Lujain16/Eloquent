@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Random;
 
 public class EasyOnsetWord extends AppCompatActivity {
     private ImageButton Record,Stop, Play;
@@ -26,6 +27,8 @@ public class EasyOnsetWord extends AppCompatActivity {
     Button button;
     // previous button
     ImageView imageView;
+    TextView textViewWord ;
+    Random rand = new Random();
 
     private TextToSpeech textToSpeech;
     private TextView textViewEasyOnset;
@@ -46,6 +49,44 @@ public class EasyOnsetWord extends AppCompatActivity {
         Play.setEnabled(false);
 
         outputFile = Environment.getExternalStorageDirectory().getAbsolutePath()+ "/Word_Recording.mp3";
+
+        //-------------------Word list generator
+        textViewWord = (TextView)findViewById(R.id.textViewEasyOnsetWord);
+        String[] Word_List = {"After",
+                " Also",
+                "Always",
+                "Enough",
+                "Easy",
+                "Email",
+                "Either",
+                "Exit",
+                "Expert",
+                "Inside",
+                "Inspect",
+                "Include",
+                "Island",
+                "Oven",
+                "Open",
+                "Offer",
+                "Outdoor",
+                "Under",
+                "Update",
+                "Unless",
+                "hole",
+                "heart",
+                "whom",
+                "home",
+                "harm",
+                "horse",
+                "hard"
+        };
+
+        int Word_List_Length = Word_List.length-1 ;
+        int random_Number_Word = rand.nextInt(Word_List_Length-0);
+        textViewWord.setText(Word_List[random_Number_Word]);
+
+
+        //-------------------End Word list generator
 
         Record.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,9 +121,10 @@ public class EasyOnsetWord extends AppCompatActivity {
                 try{
                     myAudioRecorder.stop();
                     myAudioRecorder.reset();
-                    //myAdioRecorder.release();
                     myAudioRecorder = null;
-                }catch (Exception e){}
+                }catch (Exception e){
+                    //
+                }
 
 
                 Record.setEnabled(true);
@@ -131,7 +173,8 @@ public class EasyOnsetWord extends AppCompatActivity {
         });
 
         // ------------------Start Text To Speech
-        textViewEasyOnset = findViewById(R.id.textViewEasyOnset1);
+       // textViewEasyOnset = findViewById(R.id.textViewEasyOnsetWord);
+        textViewEasyOnset = textViewWord;
         imageViewSpeaker = findViewById(R.id.imageViewSpeaker);
 
         textToSpeech=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -152,6 +195,8 @@ public class EasyOnsetWord extends AppCompatActivity {
         });
 
         // ------------------End Text To Speech
+
+
     }
 
 

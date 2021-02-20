@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Random;
 
 public class EasyOnsetPhrases extends AppCompatActivity {
     private ImageButton Record,Stop, Play;
@@ -24,6 +25,8 @@ public class EasyOnsetPhrases extends AppCompatActivity {
     MediaPlayer mediaPlayer ;
     private String outputFile = null;
     Button button;
+    TextView textViewPhrases ;
+    Random rand = new Random();
 
     private TextToSpeech textToSpeech;
     private TextView textViewEasyOnset;
@@ -42,6 +45,33 @@ public class EasyOnsetPhrases extends AppCompatActivity {
         Play.setEnabled(false);
 
         outputFile = Environment.getExternalStorageDirectory().getAbsolutePath()+ "/Phrases_Recording.mp3";
+        //-------------------Word list generator
+        textViewPhrases = (TextView)findViewById(R.id.textViewEasyOnsePhrases);
+        String Phrases_List [] = {"Of course.",
+                " After you",
+                "It’s been a brilliant day.",
+                "It is raining",
+                "I’ll see you later.",
+                "I’m hungry.",
+                "Is this a good time?",
+                "Open the door, please.",
+                "Uncle Patrick is here.",
+                "I’ll have a pizza, please.",
+                "Annie ate an apple",
+                "How are you today?",
+                "I really appreciate your help.",
+                "Nice to meet you.",
+                "I’ll be with you in a moment.",
+                "I can do it!",
+                "I'll not give up!",
+                "It’s never too late to learn."};
+
+        int Phrases_List_Length = Phrases_List.length-1 ;
+        int random_Number_Phrases = rand.nextInt(Phrases_List_Length-0);
+        textViewPhrases.setText(Phrases_List[random_Number_Phrases]);
+
+
+        //-------------------End Word list generator
 
         Record.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +106,6 @@ public class EasyOnsetPhrases extends AppCompatActivity {
                 try{
                     myAudioRecorder.stop();
                     myAudioRecorder.reset();
-                    //myAdioRecorder.release();
                     myAudioRecorder = null;
                 }catch (Exception e){}
 
@@ -116,7 +145,8 @@ public class EasyOnsetPhrases extends AppCompatActivity {
         });
 
         // ------------------Start Text To Speech
-        textViewEasyOnset = findViewById(R.id.textViewEasyOnset1);
+        //textViewEasyOnset = findViewById(R.id.textViewEasyOnsetWord);
+        textViewEasyOnset =textViewPhrases;
         imageViewSpeaker = findViewById(R.id.imageViewSpeaker);
 
         textToSpeech=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
