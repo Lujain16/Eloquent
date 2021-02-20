@@ -84,7 +84,6 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     public List<UserInformation> getuserinfo(String Email) {
         List<UserInformation> returList = new ArrayList<>();
-        //get data from the database
         String Query = "SELECT * FROM "+USERS_TABLE;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(Query,null);
@@ -95,15 +94,11 @@ public class UserDBHelper extends SQLiteOpenHelper {
                 String userEmail = cursor.getString(2);
                 String userBdate = cursor.getString(3);
                 String userPassword = cursor.getString(4);
-
                 if(userEmail.equalsIgnoreCase(Email)) {
                     UserInformation NewuserInformation = new UserInformation(userFname, userLname, userEmail, userBdate, userPassword);
                     returList.add(NewuserInformation);
                 }
-
-
             }while (cursor.moveToNext());
-
         }
         cursor.close();
         db.close();
@@ -115,19 +110,15 @@ public class UserDBHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_FIRST_NAME,Fname);
         contentValues.put(COLUMN_LAST_NAME,Lname);
-
         Cursor cursor = db.rawQuery("SELECT * FROM USERS_TABLE WHERE Email =?", new String[]{Email});
         if (cursor.getCount() > 0){
             long result = db.update(USERS_TABLE,contentValues,COLUMN_EMAIL+" = ? ",new String[] {Email});
             if (result==-1){
                 return false;
-            }else {
-                return true;
-            }
+            }else { return true; }
         }else {
             return false;
         }
-
     }
 
     public boolean DeleteAccount (String Email){
@@ -137,12 +128,8 @@ public class UserDBHelper extends SQLiteOpenHelper {
             long result = db.delete(USERS_TABLE,COLUMN_EMAIL+" = ? ",new String[] {Email});
             if (result == -1){
                 return false;
-            }else {
-                return true;
-            }
-        }else {
-            return false;
-        }
+            }else { return true; }
+        }else { return false;}
     }
 
 

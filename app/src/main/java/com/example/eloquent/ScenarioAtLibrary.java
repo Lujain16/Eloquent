@@ -16,7 +16,7 @@ import java.util.List;
 import Adapter.MyAdapter;
 import Model.Listitem;
 
-public class ScenariosAtSchool extends AppCompatActivity {
+public class ScenarioAtLibrary extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<Listitem> listitems;
     private  RecyclerView.Adapter adapter;
@@ -30,20 +30,19 @@ public class ScenariosAtSchool extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scenarios_at_school);
-
-        textArray = new String[]{"Could you help me?",
-                "What do you need?",
-                "I can't seem to find my class.",
-                "What building is it in?",
-                "It's in the C building.",
-                "Oh, I know exactly where that is.",
-                "Do you mind telling me where it is?",
-                "Sure, what room number is it?",
-                "It's room number 261.",
-                "I have a class around there right now.",
-                "Could you show me where it is?",
-                "No problem, come on."};
+        setContentView(R.layout.activity_scenario_at_library);
+        textArray = new String[]{"What can I do for you?",
+                "I was looking for a book, but I couldn't find it.",
+                "Did you check our database to see if it was on the shelf?",
+                "I already did.",
+                "Is it on the shelf?",
+                "I didn't see it.",
+                "Apparently somebody took that book out of the library.",
+                "Will you ever get another copy?",
+                "We will definitely be getting another.",
+                "Could you please reserve it for me?",
+                "That won't be a problem.",
+                "Thanks. I really appreciate that."};
 
         recyclerView = findViewById(R.id.recyclerviewID);
         recyclerView.setHasFixedSize(true);
@@ -51,11 +50,11 @@ public class ScenariosAtSchool extends AppCompatActivity {
 
         listitems = new ArrayList<>();
         for(int x=0; x<textArray.length-1; x=x+2){
-            System.out.println("-----------------------------textArray[x]"+textArray[x]);
-            System.out.println("-----------------------------textArray[x+1]"+textArray[x+1]);
+//            System.out.println("-----------------------------textArray[x]"+textArray[x]);
+//            System.out.println("-----------------------------textArray[x+1]"+textArray[x+1]);
             Listitem listitem =new Listitem(
 
-                    "Studen: "+textArray[x],
+                    "Librarian: "+textArray[x],
                     "You: "+textArray[x+1]
             );
             listitems.add(listitem);
@@ -68,7 +67,7 @@ public class ScenariosAtSchool extends AppCompatActivity {
         Donebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(ScenariosAtSchool.this, StutteringSeverity.class);
+                Intent intent =new Intent(ScenarioAtLibrary.this, StutteringSeverity.class);
                 startActivity(intent);
             }
         });
@@ -78,7 +77,7 @@ public class ScenariosAtSchool extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(ScenariosAtSchool.this, ScenarioAtSchoolInstructions.class);
+                Intent intent =new Intent(ScenarioAtLibrary.this, ScenarioAtLibraryInstructions.class);
                 startActivity(intent);
             }
         });

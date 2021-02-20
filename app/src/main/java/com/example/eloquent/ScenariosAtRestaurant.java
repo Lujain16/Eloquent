@@ -16,7 +16,7 @@ import java.util.List;
 import Adapter.MyAdapter;
 import Model.Listitem;
 
-public class ScenariosAtSchool extends AppCompatActivity {
+public class ScenariosAtRestaurant extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<Listitem> listitems;
     private  RecyclerView.Adapter adapter;
@@ -30,20 +30,19 @@ public class ScenariosAtSchool extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scenarios_at_school);
-
-        textArray = new String[]{"Could you help me?",
-                "What do you need?",
-                "I can't seem to find my class.",
-                "What building is it in?",
-                "It's in the C building.",
-                "Oh, I know exactly where that is.",
-                "Do you mind telling me where it is?",
-                "Sure, what room number is it?",
-                "It's room number 261.",
-                "I have a class around there right now.",
-                "Could you show me where it is?",
-                "No problem, come on."};
+        setContentView(R.layout.activity_scenarios_at_restaurant);
+        textArray = new String[]{"What would you like to order?",
+                "I would like to have a burger.",
+                "Did you want it with cheese?",
+                "I don't want cheese on it.",
+                "Did you want anything to drink today?",
+                "I think I'm going to get a soda today.",
+                "What kind of soda can I get you?",
+                "A Sprite sounds good.",
+                "What else would you like?",
+                "Let me get a bag of chips too.",
+                "Anything else?",
+                "That's all. Thank you."};
 
         recyclerView = findViewById(R.id.recyclerviewID);
         recyclerView.setHasFixedSize(true);
@@ -51,11 +50,11 @@ public class ScenariosAtSchool extends AppCompatActivity {
 
         listitems = new ArrayList<>();
         for(int x=0; x<textArray.length-1; x=x+2){
-            System.out.println("-----------------------------textArray[x]"+textArray[x]);
-            System.out.println("-----------------------------textArray[x+1]"+textArray[x+1]);
+//            System.out.println("-----------------------------textArray[x]"+textArray[x]);
+//            System.out.println("-----------------------------textArray[x+1]"+textArray[x+1]);
             Listitem listitem =new Listitem(
 
-                    "Studen: "+textArray[x],
+                    "Waiter: "+textArray[x],
                     "You: "+textArray[x+1]
             );
             listitems.add(listitem);
@@ -68,7 +67,7 @@ public class ScenariosAtSchool extends AppCompatActivity {
         Donebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(ScenariosAtSchool.this, StutteringSeverity.class);
+                Intent intent =new Intent(ScenariosAtRestaurant.this, StutteringSeverity.class);
                 startActivity(intent);
             }
         });
@@ -78,7 +77,7 @@ public class ScenariosAtSchool extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(ScenariosAtSchool.this, ScenarioAtSchoolInstructions.class);
+                Intent intent =new Intent(ScenariosAtRestaurant.this, ScenarioAtSchoolInstructions.class);
                 startActivity(intent);
             }
         });

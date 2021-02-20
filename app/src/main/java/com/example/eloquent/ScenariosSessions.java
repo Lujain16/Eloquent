@@ -103,7 +103,7 @@ public class ScenariosSessions extends AppCompatActivity {
         cardViewAtRestaurant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(ScenariosSessions.this, ScenariosInstructions.class);
+                Intent intent =new Intent(ScenariosSessions.this, ScenarioAtRestaurantInstructions.class);
                 startActivity(intent);
             }
         });
@@ -114,7 +114,7 @@ public class ScenariosSessions extends AppCompatActivity {
         cardViewAtLibrary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(ScenariosSessions.this, ScenariosInstructions.class);
+                Intent intent =new Intent(ScenariosSessions.this, ScenarioAtLibraryInstructions.class);
                 startActivity(intent);
             }
         });
