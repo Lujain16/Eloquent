@@ -4,11 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.vishnusivadas.advanced_httpurlconnection.PutData;
 
 import DataBase.UserDBHelper;
 
@@ -22,6 +26,8 @@ public class Login extends AppCompatActivity {
     ImageView imageView;
     //login button
     Button LoginButton;
+
+    String Email, Password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,33 +53,70 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String Email = EmailText.getText().toString();
-                String pass = passwordText.getText().toString();
+                Email = EmailText.getText().toString();
+                Password = passwordText.getText().toString();
 
-                if (Email.equals("")||pass.equals("")) {
-                    Toast.makeText(Login.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
-                } else {
-                    boolean checkEmail = dbHelper.checkEmail(Email);
-                    if (checkEmail==true) {
-                        Toast.makeText(Login.this, "email exist", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(Login.this, HomePage.class);
-                        startActivity(intent);
-                    }
-                    boolean checkEmailAndPass = dbHelper.checkEmailAndPassword(Email, pass);
-                    if (checkEmailAndPass==true){
-                        Toast.makeText(Login.this, "login successfull", Toast.LENGTH_SHORT).show();
+                if (Email.equals("")|| Password.equals("")){
+                    Toast.makeText(Login.this, "All fields must be filled and  passwords must be correct.", Toast.LENGTH_SHORT).show();
 
-                                intent2 = new Intent(getApplicationContext(),HomePage.class);
-                        intent2.putExtra("LoginEmailInfo",Email);
-                        startActivity(intent2);
-                    }else{
-                        Toast.makeText(Login.this, "invaled login", Toast.LENGTH_SHORT).show();
-
-                    }
                 }
+                else{
 
-            }
+                    //---------------------------------------------
+                    Handler handler = new Handler(Looper.getMainLooper());
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            //Starting Write and Read data with URL
+                            //Creating array for parameters
+                            String[] field = new String[2];
+                            field[0] = "Email";
+                            field[1] = "Password";
+                            //Creating array for data
+                            String[] data = new String[2];
+                            data[0] = Email;
+                            data[1] = Password;
+
+                            PutData putData = new PutData("http://192.168.100.4/Users/CreateAccount.php", "POST", field, data);
+
+                            if (putData.startPut()) {
+                                if (putData.onComplete()) {
+                                    String result = putData.getResult();
+                                    Toast.makeText(Login.this, result, Toast.LENGTH_SHORT).show();
+
+                                    intent2 = new Intent(Login.this, HomePage.class);
+                                    startActivity(intent2);
+
+                                }
+                            }
+                            //End Write and Read data with URL
+                        }
+                    });
+                    //---------------------------------------------
+                }}
         });
 
     }
 }
+
+//    if (Email.equals("")||pass.equals("")) {
+//            Toast.makeText(Login.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
+//            } else {
+//            boolean checkEmail = dbHelper.checkEmail(Email);
+//            if (checkEmail==true) {
+//            Toast.makeText(Login.this, "email exist", Toast.LENGTH_SHORT).show();
+//            Intent intent = new Intent(Login.this, HomePage.class);
+//        startActivity(intent);
+//        }
+//        boolean checkEmailAndPass = dbHelper.checkEmailAndPassword(Email, pass);
+//        if (checkEmailAndPass==true){
+//        Toast.makeText(Login.this, "login successfull", Toast.LENGTH_SHORT).show();
+//
+//        intent2 = new Intent(getApplicationContext(),HomePage.class);
+//        intent2.putExtra("LoginEmailInfo",Email);
+//        startActivity(intent2);
+//        }else{
+//        Toast.makeText(Login.this, "invaled login", Toast.LENGTH_SHORT).show();
+//
+//        }
+//        }

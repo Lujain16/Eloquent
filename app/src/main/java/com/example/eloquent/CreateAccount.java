@@ -83,7 +83,6 @@ public class CreateAccount extends AppCompatActivity {
 
 
 
-        //database////////////////////////
         //DATABASE------------
         dateTxt = (EditText) findViewById(R.id.editTextDate);
         FnameTxt = (EditText) findViewById(R.id.editTextTextPersonName);
@@ -106,6 +105,12 @@ public class CreateAccount extends AppCompatActivity {
                 BirthDate = dateTxt.getText().toString();
                 Password = passwordTxt.getText().toString();
                 RePassword = RePasswordTxt.getText().toString();
+
+                if ((FirstName.equals("") || LastName.equals("") || Email.equals("") || BirthDate.equals("") || Password.equals("") || RePassword.equals(""))||!Password.equals(RePassword)){
+                    Toast.makeText(CreateAccount.this, "All fields must be filled and the two passwords must be matched.", Toast.LENGTH_SHORT).show();
+
+                }
+                else{
 
                 //---------------------------------------------
                 Handler handler = new Handler(Looper.getMainLooper());
@@ -135,41 +140,20 @@ public class CreateAccount extends AppCompatActivity {
                                 String result = putData.getResult();
                                 Toast.makeText(CreateAccount.this, result, Toast.LENGTH_SHORT).show();
 
-                                System.out.println("************************************ "+result);
-                                if (result.equalsIgnoreCase("Create Account Success")){
-                                    System.out.println("Create Account Success");
 
-                                }else if(result.equalsIgnoreCase("Create Account Failed")){
-
-                                    System.out.println("Create Account Failed");
-
-                                }else if(result.equalsIgnoreCase("Error: Database connection")){
-                                    System.out.println("Error: Database connection");
-
-                                }else if(result.equalsIgnoreCase("All fields are required")){
-
-                                    System.out.println("All fields are required");
-                                }else {
-
-                                    System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
-                                }
-
-                                //End ProgressBar (Set visibility to GONE)
-                                //Log.i("PutData", result);
+                                intent2 = new Intent(CreateAccount.this, DiagnosticTest.class);
+                                startActivity(intent2);
                             }
                         }
                         //End Write and Read data with URL
                     }
                 });
                  //---------------------------------------------
+            }}
+        });
 
-
-
-
-
-
-
-
+    }
+}
 //                try {
 //
 //
@@ -211,9 +195,3 @@ public class CreateAccount extends AppCompatActivity {
 //                }catch (Exception e){
 //                    Toast.makeText(CreateAccount.this, "Your account has not!!! been created", Toast.LENGTH_SHORT).show();
 //                }
-
-            }
-        });
-
-    }
-}
