@@ -57,7 +57,7 @@ public class Login extends AppCompatActivity {
                 Password = passwordText.getText().toString();
 
                 if (Email.equals("")|| Password.equals("")){
-                    Toast.makeText(Login.this, "All fields must be filled and  passwords must be correct.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this, "All fields must be filled", Toast.LENGTH_SHORT).show();
 
                 }
                 else{
@@ -77,15 +77,23 @@ public class Login extends AppCompatActivity {
                             data[0] = Email;
                             data[1] = Password;
 
-                            PutData putData = new PutData("http://192.168.100.4/Users/CreateAccount.php", "POST", field, data);
+                            PutData putData = new PutData("http://192.168.100.19/Users/login.php", "POST", field, data);
 
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {
                                     String result = putData.getResult();
-                                    Toast.makeText(Login.this, result, Toast.LENGTH_SHORT).show();
+                                 //   Toast.makeText(Login.this, result, Toast.LENGTH_SHORT).show();
+                if(result.equalsIgnoreCase("Login Success")){
+                    Toast.makeText(Login.this, result, Toast.LENGTH_SHORT).show();
+                    intent2 = new Intent(Login.this, HomePage.class);
+                    intent2.putExtra("LoginEmailInfo",Email);
+                    startActivity(intent2);
 
-                                    intent2 = new Intent(Login.this, HomePage.class);
-                                    startActivity(intent2);
+                }else{
+                    Toast.makeText(Login.this, "Email or Password wrong", Toast.LENGTH_SHORT).show();
+
+                }
+
 
                                 }
                             }

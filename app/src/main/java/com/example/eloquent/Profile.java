@@ -9,12 +9,15 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.vishnusivadas.advanced_httpurlconnection.PutData;
 
 import java.util.List;
 
@@ -91,13 +94,47 @@ public class Profile extends AppCompatActivity {
 
         //user name
         username = findViewById(R.id.textView14);
+//
+//        dbHelper = new UserDBHelper(Profile.this);
+//
+//        List<UserInformation> Usersinfo = dbHelper.getuserinfo(UserEmailLogin);
+//        String UserFName = Usersinfo.get(0).getFName();
+//        String UserLName = Usersinfo.get(0).getLName();
+//        username.setText(UserFName+" "+UserLName);
 
-        dbHelper = new UserDBHelper(Profile.this);
+//--------------------------------------------------------------------------
 
-        List<UserInformation> Usersinfo = dbHelper.getuserinfo(UserEmailLogin);
-        String UserFName = Usersinfo.get(0).getFName();
-        String UserLName = Usersinfo.get(0).getLName();
-        username.setText(UserFName+" "+UserLName);
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                //Starting Write and Read data with URL
+                //Creating array for parameters
+                String[] field = new String[1];
+                field[0] = "Email";
+
+                //Creating array for data
+                String[] data = new String[1];
+                data[0] = UserEmailLogin;
+
+
+                PutData putData = new PutData("http://192.168.100.19/Users/GetUserInfo.php", "POST", field, data);
+
+                if (putData.startPut()) {
+                    if (putData.onComplete()) {
+                        String result = putData.getResult();
+                        String[] arrOfStr = result.split(",", 4);
+
+                        username.setText(arrOfStr[0]+" "+arrOfStr[1]);
+
+
+                    }
+                }
+
+            }
+        });
+        //-------------------------------------------------------
+
 
         //My information
         textViewInfo = findViewById(R.id.textViewMyinformation);
@@ -108,15 +145,8 @@ public class Profile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         //add pic
 //        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
 //        Picture = findViewById(R.id.imageViewPic);
-
-
-
-
-
-
     }
 }

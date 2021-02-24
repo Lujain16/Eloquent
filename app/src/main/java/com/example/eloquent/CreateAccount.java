@@ -133,13 +133,13 @@ public class CreateAccount extends AppCompatActivity {
                         data[3] = BirthDate;
                         data[4] = Password;
 
-                        PutData putData = new PutData("http://192.168.100.4/Users/CreateAccount.php", "POST", field, data);
+                        PutData putData = new PutData("http://192.168.100.19/Users/CreateAccount.php", "POST", field, data);
 
                         if (putData.startPut()) {
                             if (putData.onComplete()) {
                                 String result = putData.getResult();
                                 Toast.makeText(CreateAccount.this, result, Toast.LENGTH_SHORT).show();
-
+                            //    System.out.println("KKKKKK "+result);
 
                                 intent2 = new Intent(CreateAccount.this, DiagnosticTest.class);
                                 startActivity(intent2);
