@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
 
 import java.util.Calendar;
+import java.util.regex.Pattern;
 
 import DataBase.UserDBHelper;
 import Model.UserInformation;
@@ -34,6 +36,8 @@ public class CreateAccount extends AppCompatActivity {
     Button createAccountButton;
     //Database
     UserDBHelper dbHelper;
+
+    private static final Pattern password_patern = Pattern.compile("^"+ "(?=.*[0-9])" + "(?=.*[a-z])" + "(?=.*[A-Z])" + "(?=\\S+$)" + ".{6,}" +"$");
 
     String FirstName,LastName, Email, BirthDate, Password,RePassword;
 
@@ -106,10 +110,21 @@ public class CreateAccount extends AppCompatActivity {
                 Password = passwordTxt.getText().toString();
                 RePassword = RePasswordTxt.getText().toString();
 
-                if ((FirstName.equals("") || LastName.equals("") || Email.equals("") || BirthDate.equals("") || Password.equals("") || RePassword.equals(""))||!Password.equals(RePassword)){
-                    Toast.makeText(CreateAccount.this, "All fields must be filled and the two passwords must be matched.", Toast.LENGTH_SHORT).show();
+                if (FirstName.equals("") || LastName.equals("") || Email.equals("") || BirthDate.equals("") || Password.equals("") ||RePassword.equals("")){
+                    Toast.makeText(CreateAccount.this, "All fields must be filled", Toast.LENGTH_LONG).show();
 
                 }
+                else if(!Password.equals(RePassword)){
+                    Toast.makeText(CreateAccount.this, "Password not matched", Toast.LENGTH_LONG).show();
+
+                }
+                else if (!Patterns.EMAIL_ADDRESS.matcher(Email).matches()){
+                    Toast.makeText(CreateAccount.this, "Please Enter a valid Email", Toast.LENGTH_LONG).show();
+                }
+                else if(!password_patern.matcher(Password).matches()){
+                    Toast.makeText(CreateAccount.this, "Password too weak, It must be at least 6 characters long and contain capital, and small letters.", Toast.LENGTH_LONG).show();
+                }
+
                 else{
 
                 //---------------------------------------------

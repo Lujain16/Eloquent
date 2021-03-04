@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
@@ -18,7 +19,6 @@ import DataBase.UserDBHelper;
 
 public class Login extends AppCompatActivity {
     public static Intent intent2;
-    //textview
     EditText EmailText, passwordText;
     //database
     UserDBHelper dbHelper;
@@ -26,7 +26,7 @@ public class Login extends AppCompatActivity {
     ImageView imageView;
     //login button
     Button LoginButton;
-
+    TextView ForgetPass;
     String Email, Password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +43,22 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //Forget password
+        ForgetPass = findViewById(R.id.textView4);
+        ForgetPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(Login.this, ForgetPassword2.class);
+                startActivity(intent);
+            }
+        });
+
 
         //database
         EmailText = (EditText) findViewById(R.id.editTextTextEmailAddress);
         passwordText = (EditText) findViewById(R.id.editTextTextPassword);
         LoginButton = (Button) findViewById(R.id.buttonLogin2);
+        ForgetPass = (TextView) findViewById(R.id.textView4);
         dbHelper = new UserDBHelper(this);
         LoginButton.setOnClickListener(new View.OnClickListener() {
             @Override

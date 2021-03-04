@@ -118,7 +118,7 @@ public class Profile extends AppCompatActivity {
                 data[0] = UserEmailLogin;
 
 
-                PutData putData = new PutData("http://192.168.100.19/Users/GetUserInfo.php", "POST", field, data);
+                PutData putData = new PutData("http://192.168.88.1/Users/GetUserInfo.php", "POST", field, data);
 
                 if (putData.startPut()) {
                     if (putData.onComplete()) {
