@@ -77,7 +77,10 @@ public class ScenariosAtSchool extends AppCompatActivity {
                             Listitem listitem =new Listitem(
                                     "Student: "+arrOfStr[x],
                                     "You: "+arrOfStr[x+1]
+
                             );
+                            //add record
+
                             listitems.add(listitem);
                         }
 

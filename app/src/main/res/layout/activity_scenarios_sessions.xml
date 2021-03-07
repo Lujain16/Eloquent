@@ -89,7 +89,7 @@
 
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/imageViewA"
                     android:layout_width="160dp"
                     android:layout_height="132dp"
                     android:layout_gravity="center|right"

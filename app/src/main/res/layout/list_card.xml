@@ -76,14 +76,14 @@
             app:srcCompat="@drawable/stop_icon" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imageViewQ"
             android:layout_width="40dp"
             android:layout_height="30dp"
             android:paddingRight="-16dp"
             android:src="@drawable/speaker_icon" />
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/imageViewA"
             android:layout_width="40dp"
             android:layout_height="30dp"
             android:layout_gravity="center_vertical"

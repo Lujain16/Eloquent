@@ -33,6 +33,12 @@ public class EasyOnsetPhrasesInstructions extends AppCompatActivity {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //------------------------------Stop Text To Speech
+                if (textToSpeech != null) {
+                    textToSpeech.stop();
+                    textToSpeech.shutdown();
+                }
+                //------------------------------End Stop Text To Speech
                 Intent intent =new Intent(EasyOnsetPhrasesInstructions.this, EasyOnsetPhrases.class);
                 startActivity(intent);
             }
@@ -44,6 +50,12 @@ public class EasyOnsetPhrasesInstructions extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //------------------------------Stop Text To Speech
+                if (textToSpeech != null) {
+                    textToSpeech.stop();
+                    textToSpeech.shutdown();
+                }
+                //------------------------------End Stop Text To Speech
                 Intent intent =new Intent(EasyOnsetPhrasesInstructions.this, EasyOnsetPhrasesBreathing.class);
                 startActivity(intent);
             }

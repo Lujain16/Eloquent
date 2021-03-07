@@ -29,11 +29,9 @@ public class EasyOnsetPhrases extends AppCompatActivity {
     MediaPlayer mediaPlayer ;
     private String outputFile = null;
     Button button;
-    // previous button
-    ImageView imageView;
     TextView textViewPhrases ;
     Random rand = new Random();
-
+    ImageView imageView; // previous button
     private TextToSpeech textToSpeech;
     private TextView textViewEasyOnset;
     private ImageView imageViewSpeaker;
@@ -179,21 +177,24 @@ public class EasyOnsetPhrases extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //--------------------------------Stop Playing the recording
+                if (mediaPlayer != null) {
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                }
+                //--------------------------------End Stop Playing the recording
+                //------------------------------Stop Text To Speech
+                if (textToSpeech != null) {
+                    textToSpeech.stop();
+                    textToSpeech.shutdown();
+                }
+                //------------------------------End Stop Text To Speech
                 Intent intent =new Intent(EasyOnsetPhrases.this, StutteringSeverity.class);// change StutteringSeverity.class ****
                 startActivity(intent);
             }
         });
 
-        //prev
-        //when user click on previous button this code will move them to the previous page
-        imageView = findViewById(R.id.imageView3Previous);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent =new Intent(EasyOnsetPhrases.this, EasyOnsetPhrasesInstructions.class);
-                startActivity(intent);
-            }
-        });
+
 
         // ------------------Start Text To Speech
         //textViewEasyOnset = findViewById(R.id.textViewEasyOnsetWord);
@@ -211,12 +212,33 @@ public class EasyOnsetPhrases extends AppCompatActivity {
         imageViewSpeaker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // textToSpeech.speak(textToRead, TextToSpeech.QUEUE_FLUSH, null,null);
-
                 textToSpeech.speak(textViewEasyOnset.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
             }
         });
 
         // ------------------End Text To Speech
+
+        //prev
+        //when user click on previous button this code will move them to the previous page
+        imageView = findViewById(R.id.imageView3Previous);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //--------------------------------Stop Playing the recording
+                if (mediaPlayer != null) {
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                }
+                //--------------------------------End Stop Playing the recording
+                //------------------------------Stop Text To Speech
+                if (textToSpeech != null) {
+                    textToSpeech.stop();
+                    textToSpeech.shutdown();
+                }
+                //------------------------------End Stop Text To Speech
+                Intent intent =new Intent(EasyOnsetPhrases.this, EasyOnsetPhrasesInstructions.class);
+                startActivity(intent);
+            }
+        });
     }
 }

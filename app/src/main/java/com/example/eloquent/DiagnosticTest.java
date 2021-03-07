@@ -146,6 +146,18 @@ public class DiagnosticTest extends AppCompatActivity {
         Donebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //--------------------------------Stop Playing the recording
+                if (mediaPlayer != null) {
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                }
+                //--------------------------------End Stop Playing the recording
+                //------------------------------Stop Text To Speech
+                if (textToSpeech != null) {
+                    textToSpeech.stop();
+                    textToSpeech.shutdown();
+                }
+                //------------------------------End Stop Text To Speech
                 Intent intent =new Intent(DiagnosticTest.this, StutteringSeverity.class);
                 startActivity(intent);
             }

@@ -57,6 +57,12 @@ public class EasyOnsetBreathing extends AppCompatActivity {
         textViewStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //------------------------------Stop Text To Speech
+                if (textToSpeech != null) {
+                    textToSpeech.stop();
+                    textToSpeech.shutdown();
+                }
+                //------------------------------End Stop Text To Speech
                 Intent intent =new Intent(EasyOnsetBreathing.this, EasyOnsetInstructions.class);
                 startActivity(intent);
             }
@@ -68,6 +74,12 @@ public class EasyOnsetBreathing extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //------------------------------Stop Text To Speech
+                if (textToSpeech != null) {
+                    textToSpeech.stop();
+                    textToSpeech.shutdown();
+                }
+                //------------------------------End Stop Text To Speech
                 Intent intent =new Intent(EasyOnsetBreathing.this, EasyOnsetSessions.class);
                 startActivity(intent);
             }

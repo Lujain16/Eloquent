@@ -31,8 +31,7 @@ public class EasyOnsetWord extends AppCompatActivity {
     MediaPlayer mediaPlayer ;
     private String outputFile = null;
     Button button;
-    // previous button
-    ImageView imageView;
+    ImageView imageView; // previous button
     TextView textViewWord ;
     Random rand = new Random();
 
@@ -198,6 +197,12 @@ public class EasyOnsetWord extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //--------------------------------Stop Playing the recording
+                if (mediaPlayer != null) {
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                }
+                //--------------------------------End Stop Playing the recording
                 Intent intent =new Intent(EasyOnsetWord.this, StutteringSeverity.class);// change StutteringSeverity.class ****
                 startActivity(intent);
             }
@@ -209,6 +214,12 @@ public class EasyOnsetWord extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //--------------------------------Stop Playing the recording
+                if (mediaPlayer != null) {
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                }
+                //--------------------------------End Stop Playing the recording
                 Intent intent =new Intent(EasyOnsetWord.this, EasyOnsetInstructions.class);
                 startActivity(intent);
             }
