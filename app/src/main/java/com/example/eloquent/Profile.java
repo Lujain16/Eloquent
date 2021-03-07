@@ -8,6 +8,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
@@ -28,7 +30,7 @@ import static com.example.eloquent.Login.intent2;
 
 
 public class Profile extends AppCompatActivity {
-    TextView textViewInfo, username;
+    TextView textViewInfo, username, emailUs;
     ImageView Picture;
     UserDBHelper dbHelper;
 
@@ -118,7 +120,7 @@ public class Profile extends AppCompatActivity {
                 data[0] = UserEmailLogin;
 
 
-                PutData putData = new PutData("http://192.168.88.1/Users/GetUserInfo.php", "POST", field, data);
+                PutData putData = new PutData("http://192.168.100.22/Users/GetUserInfo.php", "POST", field, data);
 
                 if (putData.startPut()) {
                     if (putData.onComplete()) {
@@ -143,6 +145,27 @@ public class Profile extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Profile.this,MyInfo.class);
                 startActivity(intent);
+            }
+        });
+
+        //email us
+        emailUs = findViewById(R.id.textView13);
+        emailUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"EloquentApplication@gmail.com"});
+                intent.putExtra(Intent.EXTRA_SUBJECT, " ");
+                intent.putExtra(Intent.EXTRA_TEXT, " ");
+                //intent.setType("message/rfc822");
+                intent.setData(Uri.parse("mailto:"));
+                if (intent.resolveActivity(getPackageManager())!=null){
+
+                    startActivity(intent);
+
+                }else{
+                    Toast.makeText(Profile.this, "error!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         //add pic

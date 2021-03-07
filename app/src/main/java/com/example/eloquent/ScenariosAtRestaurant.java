@@ -59,7 +59,7 @@ public class ScenariosAtRestaurant extends AppCompatActivity {
                 data[0] = place;
 
 
-                PutData putData = new PutData("http://192.168.100.19/Users/ScenarioExercise.php", "POST", field, data);
+                PutData putData = new PutData("http://192.168.100.22/Users/ScenarioExercise.php", "POST", field, data);
 
                 if (putData.startPut()) {
                     System.out.println("resut:1 ");
@@ -140,7 +140,7 @@ public class ScenariosAtRestaurant extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(ScenariosAtRestaurant.this, ScenarioAtSchoolInstructions.class);
+                Intent intent =new Intent(ScenariosAtRestaurant.this, ScenarioAtRestaurantInstructions.class);
                 startActivity(intent);
             }
         });

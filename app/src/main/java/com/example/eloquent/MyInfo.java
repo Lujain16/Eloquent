@@ -91,7 +91,7 @@ String UserEmailForIntent= "";
                 data[0] = emailLogin;
 
 
-                PutData putData = new PutData("http://192.168.88.1/Users/GetUserInfo.php", "POST", field, data);
+                PutData putData = new PutData("http://192.168.100.22/Users/GetUserInfo.php", "POST", field, data);
 
                 if (putData.startPut()) {
                     System.out.println("resut:1 ");

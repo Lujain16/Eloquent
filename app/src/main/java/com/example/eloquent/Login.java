@@ -88,7 +88,7 @@ public class Login extends AppCompatActivity {
                             data[0] = Email;
                             data[1] = Password;
 
-                            PutData putData = new PutData("http://192.168.100.19/Users/login.php", "POST", field, data);
+                            PutData putData = new PutData("http://192.168.100.22/Users/login.php", "POST", field, data);
 
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {

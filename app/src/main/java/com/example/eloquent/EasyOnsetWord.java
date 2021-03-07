@@ -7,6 +7,8 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
@@ -15,9 +17,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vishnusivadas.advanced_httpurlconnection.PutData;
+
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Random;
+
+import Model.Listitem;
 
 public class EasyOnsetWord extends AppCompatActivity {
     private ImageButton Record,Stop, Play;
@@ -33,6 +39,8 @@ public class EasyOnsetWord extends AppCompatActivity {
     private TextToSpeech textToSpeech;
     private TextView textViewEasyOnset;
     private ImageView imageViewSpeaker;
+    String category ="word";
+    String result;
 
 
 
@@ -51,40 +59,74 @@ public class EasyOnsetWord extends AppCompatActivity {
         outputFile = Environment.getExternalStorageDirectory().getAbsolutePath()+ "/Word_Recording.mp3";
 
         //-------------------Word list generator
+        //===================================================
         textViewWord = (TextView)findViewById(R.id.textViewEasyOnsetWord);
-        String[] Word_List = {"After",
-                " Also",
-                "Always",
-                "Enough",
-                "Easy",
-                "Email",
-                "Either",
-                "Exit",
-                "Expert",
-                "Inside",
-                "Inspect",
-                "Include",
-                "Island",
-                "Oven",
-                "Open",
-                "Offer",
-                "Outdoor",
-                "Under",
-                "Update",
-                "Unless",
-                "hole",
-                "heart",
-                "whom",
-                "home",
-                "harm",
-                "horse",
-                "hard"
-        };
+        //---------------------------------------------
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                //Starting Write and Read data with URL
+                //Creating array for parameters
+                String[] field = new String[1];
+                field[0] = "category";
 
-        int Word_List_Length = Word_List.length-1 ;
-        int random_Number_Word = rand.nextInt(Word_List_Length-0);
-        textViewWord.setText(Word_List[random_Number_Word]);
+                //Creating array for data
+                String[] data = new String[1];
+                data[0] = category;
 
+
+                PutData putData = new PutData("http://192.168.100.22/Users/EasyOnSetExercise.php", "POST", field, data);
+
+                if (putData.startPut()) {
+                    System.out.println("resut:1 ");
+                    if (putData.onComplete()) {
+                        System.out.println("resut:2 ");
+                        result = putData.getResult();
+                        System.out.println("resut: " + result);
+                        textViewWord.setText(result);
+
+                    }
+                }
+                //End Write and Read data with URL
+            }
+        });
+        //===================================================
+
+//        textViewWord = (TextView)findViewById(R.id.textViewEasyOnsetWord);
+//        String[] Word_List = {"After",
+//                " Also",
+//                "Always",
+//                "Enough",
+//                "Easy",
+//                "Email",
+//                "Either",
+//                "Exit",
+//                "Expert",
+//                "Inside",
+//                "Inspect",
+//                "Include",
+//                "Island",
+//                "Oven",
+//                "Open",
+//                "Offer",
+//                "Outdoor",
+//                "Under",
+//                "Update",
+//                "Unless",
+//                "hole",
+//                "heart",
+//                "whom",
+//                "home",
+//                "harm",
+//                "horse",
+//                "hard"
+//        };
+//
+//        int Word_List_Length = Word_List.length-1 ;
+//        int random_Number_Word = rand.nextInt(Word_List_Length-0);
+//        textViewWord.setText(Word_List[random_Number_Word]);
+//
 
         //-------------------End Word list generator
 
