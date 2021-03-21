@@ -11,7 +11,7 @@ import android.widget.TextView;
 import static com.example.eloquent.DiagnosticTest.intentResult;
 import static com.example.eloquent.EasyOnsetPhrases.intentPhrasesResult;
 
-public class StutteringSeverity extends AppCompatActivity {
+public class StutteringSeverityPhrases extends AppCompatActivity {
 
     ImageView imageView;
     TextView textViewResult;
@@ -20,10 +20,11 @@ public class StutteringSeverity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stuttering_severity);
 
-        // Show the result from DT python
+        // Show the result from EasyOnsetPhrases python
         textViewResult = (TextView) findViewById(R.id.textViewSetStuttringResult);
-        textViewResult.setText(intentResult.getStringExtra("KeyResult"));
+        textViewResult.setText(intentPhrasesResult.getStringExtra("KeyResultPhrases"));
         //-----------
+
 
 
         //close button on StutteringSeverity page
@@ -32,7 +33,7 @@ public class StutteringSeverity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(StutteringSeverity.this, HomePage.class);
+                Intent intent =new Intent(StutteringSeverityPhrases.this, HomePage.class);
                 startActivity(intent);
             }
         });
