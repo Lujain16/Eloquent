@@ -41,8 +41,6 @@ public class EasyOnsetWord extends AppCompatActivity {
     String category ="word";
     String result;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

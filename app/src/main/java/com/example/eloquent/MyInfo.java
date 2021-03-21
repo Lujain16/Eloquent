@@ -153,7 +153,7 @@ String UserEmailForIntent= "";
                         data[1] = EditUserFName;
                         data[2] = EditUserLName;
 
-                        PutData putData = new PutData("http://192.168.100.19/Users/UpdateName.php", "POST", field, data);
+                        PutData putData = new PutData("http://192.168.100.22/Users/UpdateName.php", "POST", field, data);
 
                         if (putData.startPut()) {
 
