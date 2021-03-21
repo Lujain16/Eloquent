@@ -54,13 +54,7 @@ public class EasyOnsetPhrases extends AppCompatActivity {
     Button DonButton;
     //-------------------
 
-    //    private ImageButton Record,Stop, Play;
-//    private MediaRecorder myAudioRecorder;
-//    MediaPlayer mediaPlayer ;
-//    private String outputFile = null;
-//    Button button;
     TextView textViewPhrases ;
-    //Random rand = new Random();
     ImageView imageView; // previous button
     private TextToSpeech textToSpeech;
     private TextView textViewEasyOnset;

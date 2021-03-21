@@ -3,13 +3,17 @@ package com.example.eloquent;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.AudioFormat;
+import android.media.AudioRecord;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -17,8 +21,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chaquo.python.PyObject;
+import com.chaquo.python.Python;
+import com.chaquo.python.android.AndroidPlatform;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Random;
@@ -26,14 +37,28 @@ import java.util.Random;
 import Model.Listitem;
 
 public class EasyOnsetWord extends AppCompatActivity {
-    private ImageButton Record,Stop, Play;
-    private MediaRecorder myAudioRecorder;
-    MediaPlayer mediaPlayer ;
+    //Record in wav------------------
+    public static Intent intentWordResult ; //intentResult save the Stuttring Severity result from python
+    private ImageButton record_bt,play_bt,stop_bt;
     private String outputFile = null;
-    Button button;
+    private boolean recording_sta = false;
+    final static String RecordName = "Jumana_speaker.wav";
+    private static final int RECORDER_BPP = 16;
+    private static final String AUDIO_RECORDER_TEMP_FILE = "record_temp.raw";
+    private static int frequency = 44100;
+    private static int channelConfiguration = AudioFormat.CHANNEL_CONFIGURATION_MONO;
+    private static int EncodingBitRate = AudioFormat.ENCODING_PCM_16BIT;    //PCM16
+    private AudioRecord audioRecord = null;
+    MediaPlayer m ;
+    private int recBufSize = 0;
+    private Thread recordingThread = null;
+    private boolean isRecording = false;
+    Button DonButton;
+    //-------------------
+
     ImageView imageView; // previous button
     TextView textViewWord ;
-    Random rand = new Random();
+
 
     private TextToSpeech textToSpeech;
     private TextView textViewEasyOnset;
@@ -45,15 +70,7 @@ public class EasyOnsetWord extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_easy_onset_word);
-        Record = (ImageButton) findViewById(R.id.imageButton_mic);
-        Stop = (ImageButton) findViewById(R.id.imageButton_stop);
-        Play = (ImageButton) findViewById(R.id.imageButton_play);
 
-        Record.setEnabled(true);
-        Stop.setEnabled(false);
-        Play.setEnabled(false);
-
-        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath()+ "/Word_Recording.mp3";
 
         //-------------------Word list generator
         //===================================================
@@ -127,101 +144,6 @@ public class EasyOnsetWord extends AppCompatActivity {
 
         //-------------------End Word list generator
 
-        Record.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                try {
-                    myAudioRecorder = new MediaRecorder();
-                    myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-                    myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-                    myAudioRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-                    myAudioRecorder.setAudioChannels(1);
-                    myAudioRecorder.setOutputFile(outputFile);
-                    myAudioRecorder.prepare();
-                    myAudioRecorder.start();
-
-                } catch (IllegalStateException ise){
-                    //..
-                }catch (IOException ioe){
-                    //...
-                }
-                Record.setEnabled(false);
-                Stop.setEnabled(true);
-
-                Toast.makeText(getApplicationContext(), "Recording started...",Toast.LENGTH_LONG).show();
-            }
-        });
-
-        // Stop Recording
-        Stop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try{
-                    myAudioRecorder.stop();
-                    myAudioRecorder.reset();
-                    myAudioRecorder = null;
-                }catch (Exception e){
-                    //
-                }
-
-
-                Record.setEnabled(true);
-                Stop.setEnabled(false);
-                Play.setEnabled(true);
-                Toast.makeText(getApplicationContext(), "Audio Recorder successfully", Toast.LENGTH_LONG).show();
-            }
-        });
-
-
-        // Play Recorded Audio
-        Play.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                try {
-                    mediaPlayer = new MediaPlayer();
-                    mediaPlayer.setDataSource(outputFile);
-                    mediaPlayer.prepare();
-                    mediaPlayer.start();
-
-                    Toast.makeText(getApplicationContext(), "Playing Audio", Toast.LENGTH_LONG).show();
-                } catch (Exception e) {
-                    // make something
-                }
-            }
-        });
-
-        button = findViewById(R.id.buttonDone);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //--------------------------------Stop Playing the recording
-                if (mediaPlayer != null) {
-                    mediaPlayer.release();
-                    mediaPlayer = null;
-                }
-                //--------------------------------End Stop Playing the recording
-                Intent intent =new Intent(EasyOnsetWord.this, StutteringSeverity.class);// change StutteringSeverity.class ****
-                startActivity(intent);
-            }
-        });
-
-        //prev
-        //when user click on previous button this code will move them to the previous page
-        imageView = findViewById(R.id.imageView3Previous);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //--------------------------------Stop Playing the recording
-                if (mediaPlayer != null) {
-                    mediaPlayer.release();
-                    mediaPlayer = null;
-                }
-                //--------------------------------End Stop Playing the recording
-                Intent intent =new Intent(EasyOnsetWord.this, EasyOnsetInstructions.class);
-                startActivity(intent);
-            }
-        });
 
         // ------------------Start Text To Speech
        // textViewEasyOnset = findViewById(R.id.textViewEasyOnsetWord);
@@ -246,9 +168,315 @@ public class EasyOnsetWord extends AppCompatActivity {
         });
 
         // ------------------End Text To Speech
+        //prev
+        //when user click on previous button this code will move them to the previous page
+        imageView = findViewById(R.id.imageView3Previous);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //--------------------------------Stop Playing the recording
+//                if (m != null) {
+//                    m.release();
+//                    m = null;
+//                }
+                //--------------------------------End Stop Playing the recording
+                //------------------------------Stop Text To Speech
+                if (textToSpeech != null) {
+                    textToSpeech.stop();
+                    textToSpeech.shutdown();
+                }
+                //------------------------------End Stop Text To Speech
+                Intent intent =new Intent(EasyOnsetWord.this, EasyOnsetInstructions.class);
+                startActivity(intent);
+            }
+        });
+
+        //--------------------------------------****START Recorder*****--------------------------------------------------
+        record_bt = (ImageButton) findViewById(R.id.imageButton_mic);
+        play_bt = (ImageButton) findViewById(R.id.imageButton_play);
+        stop_bt= (ImageButton) findViewById(R.id.imageButton_stop);
+
+
+        play_bt.setEnabled(false);
+        outputFile = getFilesDir() + "/" + RecordName;
+
+        record_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //If not recoding
+                if (recording_sta == false) {
+                    try {
+                        startRecording();
+                    } catch (IllegalStateException e) {
+                        e.printStackTrace();
+                    }
+
+                    recording_sta = true;
+                    play_bt.setEnabled(false);
+
+                    Toast.makeText(getApplicationContext(), "Recording started", Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+        });
+
+        stop_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recording_sta = false;
+                stopRecording();
+
+                play_bt.setEnabled(true);
+                Toast.makeText(getApplicationContext(), "Audio recorded successfully", Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+
+
+        //play button
+        play_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) throws IllegalArgumentException, SecurityException, IllegalStateException {
+                MediaPlayer m = new MediaPlayer();
+                try {
+                    m.setDataSource(outputFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    m.prepare();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                m.start();  //play record
+                Toast.makeText(getApplicationContext(), "Playing audio", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        //----------------------------------*************End Recorder**********------------------------------------------------------
+        //----------------------------***********************SEND AUDIO PATH TO PYTHON****************************---------------------
+        String voieNotePath = outputFile;
+        Log.d("Main", "PATH : " + voieNotePath);
+        File file = new File(voieNotePath);
+        Log.d("Main", "voice exists : " + file.exists() + ", can read : " + file.canRead());
+
+        MediaPlayer mpintro = MediaPlayer.create(EasyOnsetWord.this, Uri.parse(voieNotePath));
+        // mpintro.start();
+
+        //----------------------------***********************END SENT AUDIO PATH TO PYTHON****************************-----------------------
+
+        //----------------------------***********************START PYTHON MODEL****************************-------------------------------------
+        DonButton = (Button) findViewById(R.id.buttonDone);
+        DonButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                if (! Python.isStarted()) {
+                    Python.start(new AndroidPlatform(EasyOnsetWord.this));
+                }
+
+                Python py = Python.getInstance();
+
+                //create python object
+                PyObject pyobj = py.getModule("myscript");
+
+                // call the function
+                PyObject obj = pyobj.callAttr("main",voieNotePath);
+
+                // return text from python to textview
+                String PthythonResult =obj.toString();
+                System.out.println("||||||||||||||||||||||||||||||||PthythonResult=  "+PthythonResult);
+
+                //intentResult sent the output from python to Stuttring Severity interface
+                intentWordResult = new Intent(EasyOnsetWord.this,StutteringSeverityWord.class);
+                intentWordResult.putExtra("KeyResultWord",PthythonResult);
+                startActivity(intentWordResult);
+                //---------------------------------
+
+            }
+        });
+        //----------------------------***********************END PYTHON MODEL****************************-------------------------------------
 
 
     }
+
+
+    //----------------------------------------------**************START WAV FORMAT*********************------------------------------------------------------
+//code for recording
+    private String getFilename(){
+        String filePath = getFilesDir().getPath().toString() + "/"+RecordName;
+        //  String filePath = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + "/"+RecordName;
+        File file = new File(filePath);
+        return (file.getAbsolutePath() );
+    }
+
+    private String getTempFilename(){
+        String filePath = getFilesDir().getPath().toString() + "/" + AUDIO_RECORDER_TEMP_FILE;
+        // String filePath = Environment.getExternalStorageDirectory().getAbsolutePath().toString()+ "/" + AUDIO_RECORDER_TEMP_FILE;
+        File file = new File(filePath);
+        return (file.getAbsolutePath() );
+    }
+
+    private void startRecording(){
+        createAudioRecord();
+        audioRecord.startRecording();
+        isRecording = true;
+        recordingThread = new Thread(new Runnable() {
+            public void run() {
+                writeAudioDataToFile();
+            }
+        },"AudioRecorder Thread");
+
+        recordingThread.start();
+    }
+
+    private void writeAudioDataToFile(){
+        byte data[] = new byte[recBufSize];
+        String filename = getTempFilename();
+        FileOutputStream os = null;
+        try {
+            os = new FileOutputStream(filename);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        int read = 0;
+        if(null != os){
+            while(isRecording){
+                read = audioRecord.read(data, 0, recBufSize);
+                if(AudioRecord.ERROR_INVALID_OPERATION != read){
+                    try {
+                        os.write(data);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            try {
+                os.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void stopRecording(){
+        if(null != audioRecord){
+            isRecording = false;
+            audioRecord.stop();
+            audioRecord.release();
+            audioRecord = null;
+            recordingThread = null;
+        }
+
+        copyWaveFile(getTempFilename(),getFilename());
+        deleteTempFile();
+    }
+
+    private void deleteTempFile() {
+        File file = new File(getTempFilename());
+        file.delete();
+    }
+
+    private void copyWaveFile(String inFilename,String outFilename){
+        FileInputStream in = null;
+        FileOutputStream out = null;
+        long totalAudioLen = 0;
+        long totalDataLen = totalAudioLen + 36;
+        long longSampleRate = frequency;
+        int channels = 1;
+        long byteRate = RECORDER_BPP * frequency * channels/8;
+
+        byte[] data = new byte[recBufSize];
+
+        try {
+            in = new FileInputStream(inFilename);
+            out = new FileOutputStream(outFilename);
+            totalAudioLen = in.getChannel().size();
+            totalDataLen = totalAudioLen + 36;
+
+            WriteWaveFileHeader(out, totalAudioLen, totalDataLen,
+                    longSampleRate, channels, byteRate);
+
+            while(in.read(data) != -1){
+                out.write(data);
+            }
+
+            in.close();
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void WriteWaveFileHeader(
+            FileOutputStream out, long totalAudioLen,
+            long totalDataLen, long longSampleRate, int channels,
+            long byteRate) throws IOException {
+
+        byte[] header = new byte[44];
+
+        header[0] = 'R';  // RIFF/WAVE header
+        header[1] = 'I';
+        header[2] = 'F';
+        header[3] = 'F';
+        header[4] = (byte) (totalDataLen & 0xff);
+        header[5] = (byte) ((totalDataLen >> 8) & 0xff);
+        header[6] = (byte) ((totalDataLen >> 16) & 0xff);
+        header[7] = (byte) ((totalDataLen >> 24) & 0xff);
+        header[8] = 'W';
+        header[9] = 'A';
+        header[10] = 'V';
+        header[11] = 'E';
+        header[12] = 'f';  // 'fmt ' chunk
+        header[13] = 'm';
+        header[14] = 't';
+        header[15] = ' ';
+        header[16] = 16;  // 4 bytes: size of 'fmt ' chunk
+        header[17] = 0;
+        header[18] = 0;
+        header[19] = 0;
+        header[20] = 1;  // format = 1
+        header[21] = 0;
+        header[22] = (byte) channels;
+        header[23] = 0;
+        header[24] = (byte) (longSampleRate & 0xff);
+        header[25] = (byte) ((longSampleRate >> 8) & 0xff);
+        header[26] = (byte) ((longSampleRate >> 16) & 0xff);
+        header[27] = (byte) ((longSampleRate >> 24) & 0xff);
+        header[28] = (byte) (byteRate & 0xff);
+        header[29] = (byte) ((byteRate >> 8) & 0xff);
+        header[30] = (byte) ((byteRate >> 16) & 0xff);
+        header[31] = (byte) ((byteRate >> 24) & 0xff);
+        header[32] = (byte) (1 * 16 / 8);  // block align
+        header[33] = 0;
+        header[34] = RECORDER_BPP;  // bits per sample
+        header[35] = 0;
+        header[36] = 'd';
+        header[37] = 'a';
+        header[38] = 't';
+        header[39] = 'a';
+        header[40] = (byte) (totalAudioLen & 0xff);
+        header[41] = (byte) ((totalAudioLen >> 8) & 0xff);
+        header[42] = (byte) ((totalAudioLen >> 16) & 0xff);
+        header[43] = (byte) ((totalAudioLen >> 24) & 0xff);
+        out.write(header, 0, 44);
+    }
+    public void createAudioRecord(){
+        recBufSize = AudioRecord.getMinBufferSize(frequency,
+                channelConfiguration, EncodingBitRate);
+
+        audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, frequency,
+                channelConfiguration, EncodingBitRate, recBufSize);
+        System.out.println("AudioRecord Success");
+    }
+
+//----------------------------------------------**************END WAV FORMAT*********************------------------------------------------------------
 
 
     }

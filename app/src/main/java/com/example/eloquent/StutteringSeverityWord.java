@@ -8,21 +8,20 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import static com.example.eloquent.DiagnosticTest.intentResult;
-import static com.example.eloquent.EasyOnsetPhrases.intentPhrasesResult;
+import static com.example.eloquent.EasyOnsetWord.intentWordResult;
 
-public class StutteringSeverityPhrases extends AppCompatActivity {
+public class StutteringSeverityWord extends AppCompatActivity {
 
     ImageView imageView;
     TextView textViewResult;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stuttering_severity_phrases);
+        setContentView(R.layout.activity_stuttering_severity_word);
 
-        // Show the result from EasyOnsetPhrases python
+        // Show the result from EasyOnsetWord python
         textViewResult = (TextView) findViewById(R.id.textViewSetStuttringResult);
-        textViewResult.setText(intentPhrasesResult.getStringExtra("KeyResultPhrases"));
+        textViewResult.setText(intentWordResult.getStringExtra("KeyResultWord"));
         //-----------
 
 
@@ -33,7 +32,7 @@ public class StutteringSeverityPhrases extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(StutteringSeverityPhrases.this, HomePage.class);
+                Intent intent =new Intent(StutteringSeverityWord.this, HomePage.class);
                 startActivity(intent);
             }
         });
