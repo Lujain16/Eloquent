@@ -18,7 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Eloquent"
         android:usesCleartextTraffic="true">
-        <activity android:name=".StutteringSeverityWord"></activity>
+        <activity android:name=".StutteringSeverityAtLibrary"></activity>
+        <activity android:name=".StutteringSeverityAtRestaurant" />
+        <activity android:name=".StutteringSeverityAtSchool" />
+        <activity android:name=".StutteringSeverityWord" />
         <activity android:name=".StutteringSeverityPhrases" />
         <activity android:name=".ForgetPassword3" />
         <activity android:name=".ForgetPassword2" />

@@ -2,6 +2,9 @@ package Adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.media.AudioFormat;
+import android.media.AudioRecord;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Environment;
@@ -9,6 +12,7 @@ import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,8 +22,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.eloquent.R;
+import com.google.android.material.transition.Hold;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -29,11 +41,38 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     private Context context;
     private List<Listitem> lisitems;
 
-    private String outputFile = null;
+   // private String outputFile = null;
+
+    //Record in wav------------------
+    public static Intent intentWordResult ; //intentResult save the Stuttring Severity result from python
+   // private ImageButton record_bt,play_bt,stop_bt;
+    //private String outputFile = null;
+    private boolean recording_sta = false;
+//    final static String RecordName = "Adapter.wav";
+    public String RecordName = null;
+    public String RecordNameAndPostion =null;
+
+    String RecordNameArray[];
+    private static final int RECORDER_BPP = 16;
+    private static final String AUDIO_RECORDER_TEMP_FILE = "record_temp.raw";
+    private static int frequency = 44100;
+    private static int channelConfiguration = AudioFormat.CHANNEL_CONFIGURATION_MONO;
+    private static int EncodingBitRate = AudioFormat.ENCODING_PCM_16BIT;    //PCM16
+    private AudioRecord audioRecord = null;
+    MediaPlayer m ;
+    private int recBufSize = 0;
+    private Thread recordingThread = null;
+    private boolean isRecording = false;
+    Button DonButton;
+
+    public static int position;
+
+    //public static String outputFile;
+    //-------------------
 
     //==============
-    public MediaRecorder myAudioRecorder;
-    MediaPlayer mediaPlayer ;
+//    public MediaRecorder myAudioRecorder;
+//    MediaPlayer mediaPlayer ;
     public TextToSpeech textToSpeech;
     int i =1;
 
@@ -56,82 +95,145 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         return new ViewHolder(view);
     }
 
+
+
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.ViewHolder holder, int position) {
         Listitem item = lisitems.get(position);
+//        String iteempostion =item.toString();
         holder.Question.setText(item.getQuestion());
         holder.Answer.setText(item.getAnswer());
+        //String iteempostion =item.getRecordPostion();
+        holder.RecordPostion = item.getRecordPostion();
+
+        ArrayList<String> AuduioPathArrL = new ArrayList<>(); //jjjjj
+
+
+//        Listitem listitem = null;
+//        listitem.setRecordPostion(iteempostion);
+
 
         //----------Record
-        holder.Record.setOnClickListener(new View.OnClickListener() {
+        holder.play_bt.setEnabled(false);
+        RecordNameAndPostion = holder.RecordPostion;
+        //System.out.println("|||||||||||||||||||||||||RecordNameAndPostion=  "+RecordNameAndPostion);
+
+
+        //holder.outputFile = context.getFilesDir() + "/" +RecordNameAndPostion+RecordName;///////////////////////////////////////////////
+        //Listitem listitempos =lisitems.get(position);
+
+        //_________________________________________________________________________________________________Jumana
+     //   if(lisitems.get(position))
+//        Listitem Adapterlistitem = lisitems.get(position);
+//        //RecordName= Adapterlistitem.getRecordPostion()+"Adapter.wav";
+        //RecordName= holder.RecordPostion.Adapterlistitem."Adapter.wav";
+
+        Listitem Adapterlistitem = lisitems.get(position);
+//        RecordName= "Adapter.wav";
+
+        //RecordName= Adapterlistitem.getRecordPostion()+"Adapter.wav";
+
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>outputFile = "+outputFile);
+//
+////        holder.outputFile = context.getFilesDir() + "/" +RecordName;
+//        System.out.println("//////////////////////////////////outputFile= "+outputFile);
+
+        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+
+        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+        //_________________________________________________________________________________________________Jumana
+
+
+        holder.record_bt.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                try {
-                    myAudioRecorder = new MediaRecorder();
-                    myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-                    myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-                    myAudioRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-                    myAudioRecorder.setAudioChannels(1);
-                    myAudioRecorder.setOutputFile(outputFile);
-                    myAudioRecorder.prepare();
-                    myAudioRecorder.start();
+                //If not recoding
+                if (recording_sta == false) {
+                    try {
+                        if(Adapterlistitem.getRecordPostion().equals(holder.RecordPostion)){
+                            RecordName= holder.RecordPostion+"Adapter.wav";
+                            holder.outputFile = context.getFilesDir() + "/" +RecordName;
+                            System.out.println("|||||||||||||||||||||Adapterlistitem.getRecordPostion() = "+Adapterlistitem.getRecordPostion());
+                            System.out.println("|||||||||||||||||||||holder.RecordPostion= "+holder.RecordPostion);
+                            System.out.println("//////////////////////////////////if(Adapterlistitem.equals(holder.RecordPostion) holder.outputFile= "+holder.outputFile);
 
-                } catch (IllegalStateException ise){
-                    //..
-                }catch (IOException ioe){
-                    //...
+
+                            AuduioPathArrL.add(holder.outputFile);
+
+                        }
+
+
+                        startRecording();
+                    } catch (IllegalStateException e) {
+                        e.printStackTrace();
+                    }
+
+                    recording_sta = true;
+                    holder.play_bt.setEnabled(false);
+
+
+                    Toast.makeText(context, "Recording started", Toast.LENGTH_SHORT).show();
+
                 }
-                holder.Record.setEnabled(false);
-                holder.Stop.setEnabled(true);
-
-                Toast.makeText(context, "Recording started...",Toast.LENGTH_LONG).show();
-
-
-
 
             }
         });
+
+
         //----------End Record
         // Stop Recording
-        holder.Stop.setOnClickListener(new View.OnClickListener() {
+        holder.stop_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
-                    myAudioRecorder.stop();
-                    myAudioRecorder.reset();
-                    myAudioRecorder = null;
-                }catch (Exception e){
-                    //
-                }
+
+                recording_sta = false;
+                stopRecording();
+                //System.out.println("|||||||||||||||||||||||||outputFilestop_bt=  "+holder.outputFile);
+                holder.play_bt.setEnabled(true);
+                Toast.makeText(context, "Audio recorded successfully", Toast.LENGTH_SHORT).show();
 
 
-                holder.Record.setEnabled(true);
-                holder.Stop.setEnabled(false);
-                holder.Play.setEnabled(true);
-                Toast.makeText(context, "Audio Recorder successfully", Toast.LENGTH_LONG).show();
             }
         });
 
 
-        // Play Recorded Audio
-        holder. Play.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
+        //play button
+        holder.play_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) throws IllegalArgumentException, SecurityException, IllegalStateException {
+                MediaPlayer m = new MediaPlayer();
                 try {
-                    mediaPlayer = new MediaPlayer();
-                    mediaPlayer.setDataSource(outputFile);
-                    mediaPlayer.prepare();
-                    mediaPlayer.start();
 
-                    Toast.makeText(context, "Playing Audio", Toast.LENGTH_LONG).show();
-                } catch (Exception e) {
-                    // make something
+//                    Listitem listitempos =lisitems.get(position);
+                    //System.out.println("|||||||||||||||||||||||||listitempos.getRecordPostion()=  "+listitempos.getRecordPostion());
+                    //System.out.println("|||||||||||||||||||||||||playyyyyyyyyyyyy=  "+context.getFilesDir() + "/" +listitempos.getRecordPostion()+RecordName);
+                    //System.out.println("|||||||||||||||||||||||||play and crach =  "+holder.outputFile);
+                    m.reset();
+                    m.setDataSource(holder.outputFile);
+                   //m.setDataSource(context.getFilesDir() + "/" +listitempos.getRecordPostion()+RecordName);///////////////////////////////////////lujain
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+                try {
+                    m.prepare();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                m.start();  //play record
+                Toast.makeText(context, "Playing audio", Toast.LENGTH_LONG).show();
             }
         });
 
 
-       // ------------------Start Text To Speech For Question
+
+        // ------------------Start Text To Speech For Question
 
          textToSpeech=new TextToSpeech(context.getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
@@ -181,10 +283,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         return lisitems.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener{
         private TextView Question;
         private  TextView Answer;
         public ImageButton Record,Stop, Play;
+        public ImageButton record_bt,play_bt,stop_bt;
+        public String outputFile = null;
+        public String RecordPostion;
+        public String voiceLocation = Environment.getExternalStorageDirectory().getPath() +"Voice Recorder/";
 //        //------------------------------Text to Speech
 
           public ImageView imageViewSpeakerQ;
@@ -193,23 +299,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            //-----------------Lujain
+            itemView.setOnClickListener(this);
+            //record_bt.setOnClickListener(this);
+
+
+            //-----------------Lujain
 
             Question = itemView.findViewById(R.id.textQuestion);
             Answer = itemView.findViewById(R.id.textViewAnswer);
 
             //----j
-            Record = itemView.findViewById(R.id.imageButton_mic);
-            Stop = itemView.findViewById(R.id.imageButton_stop);
-            Play = itemView.findViewById(R.id.imageButton_play);
+            record_bt = itemView.findViewById(R.id.imageButton_mic);
+            stop_bt = itemView.findViewById(R.id.imageButton_stop);
+            play_bt = itemView.findViewById(R.id.imageButton_play);
 
-            Record.setEnabled(true);
-            Stop.setEnabled(false);
-            Play.setEnabled(false);
-
-
-            outputFile = Environment.getExternalStorageDirectory().getAbsolutePath()+ "/Scenario+"+i+".mp3";
-
-            i = i+1;
+          //  i = i+1;
             //----j
 //           // textViewQuestion = Question;
             imageViewSpeakerQ = itemView.findViewById(R.id.imageViewQ);
@@ -219,8 +324,206 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
         }
 
+        //-----------------Lujain
+        @Override
+        public void onClick(View v) {
+
+            position = getAdapterPosition();
+//            Listitem Adapterlistitem = lisitems.get(position);
+//
+//            RecordName= Adapterlistitem.getRecordPostion()+"Adapter.wav";
+//            outputFile = context.getFilesDir() + "/" +RecordName;
+//            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>outputFile = "+outputFile);
 
 
 
+            //jjjjjjjjjjjjjjjjjj
+            //Listitem listitem = lisitems.get(position);
+            //outputFile = context.getFilesDir() + "/" +listitem.getRecordPostion()+RecordName;
+
+
+
+//            Toast.makeText(context, listitem.getRecordPostion(), Toast.LENGTH_LONG).show();
+//            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%outputFile=     "+outputFile);
+//            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%context.getFilesDir() + \"/\" +RecordNameAndPostion+RecordName"+context.getFilesDir() + "/" +listitem.getRecordPostion()+RecordName);
+        }
+        //-----------------Lujain
     }
+
+    //----------------------------------------------**************START WAV FORMAT*********************------------------------------------------------------
+//code for recording
+    private String getFilename(){
+        String filePath = context.getFilesDir().getPath().toString() + "/"+RecordName;
+        //  String filePath = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + "/"+RecordName;
+        File file = new File(filePath);
+        return (file.getAbsolutePath() );
+    }
+
+    private String getTempFilename(){
+        String filePath = context.getFilesDir().getPath().toString() + "/" + AUDIO_RECORDER_TEMP_FILE;
+        // String filePath = Environment.getExternalStorageDirectory().getAbsolutePath().toString()+ "/" + AUDIO_RECORDER_TEMP_FILE;
+        File file = new File(filePath);
+        return (file.getAbsolutePath() );
+    }
+
+    private void startRecording(){
+        createAudioRecord();
+        audioRecord.startRecording();
+        isRecording = true;
+        recordingThread = new Thread(new Runnable() {
+            public void run() {
+                writeAudioDataToFile();
+            }
+        },"AudioRecorder Thread");
+
+        recordingThread.start();
+    }
+
+    private void writeAudioDataToFile(){
+        byte data[] = new byte[recBufSize];
+        String filename = getTempFilename();
+        FileOutputStream os = null;
+        try {
+            os = new FileOutputStream(filename);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        int read = 0;
+        if(null != os){
+            while(isRecording){
+                read = audioRecord.read(data, 0, recBufSize);
+                if(AudioRecord.ERROR_INVALID_OPERATION != read){
+                    try {
+                        os.write(data);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            try {
+                os.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void stopRecording(){
+        if(null != audioRecord){
+            isRecording = false;
+            audioRecord.stop();
+            audioRecord.release();
+            audioRecord = null;
+            recordingThread = null;
+        }
+
+        copyWaveFile(getTempFilename(),getFilename());
+        deleteTempFile();
+    }
+
+    private void deleteTempFile() {
+        File file = new File(getTempFilename());
+        file.delete();
+    }
+
+    private void copyWaveFile(String inFilename,String outFilename){
+        FileInputStream in = null;
+        FileOutputStream out = null;
+        long totalAudioLen = 0;
+        long totalDataLen = totalAudioLen + 36;
+        long longSampleRate = frequency;
+        int channels = 1;
+        long byteRate = RECORDER_BPP * frequency * channels/8;
+
+        byte[] data = new byte[recBufSize];
+
+        try {
+            in = new FileInputStream(inFilename);
+            out = new FileOutputStream(outFilename);
+            totalAudioLen = in.getChannel().size();
+            totalDataLen = totalAudioLen + 36;
+
+            WriteWaveFileHeader(out, totalAudioLen, totalDataLen,
+                    longSampleRate, channels, byteRate);
+
+            while(in.read(data) != -1){
+                out.write(data);
+            }
+
+            in.close();
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void WriteWaveFileHeader(
+            FileOutputStream out, long totalAudioLen,
+            long totalDataLen, long longSampleRate, int channels,
+            long byteRate) throws IOException {
+
+        byte[] header = new byte[44];
+
+        header[0] = 'R';  // RIFF/WAVE header
+        header[1] = 'I';
+        header[2] = 'F';
+        header[3] = 'F';
+        header[4] = (byte) (totalDataLen & 0xff);
+        header[5] = (byte) ((totalDataLen >> 8) & 0xff);
+        header[6] = (byte) ((totalDataLen >> 16) & 0xff);
+        header[7] = (byte) ((totalDataLen >> 24) & 0xff);
+        header[8] = 'W';
+        header[9] = 'A';
+        header[10] = 'V';
+        header[11] = 'E';
+        header[12] = 'f';  // 'fmt ' chunk
+        header[13] = 'm';
+        header[14] = 't';
+        header[15] = ' ';
+        header[16] = 16;  // 4 bytes: size of 'fmt ' chunk
+        header[17] = 0;
+        header[18] = 0;
+        header[19] = 0;
+        header[20] = 1;  // format = 1
+        header[21] = 0;
+        header[22] = (byte) channels;
+        header[23] = 0;
+        header[24] = (byte) (longSampleRate & 0xff);
+        header[25] = (byte) ((longSampleRate >> 8) & 0xff);
+        header[26] = (byte) ((longSampleRate >> 16) & 0xff);
+        header[27] = (byte) ((longSampleRate >> 24) & 0xff);
+        header[28] = (byte) (byteRate & 0xff);
+        header[29] = (byte) ((byteRate >> 8) & 0xff);
+        header[30] = (byte) ((byteRate >> 16) & 0xff);
+        header[31] = (byte) ((byteRate >> 24) & 0xff);
+        header[32] = (byte) (1 * 16 / 8);  // block align
+        header[33] = 0;
+        header[34] = RECORDER_BPP;  // bits per sample
+        header[35] = 0;
+        header[36] = 'd';
+        header[37] = 'a';
+        header[38] = 't';
+        header[39] = 'a';
+        header[40] = (byte) (totalAudioLen & 0xff);
+        header[41] = (byte) ((totalAudioLen >> 8) & 0xff);
+        header[42] = (byte) ((totalAudioLen >> 16) & 0xff);
+        header[43] = (byte) ((totalAudioLen >> 24) & 0xff);
+        out.write(header, 0, 44);
+    }
+    public void createAudioRecord(){
+        recBufSize = AudioRecord.getMinBufferSize(frequency,
+                channelConfiguration, EncodingBitRate);
+
+        audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, frequency,
+                channelConfiguration, EncodingBitRate, recBufSize);
+        System.out.println("AudioRecord Success");
+    }
+
+//----------------------------------------------**************END WAV FORMAT*********************------------------------------------------------------
+
+
+
 }

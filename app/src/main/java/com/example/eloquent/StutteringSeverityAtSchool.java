@@ -8,21 +8,20 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import static com.example.eloquent.DiagnosticTest.intentResult;
-import static com.example.eloquent.EasyOnsetPhrases.intentPhrasesResult;
+import static com.example.eloquent.EasyOnsetWord.intentWordResult;
+import static com.example.eloquent.ScenariosAtSchool.intentAtSchoolResult;
 
-public class StutteringSeverityPhrases extends AppCompatActivity {
-
+public class StutteringSeverityAtSchool extends AppCompatActivity {
     ImageView imageView;
     TextView textViewResult;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stuttering_severity_phrases);
-
-        // Show the result from python
+        setContentView(R.layout.activity_stuttering_severity_at_school);
+        // Show the result from  python
         textViewResult = (TextView) findViewById(R.id.textViewSetStuttringResult);
-        textViewResult.setText(intentPhrasesResult.getStringExtra("KeyResultPhrases"));
+        textViewResult.setText(intentAtSchoolResult.getStringExtra("KeyResulAtSchool"));
         //-----------
 
 
@@ -33,7 +32,7 @@ public class StutteringSeverityPhrases extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(StutteringSeverityPhrases.this, HomePage.class);
+                Intent intent =new Intent(StutteringSeverityAtSchool.this, HomePage.class);
                 startActivity(intent);
             }
         });

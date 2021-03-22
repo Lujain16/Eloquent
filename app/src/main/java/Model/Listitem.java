@@ -1,12 +1,14 @@
 package Model;
 
 public class Listitem {
-    private String Question;
-    private String Answer;
-
-    public Listitem(String question, String answer) {
+    public String Question;
+    public String Answer;
+    public String RecordPostion;
+//, String recordPostion
+    public Listitem(String question, String answer, String recordPostion) {
         Question = question;
         Answer = answer;
+        RecordPostion = recordPostion;
     }
 
     public String getQuestion() {
@@ -23,5 +25,13 @@ public class Listitem {
 
     public void setAnswer(String answer) {
         Answer = answer;
+    }
+
+    public String getRecordPostion() {
+        return RecordPostion;
+    }
+
+    public void setRecordPostion(String recordPostion) {
+        RecordPostion = recordPostion;
     }
 }

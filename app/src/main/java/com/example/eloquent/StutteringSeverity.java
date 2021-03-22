@@ -20,7 +20,7 @@ public class StutteringSeverity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stuttering_severity);
 
-        // Show the result from DT python
+        // Show the result from python
         textViewResult = (TextView) findViewById(R.id.textViewSetStuttringResult);
         textViewResult.setText(intentResult.getStringExtra("KeyResult"));
         //-----------

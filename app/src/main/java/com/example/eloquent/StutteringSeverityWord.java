@@ -19,7 +19,7 @@ public class StutteringSeverityWord extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stuttering_severity_word);
 
-        // Show the result from EasyOnsetWord python
+        // Show the result from  python
         textViewResult = (TextView) findViewById(R.id.textViewSetStuttringResult);
         textViewResult.setText(intentWordResult.getStringExtra("KeyResultWord"));
         //-----------
