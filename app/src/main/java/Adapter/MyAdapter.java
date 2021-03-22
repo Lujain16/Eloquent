@@ -41,14 +41,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     private Context context;
     private List<Listitem> lisitems;
 
-   // private String outputFile = null;
+    // private String outputFile = null;
 
     //Record in wav------------------
     public static Intent intentWordResult ; //intentResult save the Stuttring Severity result from python
-   // private ImageButton record_bt,play_bt,stop_bt;
+    // private ImageButton record_bt,play_bt,stop_bt;
     //private String outputFile = null;
     private boolean recording_sta = false;
-//    final static String RecordName = "Adapter.wav";
+    //    final static String RecordName = "Adapter.wav";
     public String RecordName = null;
     public String RecordNameAndPostion =null;
 
@@ -125,7 +125,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         //Listitem listitempos =lisitems.get(position);
 
         //_________________________________________________________________________________________________Jumana
-     //   if(lisitems.get(position))
+        //   if(lisitems.get(position))
 //        Listitem Adapterlistitem = lisitems.get(position);
 //        //RecordName= Adapterlistitem.getRecordPostion()+"Adapter.wav";
         //RecordName= holder.RecordPostion.Adapterlistitem."Adapter.wav";
@@ -217,7 +217,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                     //System.out.println("|||||||||||||||||||||||||play and crach =  "+holder.outputFile);
                     m.reset();
                     m.setDataSource(holder.outputFile);
-                   //m.setDataSource(context.getFilesDir() + "/" +listitempos.getRecordPostion()+RecordName);///////////////////////////////////////lujain
+                    //m.setDataSource(context.getFilesDir() + "/" +listitempos.getRecordPostion()+RecordName);///////////////////////////////////////lujain
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -237,11 +237,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
         // ------------------Start Text To Speech For Question
 
-         textToSpeech=new TextToSpeech(context.getApplicationContext(), new TextToSpeech.OnInitListener() {
+        textToSpeech=new TextToSpeech(context.getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int i) {
-                 textToSpeech.setLanguage(Locale.US);
-                 textToSpeech.setSpeechRate((float) 0.9);
+                textToSpeech.setLanguage(Locale.US);
+                textToSpeech.setSpeechRate((float) 0.9);
 
             }
         });
@@ -249,7 +249,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
             @Override
             public void onClick(View v) {
 
-              textToSpeech.speak(holder.Question.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
+                textToSpeech.speak(holder.Question.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
             }
         });
 
@@ -295,7 +295,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         public String voiceLocation = Environment.getExternalStorageDirectory().getPath() +"Voice Recorder/";
 //        //------------------------------Text to Speech
 
-          public ImageView imageViewSpeakerQ;
+        public ImageView imageViewSpeakerQ;
         public ImageView imageViewSpeakerA;
 //        //------------------------------Text to Speech
 
@@ -316,7 +316,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
             stop_bt = itemView.findViewById(R.id.imageButton_stop);
             play_bt = itemView.findViewById(R.id.imageButton_play);
 
-          //  i = i+1;
+            //  i = i+1;
             //----j
 //           // textViewQuestion = Question;
             imageViewSpeakerQ = itemView.findViewById(R.id.imageViewQ);
