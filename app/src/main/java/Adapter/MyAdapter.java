@@ -107,6 +107,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         holder.RecordPostion = item.getRecordPostion();
 
         ArrayList<String> AuduioPathArrL = new ArrayList<>(); //jjjjj
+        //--
+
 
 
 //        Listitem listitem = null;

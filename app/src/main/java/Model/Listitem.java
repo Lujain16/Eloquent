@@ -9,6 +9,7 @@ public class Listitem {
         Question = question;
         Answer = answer;
         RecordPostion = recordPostion;
+        //--
     }
 
     public String getQuestion() {
