@@ -23,7 +23,7 @@ android {
         }
 
         python {
-            buildPython "C:/Users/Juman/Python/Python386/python.exe"
+            buildPython "C:/Users/luji/Python/Python386/python.exe"
             buildPython "python"
             pip {
 //

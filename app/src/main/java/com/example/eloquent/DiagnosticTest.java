@@ -169,9 +169,10 @@ public class DiagnosticTest extends AppCompatActivity {
                 String PthythonResult =obj.toString();
 
                 //intentResult sent the output from python to Stuttring Severity interface
-                intentResult = new Intent(DiagnosticTest.this,StutteringSeverity.class);
+                intentResult = new Intent(getApplicationContext(),StutteringSeverity.class);
                 intentResult.putExtra("KeyResult",PthythonResult);
                 startActivity(intentResult);
+
                 //---------------------------------
 
             }

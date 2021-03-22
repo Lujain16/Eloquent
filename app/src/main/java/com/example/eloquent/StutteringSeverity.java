@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import static com.example.eloquent.DiagnosticTest.intentResult;
-import static com.example.eloquent.EasyOnsetPhrases.intentPhrasesResult;
+//import static com.example.eloquent.EasyOnsetPhrases.intentPhrasesResult;
 
 public class StutteringSeverity extends AppCompatActivity {
 
