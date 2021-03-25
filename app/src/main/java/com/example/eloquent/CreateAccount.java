@@ -154,7 +154,7 @@ public class CreateAccount extends AppCompatActivity {
                             if (putData.onComplete()) {
                                 String result = putData.getResult();
                                 Toast.makeText(CreateAccount.this, result, Toast.LENGTH_SHORT).show();
-                                intent2 = new Intent(CreateAccount.this, DiagnosticTest.class);
+                                intent2 = new Intent(CreateAccount.this, appInstructions.class); // jjj
                                 intent2.putExtra("LoginEmailInfo",Email);
                                 startActivity(intent2);
                             }

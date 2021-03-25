@@ -58,6 +58,13 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
+    sourceSets {
+        main {
+            res {
+                srcDirs 'src\\main\\res', 'src\\main\\res\\raw'
+            }
+        }
+    }
 }
 
 project.ext.ASSET_DIR = projectDir.toString() + '/src/main/ml'

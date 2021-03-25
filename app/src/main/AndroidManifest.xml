@@ -18,7 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Eloquent"
         android:usesCleartextTraffic="true">
-        <activity android:name=".StutteringSeverityAtLibrary"></activity>
+        <activity android:name=".HowToUseApp"></activity>
+        <activity android:name=".appInstructions" />
+        <activity android:name=".StutteringSeverityAtLibrary" />
         <activity android:name=".StutteringSeverityAtRestaurant" />
         <activity android:name=".StutteringSeverityAtSchool" />
         <activity android:name=".StutteringSeverityWord" />

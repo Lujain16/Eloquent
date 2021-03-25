@@ -22,7 +22,7 @@ import DataBase.UserDBHelper;
 import static com.example.eloquent.Login.intent2;
 
 public class Settings extends AppCompatActivity {
-    TextView DeleteAccount, Logout, emailUs;
+    TextView DeleteAccount, Logout, emailUs, textViewUseApp;
     UserDBHelper dbHelper;
     String emailLogin = intent2.getStringExtra("LoginEmailInfo");
 
@@ -101,7 +101,7 @@ public class Settings extends AppCompatActivity {
                         //Creating array for data
                         String[] data = new String[1];
                         data[0] = emailLogin;
-                        PutData putData = new PutData("http://192.168.100.22/Users/DeleteAccount.php", "POST", field, data);
+                        PutData putData = new PutData("http://192.168.100.14/Users/DeleteAccount.php", "POST", field, data);
 
                         if (putData.startPut()) {
                             if (putData.onComplete()) {
@@ -178,5 +178,15 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-    }
+        textViewUseApp= findViewById(R.id.textViewUseApp);
+        textViewUseApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(Settings.this, HowToUseApp.class);
+                startActivity(intent);
+
+            }
+        });
+
+    }//-----------
 }
