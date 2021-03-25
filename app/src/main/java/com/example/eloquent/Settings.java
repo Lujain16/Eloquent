@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -21,7 +22,7 @@ import DataBase.UserDBHelper;
 import static com.example.eloquent.Login.intent2;
 
 public class Settings extends AppCompatActivity {
-    TextView DeleteAccount, Logout;
+    TextView DeleteAccount, Logout, emailUs;
     UserDBHelper dbHelper;
     String emailLogin = intent2.getStringExtra("LoginEmailInfo");
 
@@ -153,6 +154,27 @@ public class Settings extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent =new Intent(Settings.this,MainActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        //email us
+        emailUs = findViewById(R.id.textView13);
+        emailUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"EloquentApplication@gmail.com"});
+                intent.putExtra(Intent.EXTRA_SUBJECT, " ");
+                intent.putExtra(Intent.EXTRA_TEXT, " ");
+                //intent.setType("message/rfc822");
+                intent.setData(Uri.parse("mailto:"));
+                if (intent.resolveActivity(getPackageManager())!=null){
+
+                    startActivity(intent);
+
+                }else{
+                    Toast.makeText(Settings.this, "error!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

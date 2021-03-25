@@ -4,16 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingTop="7sp"
-    android:paddingBottom="10sp">
+    android:paddingTop="5sp"
+    android:paddingBottom="2sp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="367dp"
-        android:layout_height="200dp"
+        android:layout_height="230dp"
         android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="4dp"
         android:background="#FFFFFF"
         android:backgroundTint="#FFFFFF"
         android:foregroundTint="#FFFFFF"
@@ -23,9 +23,10 @@
 
         <TextView
             android:id="@+id/textQuestion"
-            android:layout_width="292dp"
-            android:layout_height="50dp"
+            android:layout_width="310dp"
+            android:layout_height="80dp"
             android:layout_gravity="right"
+
             android:foregroundGravity="center"
             android:gravity="center_horizontal|left|center_vertical"
             android:paddingRight="30dp"
@@ -34,9 +35,12 @@
 
         <TextView
             android:id="@+id/textViewAnswer"
-            android:layout_width="292dp"
-            android:layout_height="50dp"
+            android:layout_width="310dp"
+            android:layout_height="92dp"
             android:layout_gravity="right|center_vertical"
+            android:layout_marginTop="17dp"
+
+
             android:foregroundGravity="center"
             android:gravity="center_vertical"
             android:textColor="#000000"
@@ -47,8 +51,8 @@
             android:layout_width="30dp"
             android:layout_height="38dp"
             android:layout_gravity="bottom|center|center_horizontal|center_vertical"
-            android:backgroundTint="@color/white"
             android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/white"
             app:srcCompat="@drawable/mic_icon" />
 
         <ImageButton
@@ -79,6 +83,7 @@
             android:id="@+id/imageViewQ"
             android:layout_width="40dp"
             android:layout_height="30dp"
+            android:layout_marginTop="25dp"
             android:paddingRight="-16dp"
             android:src="@drawable/speaker_icon" />
 
@@ -87,6 +92,7 @@
             android:layout_width="40dp"
             android:layout_height="30dp"
             android:layout_gravity="center_vertical"
+            android:layout_marginTop="17dp"
             android:paddingRight="-16dp"
             android:src="@drawable/speaker_icon" />
 

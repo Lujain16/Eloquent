@@ -14,6 +14,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,8 +36,16 @@ public class Profile extends AppCompatActivity {
     ImageView Picture;
     UserDBHelper dbHelper;
 
-
     String UserEmailLogin = intent2.getStringExtra("LoginEmailInfo");
+
+    //-------------------myinfo
+    EditText Fname, Lname, Email, BD;
+    Button save;
+    TextView textView;
+    String EditUserFName;
+    String EditUserLName;
+    String UserEmailForIntent= "";
+    //------------------myinfo
 
 
     @Override
@@ -94,19 +104,116 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+
+        //-------------------------------------------------------My information
+        String emailLogin = intent2.getStringExtra("LoginEmailInfo");
+//we do not need this in mySQL
+        Fname = findViewById(R.id.PersonNameFN);
+        Lname = findViewById(R.id.PersonNameLN);
+        Email = findViewById(R.id.PersonEmail);
+        BD = findViewById(R.id.editTextBD);
+        save = findViewById(R.id.Savebutton);
+//        dbHelper = new UserDBHelper(MyInfo.this);
+        textView=findViewById(R.id.textView14);
+
+        //---------------------------------------------
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                //Starting Write and Read data with URL
+                //Creating array for parameters
+                String[] field = new String[1];
+                field[0] = "Email";
+
+                //Creating array for data
+                String[] data = new String[1];
+                data[0] = emailLogin;
+
+
+                PutData putData = new PutData("http://192.168.100.22/Users/GetUserInfo.php", "POST", field, data);
+
+                if (putData.startPut()) {
+                    System.out.println("resut:1 ");
+                    if (putData.onComplete()) {
+                        System.out.println("resut:2 ");
+                        String result = putData.getResult();
+                        System.out.println("resut: " + result);
+
+
+                        String[] arrOfStr = result.split(",", 4);
+                        Fname.setText(arrOfStr[0]);
+                        Lname.setText(arrOfStr[1]);
+                        Email.setText(arrOfStr[2]);
+                        BD.setText(arrOfStr[3]);
+
+                    }
+                }
+                //End Write and Read data with URL
+            }
+        });
+        //-------------------------------------------------------
         //user name
         username = findViewById(R.id.textView14);
-//
-//        dbHelper = new UserDBHelper(Profile.this);
-//
-//        List<UserInformation> Usersinfo = dbHelper.getuserinfo(UserEmailLogin);
-//        String UserFName = Usersinfo.get(0).getFName();
-//        String UserLName = Usersinfo.get(0).getLName();
-//        username.setText(UserFName+" "+UserLName);
 
-//--------------------------------------------------------------------------
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditUserFName = Fname.getText().toString();
+                EditUserLName = Lname.getText().toString();
 
-        Handler handler = new Handler(Looper.getMainLooper());
+                //---------------------------------------------
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Starting Write and Read data with URL
+                        //Creating array for parameters
+                        String[] field = new String[3];
+                        field[0] = "Email";
+                        field[1] = "FirstName";
+                        field[2] = "LastName";
+
+                        //Creating array for data
+                        String[] data = new String[3];
+                        data[0] = emailLogin;
+                        data[1] = EditUserFName;
+                        data[2] = EditUserLName;
+
+                        PutData putData = new PutData("http://192.168.100.22/Users/UpdateName.php", "POST", field, data);
+
+                        if (putData.startPut()) {
+
+                            if (putData.onComplete()) {
+                                username.setText(EditUserFName+" "+EditUserLName);
+                                Toast.makeText(Profile.this, "update successful", Toast.LENGTH_LONG).show();
+
+//                                String result = putData.getResult();
+//                                intent2 =new Intent(getApplicationContext(),MainActivity.class);
+//                                intent2.putExtra("LoginEmailInfo", emailLogin);
+//                                startActivity(intent2);
+                            }else{
+                                Toast.makeText(Profile.this, "update is failed", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        //End Write and Read data with URL
+                    }
+                });
+                //-------------------------------------------------------
+
+            }
+        });
+
+
+
+        //-------------------------------------------------------My information
+
+        //------------------------------------------------------user name
+        //username = findViewById(R.id.textView14);
+
+
+
+         handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -135,39 +242,20 @@ public class Profile extends AppCompatActivity {
 
             }
         });
-        //-------------------------------------------------------
+        //------------------------------------------------------user name
 
 
         //My information
-        textViewInfo = findViewById(R.id.textViewMyinformation);
-        textViewInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Profile.this,MyInfo.class);
-                startActivity(intent);
-            }
-        });
+//        textViewInfo = findViewById(R.id.textViewMyinformation);
+//        textViewInfo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(Profile.this,MyInfo.class);
+//                startActivity(intent);
+//            }
+//        });
 
-        //email us
-        emailUs = findViewById(R.id.textView13);
-        emailUs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_SENDTO);
-                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"EloquentApplication@gmail.com"});
-                intent.putExtra(Intent.EXTRA_SUBJECT, " ");
-                intent.putExtra(Intent.EXTRA_TEXT, " ");
-                //intent.setType("message/rfc822");
-                intent.setData(Uri.parse("mailto:"));
-                if (intent.resolveActivity(getPackageManager())!=null){
 
-                    startActivity(intent);
-
-                }else{
-                    Toast.makeText(Profile.this, "error!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
         //add pic
 //        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
 //        Picture = findViewById(R.id.imageViewPic);
