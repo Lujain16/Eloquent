@@ -11,12 +11,26 @@ import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+
 public class MonitorThePerformance extends AppCompatActivity {
+
+    LineGraph lineGraph;
+    //    private final float[] graph1 = new float[]{0.0F, 400000.0F, 200000.0F, 600000.0F, 0.0F, 400000.0F, 200000.0F, 600000.0F};
+    private final float[] graph1 = new float[]{600000.0F, 600000.0F, 400000.0F, 400000.0F, 200000.0F, 200000.0F};
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitor_the_performance);
+
+        ChartEntity firstChartEntity = new ChartEntity(-1, this.graph1);
+        lineGraph = (LineGraph) findViewById(R.id.lineChart);
+        ArrayList<ChartEntity> list = new ArrayList();
+        list.add(firstChartEntity);
+        lineGraph.setList(list);
 
 
         //bottom navigation par

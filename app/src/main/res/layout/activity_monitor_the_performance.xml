@@ -36,14 +36,75 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation" />
 
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="179dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="304dp"
-        android:text="monitor"
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="429dp"
+        android:layout_margin="-20dp"
+        android:background="#5AA9E6"
+        android:backgroundTint="#5AA9E6"
+        android:foregroundGravity="center"
+        android:translationY="240dp"
+        app:cardBackgroundColor="#5AA9E6"
+        app:cardCornerRadius="7dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="-92dp">
+
+        <com.example.eloquent.LineGraph
+            android:id="@+id/lineChart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#5AA9E6"
+
+            android:foregroundTint="#5AA9E6"
+            android:orientation="vertical"
+            android:translationY="5dp" />
+
+        <TextView
+            android:id="@+id/sev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="High"
+            android:textColor="#FF000000"
+            android:textStyle="italic"
+            android:translationX="5dp"
+            android:translationY="30dp"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/sev2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Moderate"
+            android:textColor="#FF000000"
+            android:textStyle="italic"
+            android:translationX="5dp"
+            android:translationY="105dp"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/sev3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Low"
+            android:textColor="#FF000000"
+            android:textStyle="italic"
+            android:translationX="5dp"
+            android:translationY="180dp"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/sev4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Eloquent"
+            android:textColor="#FF000000"
+            android:textStyle="italic"
+            android:translationX="5dp"
+            android:translationY="255dp"
+            tools:ignore="MissingConstraints" />
+
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
