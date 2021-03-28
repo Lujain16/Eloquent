@@ -31,8 +31,8 @@ public class LineGraph extends View{
     private float mPaddingBottom = 265.5F; //done195.5F-------
     private long maxValue = 600000;
 
-    private int lineColor = -7480884;
-    private int bgColor = -7480884;
+    private int lineColor = -10835482;
+    private int bgColor = -10835482;
     private Typeface typeFace;//
 
     private int xLength =490;
@@ -189,7 +189,8 @@ public class LineGraph extends View{
             Rect rect = new Rect();
             String text = (String)this.legendArray[i];
             this.pMarkText.measureText(text);
-            this.pMarkText.setTextSize(40.0F);
+            //this.pMarkText.setTextSize(40.0F);
+            this.pMarkText.setTextSize(30.0F);
             this.pMarkText.setTypeface(this.typeFace);
             float x = xGap * (float)i;
             float y = (float)(-(rect.height() + 30));

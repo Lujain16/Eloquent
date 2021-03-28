@@ -58,6 +58,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#5AA9E6"
 
+
             android:foregroundTint="#5AA9E6"
             android:orientation="vertical"
             android:translationY="5dp" />
@@ -67,8 +68,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="High"
+            android:textAllCaps="false"
             android:textColor="#FF000000"
-            android:textStyle="italic"
+            android:textSize="16sp"
             android:translationX="5dp"
             android:translationY="30dp"
             tools:ignore="MissingConstraints" />
@@ -79,7 +81,7 @@
             android:layout_height="wrap_content"
             android:text="Moderate"
             android:textColor="#FF000000"
-            android:textStyle="italic"
+            android:textSize="16sp"
             android:translationX="5dp"
             android:translationY="105dp"
             tools:ignore="MissingConstraints" />
@@ -90,7 +92,7 @@
             android:layout_height="wrap_content"
             android:text="Low"
             android:textColor="#FF000000"
-            android:textStyle="italic"
+            android:textSize="16sp"
             android:translationX="5dp"
             android:translationY="180dp"
             tools:ignore="MissingConstraints" />
@@ -101,7 +103,6 @@
             android:layout_height="wrap_content"
             android:text="Eloquent"
             android:textColor="#FF000000"
-            android:textStyle="italic"
             android:translationX="5dp"
             android:translationY="255dp"
             tools:ignore="MissingConstraints" />
