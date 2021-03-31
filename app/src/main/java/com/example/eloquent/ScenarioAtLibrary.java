@@ -68,7 +68,7 @@ public class ScenarioAtLibrary extends AppCompatActivity {
                 data[0] = place;
 
 
-                PutData putData = new PutData("http://192.168.100.22/Users/ScenarioExercise.php", "POST", field, data);
+                PutData putData = new PutData("http://192.168.100.14/Users/ScenarioExercise.php", "POST", field, data);
 
                 if (putData.startPut()) {
                     System.out.println("resut:1 ");

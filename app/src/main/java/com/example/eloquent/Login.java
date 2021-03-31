@@ -19,6 +19,8 @@ import DataBase.UserDBHelper;
 
 public class Login extends AppCompatActivity {
     public static Intent intent2;
+
+
     EditText EmailText, passwordText;
     //database
     UserDBHelper dbHelper;
@@ -48,7 +50,7 @@ public class Login extends AppCompatActivity {
         ForgetPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(Login.this, ForgetPassword2.class);
+                Intent intent =new Intent(Login.this, ForgetPassword1.class);
                 startActivity(intent);
             }
         });
