@@ -161,8 +161,12 @@ public class EasyOnsetWord extends AppCompatActivity {
         imageViewSpeaker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // textToSpeech.speak(textToRead, TextToSpeech.QUEUE_FLUSH, null,null);
-
+                //--------------------------------Stop Playing the recording
+                if(m != null) {
+                    m.release();
+                    m = null;
+                }
+                //--------------------------------End Stop Playing the recording
                 textToSpeech.speak(textViewEasyOnset.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
             }
         });
@@ -203,6 +207,18 @@ public class EasyOnsetWord extends AppCompatActivity {
         record_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //--------------------------------Stop Playing the recording
+                if(m != null) {
+                    m.release();
+                    m = null;
+                }
+                //--------------------------------End Stop Playing the recording
+                //------------------------------Stop Text To Speech
+                if (textToSpeech != null) {
+                    textToSpeech.stop();
+                    // textToSpeech.shutdown();
+                }
+                //------------------------------End Stop Text To Speech
                 //If not recoding
                 if (recording_sta == false) {
                     try {
@@ -239,7 +255,13 @@ public class EasyOnsetWord extends AppCompatActivity {
         play_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) throws IllegalArgumentException, SecurityException, IllegalStateException {
-                MediaPlayer m = new MediaPlayer();
+                //------------------------------Stop Text To Speech
+                if (textToSpeech != null) {
+                    textToSpeech.stop();
+                    // textToSpeech.shutdown();
+                }
+                //------------------------------End Stop Text To Speech
+                 m = new MediaPlayer();
                 try {
                     m.setDataSource(outputFile);
                 } catch (IOException e) {
@@ -273,6 +295,18 @@ public class EasyOnsetWord extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                //--------------------------------Stop Playing the recording
+                if(m != null) {
+                    m.release();
+                    m = null;
+                }
+                //--------------------------------End Stop Playing the recording
+                //------------------------------Stop Text To Speech
+                if (textToSpeech != null) {
+                    textToSpeech.stop();
+                    textToSpeech.shutdown();
+                }
+                //------------------------------End Stop Text To Speech
 
                 if (! Python.isStarted()) {
                     Python.start(new AndroidPlatform(EasyOnsetWord.this));

@@ -82,6 +82,12 @@ public class DiagnosticTest extends AppCompatActivity {
         record_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //------------------------------Stop Text To Speech
+                if (textToSpeech != null) {
+                    textToSpeech.stop();
+                    // textToSpeech.shutdown();
+                }
+                //------------------------------End Stop Text To Speech
                 //If not recoding
                 if (recording_sta == false) {
                     try {
@@ -118,7 +124,13 @@ public class DiagnosticTest extends AppCompatActivity {
         play_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) throws IllegalArgumentException, SecurityException, IllegalStateException {
-                MediaPlayer m = new MediaPlayer();
+                //------------------------------Stop Text To Speech
+                if (textToSpeech != null) {
+                    textToSpeech.stop();
+                    // textToSpeech.shutdown();
+                }
+                //------------------------------End Stop Text To Speech
+                 m = new MediaPlayer();
                 try {
                     m.setDataSource(outputFile);
                 } catch (IOException e) {
@@ -152,6 +164,18 @@ public class DiagnosticTest extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                //--------------------------------Stop Playing the recording
+                if(m != null) {
+                    m.release();
+                    m = null;
+                }
+                //--------------------------------End Stop Playing the recording
+                //------------------------------Stop Text To Speech
+                if (textToSpeech != null) {
+                    textToSpeech.stop();
+                    // textToSpeech.shutdown();
+                }
+                //------------------------------End Stop Text To Speech
 
                 if (! Python.isStarted()) {
                     Python.start(new AndroidPlatform(DiagnosticTest.this));
@@ -195,34 +219,19 @@ public class DiagnosticTest extends AppCompatActivity {
         imageViewSpeaker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //--------------------------------Stop Playing the recording
+                if(m != null) {
+                    m.release();
+                    m = null;
+                }
+                //--------------------------------End Stop Playing the recording
                 textToSpeech.speak(textViewDT.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
             }
         });
 
         // ------------------End Text To Speech
 
-        //Done button on diagnostic test page
-        //when user click on Done button  this code will move them to the stuttering severity page
-        //Donebutton = findViewById(R.id.buttonDone);
-//        Donebutton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //--------------------------------Stop Playing the recording
-//                if (m != null) {
-//                    m.release();
-//                    m = null;
-//                }
-//                //--------------------------------End Stop Playing the recording
-//                //------------------------------Stop Text To Speech
-//                if (textToSpeech != null) {
-//                    textToSpeech.stop();
-//                    textToSpeech.shutdown();
-//                }
-//                //------------------------------End Stop Text To Speech
-//                Intent intent =new Intent(DiagnosticTest.this, StutteringSeverity.class);
-//                startActivity(intent);
-//            }
-//        });
+
     }
 
 

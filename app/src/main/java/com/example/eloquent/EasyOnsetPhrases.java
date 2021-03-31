@@ -47,11 +47,12 @@ public class EasyOnsetPhrases extends AppCompatActivity {
     private static int channelConfiguration = AudioFormat.CHANNEL_CONFIGURATION_MONO;
     private static int EncodingBitRate = AudioFormat.ENCODING_PCM_16BIT;    //PCM16
     private AudioRecord audioRecord = null;
-    MediaPlayer m ;
+    MediaPlayer m ; //jj
     private int recBufSize = 0;
     private Thread recordingThread = null;
     private boolean isRecording = false;
     Button DonButton;
+
     //-------------------
 
     TextView textViewPhrases ;
@@ -144,34 +145,21 @@ public class EasyOnsetPhrases extends AppCompatActivity {
         imageViewSpeaker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //--------------------------------Stop Playing the recording
+                if(m != null) {
+                    m.release();
+                    m = null;
+                }
+                //--------------------------------End Stop Playing the recording
+
                 textToSpeech.speak(textViewEasyOnset.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
+
             }
         });
 
         // ------------------End Text To Speech
 
-        //prev
-        //when user click on previous button this code will move them to the previous page
-        imageView = findViewById(R.id.imageView3Previous);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //--------------------------------Stop Playing the recording
-//                if (m != null) {
-//                    m.release();
-//                    m = null;
-//                }
-                //--------------------------------End Stop Playing the recording
-                //------------------------------Stop Text To Speech
-                if (textToSpeech != null) {
-                    textToSpeech.stop();
-                    textToSpeech.shutdown();
-                }
-                //------------------------------End Stop Text To Speech
-                Intent intent =new Intent(EasyOnsetPhrases.this, EasyOnsetPhrasesInstructions.class);
-                startActivity(intent);
-            }
-        });
+
 
         //--------------------------------------****START Recorder*****--------------------------------------------------
         record_bt = (ImageButton) findViewById(R.id.imageButton_mic);
@@ -185,6 +173,18 @@ public class EasyOnsetPhrases extends AppCompatActivity {
         record_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //--------------------------------Stop Playing the recording
+                if(m != null) {
+                    m.release();
+                    m = null;
+                }
+                //--------------------------------End Stop Playing the recording
+                //------------------------------Stop Text To Speech
+                if (textToSpeech != null) {
+                    textToSpeech.stop();
+                   // textToSpeech.shutdown();
+                }
+                //------------------------------End Stop Text To Speech
                 //If not recoding
                 if (recording_sta == false) {
                     try {
@@ -221,7 +221,13 @@ public class EasyOnsetPhrases extends AppCompatActivity {
         play_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) throws IllegalArgumentException, SecurityException, IllegalStateException {
-                MediaPlayer m = new MediaPlayer();
+                //------------------------------Stop Text To Speech
+                if (textToSpeech != null) {
+                    textToSpeech.stop();
+                    //textToSpeech.shutdown();
+                }
+                //------------------------------End Stop Text To Speech
+                 m = new MediaPlayer();
                 try {
                     m.setDataSource(outputFile);
                 } catch (IOException e) {
@@ -236,6 +242,30 @@ public class EasyOnsetPhrases extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Playing audio", Toast.LENGTH_LONG).show();
             }
         });
+
+        //prev
+        //when user click on previous button this code will move them to the previous page
+        imageView = findViewById(R.id.imageView3Previous);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //--------------------------------Stop Playing the recording
+                    if(m != null) {
+                        m.release();
+                        m = null;
+                    }
+                //--------------------------------End Stop Playing the recording
+                //------------------------------Stop Text To Speech
+                if (textToSpeech != null) {
+                    textToSpeech.stop();
+                    textToSpeech.shutdown();
+                }
+                //------------------------------End Stop Text To Speech
+                Intent intent =new Intent(EasyOnsetPhrases.this, EasyOnsetPhrasesInstructions.class);
+                startActivity(intent);
+            }
+        });
+
 
         //----------------------------------*************End Recorder**********------------------------------------------------------
         //----------------------------***********************SEND AUDIO PATH TO PYTHON****************************---------------------
@@ -255,6 +285,18 @@ public class EasyOnsetPhrases extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                //--------------------------------Stop Playing the recording
+                if(m != null) {
+                    m.release();
+                    m = null;
+                }
+                //--------------------------------End Stop Playing the recording
+                //------------------------------Stop Text To Speech
+                if (textToSpeech != null) {
+                    textToSpeech.stop();
+                    textToSpeech.shutdown();
+                }
+                //------------------------------End Stop Text To Speech
 
                 if (! Python.isStarted()) {
                     Python.start(new AndroidPlatform(EasyOnsetPhrases.this));
@@ -455,5 +497,6 @@ public class EasyOnsetPhrases extends AppCompatActivity {
     }
 
 //----------------------------------------------**************END WAV FORMAT*********************------------------------------------------------------
+
 
 }

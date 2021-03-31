@@ -154,6 +154,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
             @Override
             public void onClick(View v) {
+                //--------------------------------Stop Playing the recording
+                if(m != null) {
+                    m.release();
+                    m = null;
+                }
+                //--------------------------------End Stop Playing the recording
+                //------------------------------Stop Text To Speech
+                if (textToSpeech != null) {
+                    textToSpeech.stop();
+                    // textToSpeech.shutdown();
+                }
+                //------------------------------End Stop Text To Speech
                 //If not recoding
                 if (recording_sta == false) {
                     try {
@@ -208,7 +220,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         holder.play_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) throws IllegalArgumentException, SecurityException, IllegalStateException {
-                MediaPlayer m = new MediaPlayer();
+                //------------------------------Stop Text To Speech
+                if (textToSpeech != null) {
+                    textToSpeech.stop();
+                    // textToSpeech.shutdown();
+                }
+                //------------------------------End Stop Text To Speech
+                 m = new MediaPlayer();
                 try {
 
 //                    Listitem listitempos =lisitems.get(position);
@@ -248,6 +266,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         holder.imageViewSpeakerQ.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //--------------------------------Stop Playing the recording
+                if(m != null) {
+                    m.release();
+                    m = null;
+                }
+                //--------------------------------End Stop Playing the recording
 
                 textToSpeech.speak(holder.Question.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
             }
@@ -268,6 +292,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         holder.imageViewSpeakerA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //--------------------------------Stop Playing the recording
+                if(m != null) {
+                    m.release();
+                    m = null;
+                }
+                //--------------------------------End Stop Playing the recording
 
                 textToSpeech.speak(holder.Answer.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
             }
