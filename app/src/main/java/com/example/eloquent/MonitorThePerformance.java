@@ -16,18 +16,28 @@ import com.vishnusivadas.advanced_httpurlconnection.PutData;
 
 import java.util.ArrayList;
 
+import static com.example.eloquent.HomePage.intentIndex;
+import static com.example.eloquent.HomePage.intentresultofseverity;
 import static com.example.eloquent.Login.intent2;
 
 public class MonitorThePerformance extends AppCompatActivity {
 
+
     String Email = intent2.getStringExtra("LoginEmailInfo");
     String[] arrId;
     String [] arrSeverity;
+    int SeverityLength = intentIndex.getIntExtra("index",1);
+      public  float [] arrSeverityNumber = new float[SeverityLength];
+//public float [] arrSeverityNumber;
+public  String resultofseverity =intentresultofseverity.getStringExtra("resultofseverity");
+
+
 
     LineGraph lineGraph;
     //    private final float[] graph1 = new float[]{0.0F, 400000.0F, 200000.0F, 600000.0F, 0.0F, 400000.0F, 200000.0F, 600000.0F};
-    private final float[] graph1 = new float[]{600000.0F, 600000.0F, 400000.0F, 400000.0F, 200000.0F, 200000.0F};
-
+    //public final float[] graph1 = new float[]{600000.0F, 600000.0F, 400000.0F, 400000.0F, 200000.0F, 200000.0F};
+    ChartEntity firstChartEntity;
+    ArrayList<ChartEntity> list = new ArrayList();
 
 
     @Override
@@ -35,11 +45,39 @@ public class MonitorThePerformance extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitor_the_performance);
 
-        ChartEntity firstChartEntity = new ChartEntity(-1, this.graph1);
+        System.out.println("=============SeverityLength= "+SeverityLength);
+
+        System.out.println("intentresultofseverity.getStringArrayExtra(\"resultofseverity\")=======  " +intentresultofseverity.getStringExtra("resultofseverity"));
+
+        String[] arrOfStr = resultofseverity.split(",");
+        for (int i =1, j=0; i< arrOfStr.length;i++,j++){
+
+            System.out.println("arrOfStr["+i+"]=======  " +arrOfStr[i]);
+//                            System.out.println("arrSeverity["+i+"]" +arrSeverity[i]);
+            //==========================================================================================
+            if (arrOfStr[i].equalsIgnoreCase("Not stutter: Your speech is eloquent")) {
+                //severity_num = 0.0F;
+                arrSeverityNumber[j] =0.0F;
+            } else if (arrOfStr[i].equalsIgnoreCase("Low")) {
+                //severity_num = 200000.0F;
+                arrSeverityNumber[j] = 200000.0F;
+            } else if (arrOfStr[i].equalsIgnoreCase("Moderate")) {
+                //severity_num = 400000.0F;
+                arrSeverityNumber[j] =400000.0F;
+            } else if (arrOfStr[i].equalsIgnoreCase("High")) {
+                //severity_num = 600000.0F;
+                arrSeverityNumber[j] =400000.0F;
+            }
+        }
+
+
+
+        ChartEntity firstChartEntity = new ChartEntity(-1, this.arrSeverityNumber);
         lineGraph = (LineGraph) findViewById(R.id.lineChart);
         ArrayList<ChartEntity> list = new ArrayList();
         list.add(firstChartEntity);
         lineGraph.setList(list);
+
 
 
         //bottom navigation par
@@ -92,45 +130,6 @@ public class MonitorThePerformance extends AppCompatActivity {
                 return false;
             }
         });
-
-        //---------------------------------------performance
-        //---------------------------------------------
-        //=========************************************************************* Get Severity of the user
-
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                //Starting Write and Read data with URL
-                //Creating array for parameters
-                String[] field = new String[1];
-                field[0] = "Email";
-
-                //Creating array for data
-                String[] data = new String[1];
-                data[0] = Email;
-
-                PutData putData = new PutData("http://192.168.100.14/Users/getPerformanceSeverity.php", "POST", field, data);
-
-                if (putData.startPut()) {
-                    System.out.println("resut:1 ");
-                    if (putData.onComplete()) {
-                        System.out.println("resut:2 ");
-                        String resultofseverity = putData.getResult();
-                        System.out.println("resut: **************************** " + resultofseverity);
-
-                        String[] arrOfStr = resultofseverity.split(",");
-                        for (int i =0; i< arrOfStr.length;i++){
-
-                            System.out.println("arrOfStr["+i+"]" +arrOfStr[i]);
-                        }
-                    }
-                }
-                //End Write and Read data with URL
-            }
-        });
-        //-------------------------------------------------------
-
 
 
     }
