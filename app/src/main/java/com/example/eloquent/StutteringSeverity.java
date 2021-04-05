@@ -71,7 +71,7 @@ public class StutteringSeverity extends AppCompatActivity {
                 data[0] = Email;
                 data[1] = UpdatedStutter;
 
-                PutData putData = new PutData("http://192.168.100.14/Users/Setperformance.php", "POST", field, data);
+                PutData putData = new PutData("http://192.168.100.11/Users/Setperformance.php", "POST", field, data);
 
                 if (putData.startPut()) {
                     System.out.println("resut:1 ");
@@ -109,7 +109,7 @@ public class StutteringSeverity extends AppCompatActivity {
                 String[] data = new String[1];
                 data[0] = Email;
 
-                PutData putData = new PutData("http://192.168.100.14/Users/getPerformanceSeverity.php", "POST", field, data);
+                PutData putData = new PutData("http://192.168.100.11/Users/getPerformanceSeverity.php", "POST", field, data);
 
                 if (putData.startPut()) {
                     System.out.println("resut:1 ");
@@ -159,7 +159,7 @@ public class StutteringSeverity extends AppCompatActivity {
                 data[0] = Email;
                 data[1] = UpdatedStutter;
 
-                PutData putData = new PutData("http://192.168.100.14/Users/UpdateSeverity.php", "POST", field, data);
+                PutData putData = new PutData("http://192.168.100.11/Users/UpdateSeverity.php", "POST", field, data);
 
                 if (putData.startPut()) {
                     System.out.println("resut:1 ");

@@ -90,7 +90,7 @@ public class EasyOnsetWord extends AppCompatActivity {
                 data[0] = category;
 
 
-                PutData putData = new PutData("http://192.168.100.14/Users/EasyOnSetExercise.php", "POST", field, data);
+                PutData putData = new PutData("http://192.168.100.11/Users/EasyOnSetExercise.php", "POST", field, data);
 
                 if (putData.startPut()) {
                     System.out.println("resut:1 ");

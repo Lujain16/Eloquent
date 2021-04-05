@@ -66,7 +66,7 @@ public  String resultofseverity =intentresultofseverity.getStringExtra("resultof
                 arrSeverityNumber[j] =400000.0F;
             } else if (arrOfStr[i].equalsIgnoreCase("High")) {
                 //severity_num = 600000.0F;
-                arrSeverityNumber[j] =400000.0F;
+                arrSeverityNumber[j] =600000.0F;
             }
         }
 

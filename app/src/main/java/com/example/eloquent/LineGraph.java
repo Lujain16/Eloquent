@@ -49,7 +49,10 @@ public class LineGraph extends View{
     private Paint pBaseLineX = new Paint();
     private Paint pMarkText = new Paint();
 
-    private String[] legendArray = new String[] {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"};
+    //private String[] legendArray = new String[] {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"};
+    private String[] legendArray = new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"};
+    //int num = 30;
+
 
     private List chartEntities;
 

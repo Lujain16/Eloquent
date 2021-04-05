@@ -60,7 +60,9 @@ def stuttering_severity(number_of_segment, stuttering_rate):
     stuttering_rate = stuttering_rate / number_of_segment * 100
 
     # To print severity as word (Not stutter, Low, Moderate, High)
-    if stuttering_rate > 66:
+    if number_of_segment <3 and stuttering_rate != 0:
+        severity = "Low"
+    elif stuttering_rate > 66:
         severity = "High"
     elif 66 >= stuttering_rate > 33:
         severity = "Moderate"

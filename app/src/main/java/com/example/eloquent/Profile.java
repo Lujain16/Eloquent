@@ -180,7 +180,7 @@ public class Profile extends AppCompatActivity {
                         data[1] = EditUserFName;
                         data[2] = EditUserLName;
 
-                        PutData putData = new PutData("http://192.168.100.14/Users/UpdateName.php", "POST", field, data);
+                        PutData putData = new PutData("http://192.168.100.11/Users/UpdateName.php", "POST", field, data);
 
                         if (putData.startPut()) {
 
@@ -227,7 +227,7 @@ public class Profile extends AppCompatActivity {
                 data[0] = UserEmailLogin;
 
 
-                PutData putData = new PutData("http://192.168.100.14/Users/GetUserInfo.php", "POST", field, data);
+                PutData putData = new PutData("http://192.168.100.11/Users/GetUserInfo.php", "POST", field, data);
 
                 if (putData.startPut()) {
                     if (putData.onComplete()) {
