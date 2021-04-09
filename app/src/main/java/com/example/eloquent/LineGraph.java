@@ -50,7 +50,7 @@ public class LineGraph extends View{
     private Paint pMarkText = new Paint();
 
     //private String[] legendArray = new String[] {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"};
-    private String[] legendArray = new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"};
+    private String[] legendArray = new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"};
     //int num = 30;
 
 
@@ -167,7 +167,14 @@ public class LineGraph extends View{
             GraphCanvasWrapper graphCanvasWrapper = new GraphCanvasWrapper(canvas, this.getWidth(), this.getHeight(), (int)this.mPaddingLeft, (int)this.mPaddingBottom);
             graphCanvasWrapper.drawLine(0.0F, 0.0F, (float)this.chartXLength, 0.0F, this.pBaseLine);
             float newX = 0.0F;
-            int gap = this.chartXLength / (((ChartEntity)this.chartEntities.get(0)).getValues().length - 1);
+            int gap;
+
+            if(((ChartEntity)this.chartEntities.get(0)).getValues().length ==1){
+                gap = this.chartXLength;
+            }else{
+                gap = this.chartXLength / (((ChartEntity)this.chartEntities.get(0)).getValues().length - 1);
+            }
+
             int i = 0;
 
             for(int var6 = ((ChartEntity)this.chartEntities.get(0)).getValues().length; i < var6; ++i) {
@@ -185,7 +192,16 @@ public class LineGraph extends View{
 
 
     private final void drawXText(GraphCanvasWrapper graphCanvas) {
-        float xGap = (float)(this.xLength / (((ChartEntity)this.chartEntities.get(0)).getValues().length - 1));
+        //float xGap = (float)(this.xLength / (((ChartEntity)this.chartEntities.get(0)).getValues().length - 1));
+
+        float xGap;
+        System.out.println("(float)((((ChartEntity)this.chartEntities.get(0)).getValues().length )) == "+(float)((((ChartEntity)this.chartEntities.get(0)).getValues().length )) );
+
+        if( (float)((((ChartEntity)this.chartEntities.get(0)).getValues().length )) == 1){
+            xGap = (float)(this.xLength/2);
+        }else{
+            xGap = (float)(this.xLength / (((ChartEntity)this.chartEntities.get(0)).getValues().length - 1));
+        }
         int i = 0;
 
         for(int var13 = ((ChartEntity)this.chartEntities.get(0)).getValues().length; i < var13; ++i) {
@@ -218,7 +234,16 @@ public class LineGraph extends View{
             Float y ;
             this.p.setColor(-1);
             this.pCircle.setColor(-1);
-            int xGap = this.xLength / (((ChartEntity)this.chartEntities.get(m)).getValues().length - 1);
+            //System.out.println("pCircle= "+this.pCircle);
+            //int xGap = this.xLength / (((ChartEntity)this.chartEntities.get(m)).getValues().length - 1);
+            int xGap;
+
+            if(((ChartEntity)this.chartEntities.get(m)).getValues().length ==1){
+                xGap = this.xLength/2;
+            }else{
+                xGap = this.xLength / (((ChartEntity)this.chartEntities.get(m)).getValues().length - 1);
+            }
+
             System.out.println("    xGap"+xGap);
 
             int t = 0;
@@ -242,6 +267,15 @@ public class LineGraph extends View{
             if (var10000 != null) {
                 var10000.drawPath((Path)linePath, this.p);
             }
+            for(var10 = ((ChartEntity)this.chartEntities.get(m)).getValues().length; t < var10; ++t) {
+                if (t < ((ChartEntity)this.chartEntities.get(m)).getValues().length) {
+                    x = (float)(xGap * t);
+                    y = (float)this.yLength * ((ChartEntity)this.chartEntities.get(m)).getValues()[t] / (float)this.maxValue;
+
+                    graphCanvasWrapper.drawCircle(x, y, 8.0F, this.pCircle);
+                    graphCanvasWrapper.drawCircle(x, y, 4.0F, this.pCircleBG);
+                }
+            }
         }
 
     }
@@ -253,6 +287,7 @@ public class LineGraph extends View{
         var1.setAntiAlias(true);
         var1.setFilterBitmap(true);
         var1.setColor(-16776961);
+        //var1.setColor(this.lineColor);
         var1.setStrokeWidth(10.0F);
         var1.setAntiAlias(true);
         var1.setStrokeCap(Paint.Cap.ROUND);
@@ -265,6 +300,7 @@ public class LineGraph extends View{
         var1.setAntiAlias(true);
         var1.setFilterBitmap(true);
         var1.setColor(-16776961);
+        //var1.setColor(this.lineColor);
         var1.setStrokeWidth(20.0f);
         var1.setStyle(Paint.Style.STROKE);
         this.pCircle = var1;
@@ -355,10 +391,10 @@ class GraphCanvasWrapper {
         this.mMt = new MatrixTranslator(width, height, paddingLeft, paddingBottom);
     }
 
-    //    public final void drawCircle(float cx, float cy, float radius,Paint paint) {
-//        Canvas var = this.canvas;
-//        var.drawCircle(this.mMt.calcX(cx), this.mMt.calcY(cy), radius, paint);
-//    }
+        public final void drawCircle(float cx, float cy, float radius,Paint paint) {
+        Canvas var = this.canvas;
+        var.drawCircle(this.mMt.calcX(cx), this.mMt.calcY(cy), radius, paint);
+    }
 //    public final void drawArc(RectF oval, float startAngle, float sweepAngle, boolean useCenter, Paint paint) {
 //        Canvas var = this.canvas;
 //        if (var != null) {

@@ -35,23 +35,20 @@ public class ScenariosAtSchool extends AppCompatActivity {
     private  RecyclerView.Adapter adapter;
     public String textArray[];
     String place = "At School";
-
     //Done button
     Button Donebutton;
     //previous button
     ImageView imageView;
-
-    ArrayList<String> AuduioPathArrL = new ArrayList<>(); //jjjjj
+    ArrayList<String> AuduioPathArrL = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scenarios_at_school);
-//==================================================================================
+
         recyclerView = findViewById(R.id.recyclerviewID);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         listitems = new ArrayList<>();
 
         //---------------------------------------------
@@ -69,41 +66,28 @@ public class ScenariosAtSchool extends AppCompatActivity {
                 data[0] = place;
 
 
-                PutData putData = new PutData("http://192.168.100.14/Users/ScenarioExercise.php", "POST", field, data);
+                PutData putData = new PutData("http://192.168.100.11/Users/ScenarioExercise.php", "POST", field, data);
 
                 if (putData.startPut()) {
-                    System.out.println("resut:1 ");
+                    System.out.println("result:1 ");
                     if (putData.onComplete()) {
-                        System.out.println("resut:2 ");
+                        System.out.println("result:2 ");
                         String result = putData.getResult();
-                        System.out.println("resut: " + result);
+                        System.out.println("result: " + result);
 
 
                         String[] arrOfStr = result.split("/");
-                        // Fname.setText(arrOfStr[0]);
-                        System.out.println("==============================" + arrOfStr);
-
-                        //'''''''''''''''
+                        //Filling the card with questions
                         for (int x = 0; x < arrOfStr.length - 2; x = x + 2) {
                             AuduioPathArrL.add("/data/user/0/com.example.eloquent/files/" + x + "Adapter.wav");
                             Listitem listitem = new Listitem(
                                     "Student: " + arrOfStr[x],
                                     "You: " + arrOfStr[x + 1],
                                     "" + x
-
                             );
                             //add record
-
                             listitems.add(listitem);
                         }
-
-//                        for (int i=0; i<arrOfStr.length; i++){
-//                           // String k =AuduioPathArrL.get(i);
-//                            System.out.println("##################################################################################  AuduioPathArrL["+i+"]=  "+AuduioPathArrL.get(i));
-//                            System.out.println("##################################################################################  AuduioPathArrL size =  "+AuduioPathArrL.size());
-//                        }
-
-                        //''''''''''''''''
 
                     }
                 }
@@ -112,51 +96,6 @@ public class ScenariosAtSchool extends AppCompatActivity {
         });
         adapter = new MyAdapter(this, listitems);
         recyclerView.setAdapter(adapter);
-        //-------------------------------------------------------
-
-
-//        textArray = new String[]{"Could you help me?",
-//                "What do you need?",
-//                "I can't seem to find my class.",
-//                "What building is it in?",
-//                "It's in the C building.",
-//                "Oh, I know exactly where that is.",
-//                "Do you mind telling me where it is?",
-//                "Sure, what room number is it?",
-//                "It's room number 261.",
-//                "I have a class around there right now.",
-//                "Could you show me where it is?",
-//                "No problem, come on."};
-//
-//        recyclerView = findViewById(R.id.recyclerviewID);
-//        recyclerView.setHasFixedSize(true);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//
-//        listitems = new ArrayList<>();
-//        for(int x=0; x<textArray.length-1; x=x+2){
-//            System.out.println("-----------------------------textArray[x]"+textArray[x]);
-//            System.out.println("-----------------------------textArray[x+1]"+textArray[x+1]);
-//            Listitem listitem =new Listitem(
-//
-//                    "Studen: "+textArray[x],
-//                    "You: "+textArray[x+1]
-//            );
-//            listitems.add(listitem);
-//        }
-//        adapter = new MyAdapter(this,listitems);
-//        recyclerView.setAdapter(adapter);
-        //==================================================================================
-
-
-        //Done button
-//        Donebutton = findViewById(R.id.buttonDone);
-//        Donebutton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent =new Intent(ScenariosAtSchool.this, StutteringSeverity.class);
-//                startActivity(intent);
-//            }
-//        });
 
         //----------------------------***********************SEND AUDIO PATH TO PYTHON****************************---------------------
         String voieNotePath = "/data/user/0/com.example.eloquent/files/0Adapter.wav";
@@ -165,23 +104,17 @@ public class ScenariosAtSchool extends AppCompatActivity {
         File file = new File(voieNotePath);
         File file2 = new File(voieNotePath2);
         Log.d("Main", "voice exists : " + file.exists() + ", can read : " + file.canRead());
-
-
-        //MediaPlayer mpintro = MediaPlayer.create(ScenariosAtSchool.this, Uri.parse(voieNotePath));
-        // mpintro.start();
-
         //----------------------------***********************END SENT AUDIO PATH TO PYTHON****************************-----------------------
 
         //----------------------------***********************START PYTHON MODEL****************************-------------------------------------
         Donebutton = (Button) findViewById(R.id.buttonDone);
-
-
-
         Donebutton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 if (file.exists() == true && file2.exists()) {
+                    //When the user clicks the done button message will display.
+                    Toast.makeText(getApplicationContext(), "Please wait until display your stuttering severity.", Toast.LENGTH_SHORT).show();
 
                 if (!Python.isStarted()) {
                     Python.start(new AndroidPlatform(ScenariosAtSchool.this));
@@ -197,27 +130,21 @@ public class ScenariosAtSchool extends AppCompatActivity {
 
                 // return text from python to textview
                 String PthythonResult = obj.toString();
-               // System.out.println("||||||||||||||||||||||||||||||||PthythonResult=  " + PthythonResult);
+                //Delete the audio file after done.
+                file.delete();
 
-                //intentResult sent the output from python to Stuttring Severity interface
                 intentAtSchoolResult = new Intent(ScenariosAtSchool.this,StutteringSeverityAtSchool.class);
                 intentAtSchoolResult.putExtra("KeyResulAtSchool",PthythonResult);
                 startActivity(intentAtSchoolResult);
-
             }
                 else{
-
-                    Toast.makeText(getApplicationContext(), "Please record your voice on all cards.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Please record your voice on at least two cards.", Toast.LENGTH_SHORT).show();
                 }
-            }//on Click
+            }
         });
-
-
         //----------------------------***********************END PYTHON MODEL****************************-------------------------------------
 
-
-        //prev
-        //when user click on previous button this code will move them to the previous page
+        //when users click on the previous button, move them to the previous page
         imageView = findViewById(R.id.imageView3Previous);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -226,6 +153,5 @@ public class ScenariosAtSchool extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 }

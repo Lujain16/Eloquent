@@ -26,11 +26,7 @@ public class ScenariosSessions extends AppCompatActivity {
 
         //bottom navigation par
         BottomNavigationView bottomNavigationView;
-
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        // set Exercises selected
-        //bottomNavigationView.setSelectedItemId(R.id.nav_exercises);
-
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -38,45 +34,38 @@ public class ScenariosSessions extends AppCompatActivity {
                     case R.id.nav_home:
                         Intent intenthome =new Intent(getApplicationContext(),HomePage.class);
                         startActivity(intenthome);
-                        //startActivities(new Intent(getApplicationContext(),Exercises.class));
                         overridePendingTransition(0,0);
                         return true;
 
                     case R.id.nav_exercises:
                         Intent intentexercises =new Intent(getApplicationContext(),Exercises.class);
                         startActivity(intentexercises);
-                        //startActivities(new Intent(getApplicationContext(),Exercises.class));
                         overridePendingTransition(0,0);
                         return true;
 
                     case R.id.nav_monitor:
                         Intent intentmonitor =new Intent(getApplicationContext(),MonitorThePerformance.class);
                         startActivity(intentmonitor);
-                        //startActivities(new Intent(getApplicationContext(),Exercises.class));
                         overridePendingTransition(0,0);
                         return true;
 
                     case R.id.nav_settings:
                         Intent intentSettings =new Intent(getApplicationContext(),Settings.class);
                         startActivity(intentSettings);
-                        //startActivities(new Intent(getApplicationContext(),Exercises.class));
                         overridePendingTransition(0,0);
                         return true;
 
                     case R.id.nav_profile:
                         Intent intentProfile =new Intent(getApplicationContext(),Profile.class);
                         startActivity(intentProfile);
-                        //startActivities(new Intent(getApplicationContext(),Exercises.class));
                         overridePendingTransition(0,0);
                         return true;
                 }
-
                 return false;
             }
         });
 
-        //prev
-        //when user click on previous button this code will move them to the previous page
+        //when users click on the previous button, move them to the previous page
         imageView = findViewById(R.id.imageView3Previous);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +76,7 @@ public class ScenariosSessions extends AppCompatActivity {
         });
 
         //cardViewAtSchool button
-        //when user click on cardViewAtSchool button  this code will move them to the ScenariosInstructions page
+        //when user click on cardViewAtSchool button  this code will move them to the ScenarioAtSchoolInstructions page
         cardViewAtSchool = findViewById(R.id.cardAtSchool);
         cardViewAtSchool.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +87,7 @@ public class ScenariosSessions extends AppCompatActivity {
         });
 
         //cardViewAtRestaurant button
-        //when user click on cardViewAtRestaurant button  this code will move them to the ScenariosInstructions page
+        //when user click on cardViewAtRestaurant button  this code will move them to the ScenarioAtRestaurantInstructions page
         cardViewAtRestaurant = findViewById(R.id.cardAtRestaurant);
         cardViewAtRestaurant.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,7 +98,7 @@ public class ScenariosSessions extends AppCompatActivity {
         });
 
         //cardViewAtLibrary button
-        //when user click on cardViewAtLibrary button  this code will move them to the ScenariosInstructions page
+        //when user click on cardViewAtLibrary button  this code will move them to the ScenarioAtLibraryInstructions page
         cardViewAtLibrary = findViewById(R.id.cardAtLibrary);
         cardViewAtLibrary.setOnClickListener(new View.OnClickListener() {
             @Override

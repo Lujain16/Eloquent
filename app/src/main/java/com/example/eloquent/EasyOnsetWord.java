@@ -42,7 +42,7 @@ public class EasyOnsetWord extends AppCompatActivity {
     private ImageButton record_bt,play_bt,stop_bt;
     private String outputFile = null;
     private boolean recording_sta = false;
-    final static String RecordName = "Jumana_speaker.wav";
+    final static String RecordName = "Eloquent_speaker.wav";
     private static final int RECORDER_BPP = 16;
     private static final String AUDIO_RECORDER_TEMP_FILE = "record_temp.raw";
     private static int frequency = 44100;
@@ -54,12 +54,9 @@ public class EasyOnsetWord extends AppCompatActivity {
     private Thread recordingThread = null;
     private boolean isRecording = false;
     Button DonButton;
-    //-------------------
-
-    ImageView imageView; // previous button
+    // previous button
+    ImageView imageView;
     TextView textViewWord ;
-
-
     private TextToSpeech textToSpeech;
     private TextView textViewEasyOnset;
     private ImageView imageViewSpeaker;
@@ -71,9 +68,7 @@ public class EasyOnsetWord extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_easy_onset_word);
 
-
         //-------------------Word list generator
-        //===================================================
         textViewWord = (TextView)findViewById(R.id.textViewEasyOnsetWord);
         //---------------------------------------------
         Handler handler = new Handler(Looper.getMainLooper());
@@ -89,9 +84,7 @@ public class EasyOnsetWord extends AppCompatActivity {
                 String[] data = new String[1];
                 data[0] = category;
 
-
                 PutData putData = new PutData("http://192.168.100.11/Users/EasyOnSetExercise.php", "POST", field, data);
-
                 if (putData.startPut()) {
                     System.out.println("resut:1 ");
                     if (putData.onComplete()) {
@@ -99,54 +92,14 @@ public class EasyOnsetWord extends AppCompatActivity {
                         result = putData.getResult();
                         System.out.println("resut: " + result);
                         textViewWord.setText(result);
-
                     }
                 }
                 //End Write and Read data with URL
             }
         });
-        //===================================================
-
-//        textViewWord = (TextView)findViewById(R.id.textViewEasyOnsetWord);
-//        String[] Word_List = {"After",
-//                " Also",
-//                "Always",
-//                "Enough",
-//                "Easy",
-//                "Email",
-//                "Either",
-//                "Exit",
-//                "Expert",
-//                "Inside",
-//                "Inspect",
-//                "Include",
-//                "Island",
-//                "Oven",
-//                "Open",
-//                "Offer",
-//                "Outdoor",
-//                "Under",
-//                "Update",
-//                "Unless",
-//                "hole",
-//                "heart",
-//                "whom",
-//                "home",
-//                "harm",
-//                "horse",
-//                "hard"
-//        };
-//
-//        int Word_List_Length = Word_List.length-1 ;
-//        int random_Number_Word = rand.nextInt(Word_List_Length-0);
-//        textViewWord.setText(Word_List[random_Number_Word]);
-//
-
         //-------------------End Word list generator
 
-
         // ------------------Start Text To Speech
-       // textViewEasyOnset = findViewById(R.id.textViewEasyOnsetWord);
         textViewEasyOnset = textViewWord;
         imageViewSpeaker = findViewById(R.id.imageViewSpeaker);
 
@@ -155,7 +108,6 @@ public class EasyOnsetWord extends AppCompatActivity {
             public void onInit(int i) {
                 textToSpeech.setLanguage(Locale.US);
                 textToSpeech.setSpeechRate((float) 0.9);
-
             }
         });
         imageViewSpeaker.setOnClickListener(new View.OnClickListener() {
@@ -170,20 +122,13 @@ public class EasyOnsetWord extends AppCompatActivity {
                 textToSpeech.speak(textViewEasyOnset.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
             }
         });
-
         // ------------------End Text To Speech
-        //prev
-        //when user click on previous button this code will move them to the previous page
+
+        //when users click on the previous button, move them to the previous page
         imageView = findViewById(R.id.imageView3Previous);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //--------------------------------Stop Playing the recording
-//                if (m != null) {
-//                    m.release();
-//                    m = null;
-//                }
-                //--------------------------------End Stop Playing the recording
                 //------------------------------Stop Text To Speech
                 if (textToSpeech != null) {
                     textToSpeech.stop();
@@ -200,7 +145,6 @@ public class EasyOnsetWord extends AppCompatActivity {
         play_bt = (ImageButton) findViewById(R.id.imageButton_play);
         stop_bt= (ImageButton) findViewById(R.id.imageButton_stop);
 
-
         play_bt.setEnabled(false);
         outputFile = getFilesDir() + "/" + RecordName;
 
@@ -216,7 +160,6 @@ public class EasyOnsetWord extends AppCompatActivity {
                 //------------------------------Stop Text To Speech
                 if (textToSpeech != null) {
                     textToSpeech.stop();
-                    // textToSpeech.shutdown();
                 }
                 //------------------------------End Stop Text To Speech
                 //If not recoding
@@ -226,14 +169,10 @@ public class EasyOnsetWord extends AppCompatActivity {
                     } catch (IllegalStateException e) {
                         e.printStackTrace();
                     }
-
                     recording_sta = true;
                     play_bt.setEnabled(false);
-
                     Toast.makeText(getApplicationContext(), "Recording started", Toast.LENGTH_SHORT).show();
-
                 }
-
             }
         });
 
@@ -242,14 +181,10 @@ public class EasyOnsetWord extends AppCompatActivity {
             public void onClick(View v) {
                 recording_sta = false;
                 stopRecording();
-
                 play_bt.setEnabled(true);
                 Toast.makeText(getApplicationContext(), "Audio recorded successfully", Toast.LENGTH_SHORT).show();
-
-
             }
         });
-
 
         //play button
         play_bt.setOnClickListener(new View.OnClickListener() {
@@ -258,7 +193,6 @@ public class EasyOnsetWord extends AppCompatActivity {
                 //------------------------------Stop Text To Speech
                 if (textToSpeech != null) {
                     textToSpeech.stop();
-                    // textToSpeech.shutdown();
                 }
                 //------------------------------End Stop Text To Speech
                  m = new MediaPlayer();
@@ -276,17 +210,13 @@ public class EasyOnsetWord extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Playing audio", Toast.LENGTH_LONG).show();
             }
         });
-
         //----------------------------------*************End Recorder**********------------------------------------------------------
+
         //----------------------------***********************SEND AUDIO PATH TO PYTHON****************************---------------------
         String voieNotePath = outputFile;
         Log.d("Main", "PATH : " + voieNotePath);
         File file = new File(voieNotePath);
         Log.d("Main", "voice exists : " + file.exists() + ", can read : " + file.canRead());
-
-        MediaPlayer mpintro = MediaPlayer.create(EasyOnsetWord.this, Uri.parse(voieNotePath));
-        // mpintro.start();
-
         //----------------------------***********************END SENT AUDIO PATH TO PYTHON****************************-----------------------
 
         //----------------------------***********************START PYTHON MODEL****************************-------------------------------------
@@ -295,6 +225,7 @@ public class EasyOnsetWord extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+
                 //--------------------------------Stop Playing the recording
                 if(m != null) {
                     m.release();
@@ -308,48 +239,49 @@ public class EasyOnsetWord extends AppCompatActivity {
                 }
                 //------------------------------End Stop Text To Speech
 
-                if (! Python.isStarted()) {
-                    Python.start(new AndroidPlatform(EasyOnsetWord.this));
+                if (file.exists() == true) {
+                    if (! Python.isStarted()) {
+                        Python.start(new AndroidPlatform(EasyOnsetWord.this));
+                    }
+                    //When the user clicks the done button message will display.
+                    Toast.makeText(getApplicationContext(), "Please wait until display your stuttering severity.", Toast.LENGTH_LONG).show();
+
+                    Python py = Python.getInstance();
+
+                    //create python object
+                    PyObject pyobj = py.getModule("myscript");
+
+                    // call the function
+                    PyObject obj = pyobj.callAttr("main",voieNotePath);
+
+                    // return text from python to textview
+                    String PthythonResult =obj.toString();
+                    //Delete the audio file after done.
+                    file.delete();
+
+                    //intentResult sent the output from python to Stuttring Severity interface
+                    intentWordResult = new Intent(EasyOnsetWord.this,StutteringSeverityWord.class);
+                    intentWordResult.putExtra("KeyResultWord",PthythonResult);
+                    startActivity(intentWordResult);
+                }else{
+                    Toast.makeText(getApplicationContext(), "Please record your voice.", Toast.LENGTH_SHORT).show();
                 }
-
-                Python py = Python.getInstance();
-
-                //create python object
-                PyObject pyobj = py.getModule("myscript");
-
-                // call the function
-                PyObject obj = pyobj.callAttr("main",voieNotePath);
-
-                // return text from python to textview
-                String PthythonResult =obj.toString();
-                System.out.println("||||||||||||||||||||||||||||||||PthythonResult=  "+PthythonResult);
-
-                //intentResult sent the output from python to Stuttring Severity interface
-                intentWordResult = new Intent(EasyOnsetWord.this,StutteringSeverityWord.class);
-                intentWordResult.putExtra("KeyResultWord",PthythonResult);
-                startActivity(intentWordResult);
-                //---------------------------------
 
             }
         });
         //----------------------------***********************END PYTHON MODEL****************************-------------------------------------
-
-
     }
 
-
     //----------------------------------------------**************START WAV FORMAT*********************------------------------------------------------------
-//code for recording
+    // code for recording
     private String getFilename(){
         String filePath = getFilesDir().getPath().toString() + "/"+RecordName;
-        //  String filePath = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + "/"+RecordName;
         File file = new File(filePath);
         return (file.getAbsolutePath() );
     }
 
     private String getTempFilename(){
         String filePath = getFilesDir().getPath().toString() + "/" + AUDIO_RECORDER_TEMP_FILE;
-        // String filePath = Environment.getExternalStorageDirectory().getAbsolutePath().toString()+ "/" + AUDIO_RECORDER_TEMP_FILE;
         File file = new File(filePath);
         return (file.getAbsolutePath() );
     }
@@ -509,8 +441,5 @@ public class EasyOnsetWord extends AppCompatActivity {
                 channelConfiguration, EncodingBitRate, recBufSize);
         System.out.println("AudioRecord Success");
     }
-
 //----------------------------------------------**************END WAV FORMAT*********************------------------------------------------------------
-
-
     }

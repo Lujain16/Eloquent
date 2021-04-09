@@ -14,10 +14,8 @@ import java.util.Locale;
 public class EasyOnsetPhrasesBreathing extends AppCompatActivity {
     // start button
     TextView textView;
-
     // previous button
     ImageView imageView;
-
     private TextToSpeech textToSpeech;
     private TextView textViewBreathing;
     private ImageView imageViewSpeaker;
@@ -27,8 +25,7 @@ public class EasyOnsetPhrasesBreathing extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_easy_onset_phrases_breathing);
 
-        //cardViewWord button
-        //when user click on cardViewWord button  this code will move them to the EasyOnsetBreathing page
+        //when user click on the Next button this code will move them to the EasyOnsetPhrasesInstructions page
         textView = findViewById(R.id.textViewStart);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,8 +41,7 @@ public class EasyOnsetPhrasesBreathing extends AppCompatActivity {
             }
         });
 
-        //prev
-        //when user click on previous button this code will move them to the previous page
+        //when users click on the previous button, move them to the previous page
         imageView = findViewById(R.id.imageView3Previous);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +60,6 @@ public class EasyOnsetPhrasesBreathing extends AppCompatActivity {
         // ------------------Start Text To Speech
         textViewBreathing = findViewById(R.id.textViewBreathing);
         imageViewSpeaker = findViewById(R.id.imageViewSpeaker);
-
         textToSpeech=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int i) {
@@ -81,7 +76,6 @@ public class EasyOnsetPhrasesBreathing extends AppCompatActivity {
                 textToSpeech.speak(textViewBreathing.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
             }
         });
-
         // ------------------End Text To Speech
     }
 }

@@ -21,40 +21,19 @@ import static com.example.eloquent.HomePage.intentresultofseverity;
 import static com.example.eloquent.Login.intent2;
 
 public class MonitorThePerformance extends AppCompatActivity {
-
-
-    String Email = intent2.getStringExtra("LoginEmailInfo");
-    String[] arrId;
-    String [] arrSeverity;
     int SeverityLength = intentIndex.getIntExtra("index",1);
-      public  float [] arrSeverityNumber = new float[SeverityLength];
-//public float [] arrSeverityNumber;
-public  String resultofseverity =intentresultofseverity.getStringExtra("resultofseverity");
-
-
-
-    LineGraph lineGraph;
-    //    private final float[] graph1 = new float[]{0.0F, 400000.0F, 200000.0F, 600000.0F, 0.0F, 400000.0F, 200000.0F, 600000.0F};
-    //public final float[] graph1 = new float[]{600000.0F, 600000.0F, 400000.0F, 400000.0F, 200000.0F, 200000.0F};
-    ChartEntity firstChartEntity;
-    ArrayList<ChartEntity> list = new ArrayList();
-
-
+    public  float [] arrSeverityNumber = new float[SeverityLength];
+    public  String resultofseverity =intentresultofseverity.getStringExtra("resultofseverity");
+    //LineGraph lineGraph;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitor_the_performance);
-
-        System.out.println("=============SeverityLength= "+SeverityLength);
-
-        System.out.println("intentresultofseverity.getStringArrayExtra(\"resultofseverity\")=======  " +intentresultofseverity.getStringExtra("resultofseverity"));
+        System.out.println("++++++++++SeverityLength +++++++++++= "+SeverityLength);
+        System.out.println("++++++++++resultofseverity +++++++++++= "+resultofseverity);
 
         String[] arrOfStr = resultofseverity.split(",");
         for (int i =1, j=0; i< arrOfStr.length;i++,j++){
-
-            System.out.println("arrOfStr["+i+"]=======  " +arrOfStr[i]);
-//                            System.out.println("arrSeverity["+i+"]" +arrSeverity[i]);
-            //==========================================================================================
             if (arrOfStr[i].equalsIgnoreCase("Not stutter: Your speech is eloquent")) {
                 //severity_num = 0.0F;
                 arrSeverityNumber[j] =0.0F;
@@ -68,17 +47,14 @@ public  String resultofseverity =intentresultofseverity.getStringExtra("resultof
                 //severity_num = 600000.0F;
                 arrSeverityNumber[j] =600000.0F;
             }
+            System.out.println("++++++++++arrSeverityNumber["+j+"] +++++++++++= "+arrSeverityNumber[j]);
         }
 
-
-
         ChartEntity firstChartEntity = new ChartEntity(-1, this.arrSeverityNumber);
-        lineGraph = (LineGraph) findViewById(R.id.lineChart);
+        LineGraph lineGraph = (LineGraph) findViewById(R.id.lineChart);
         ArrayList<ChartEntity> list = new ArrayList();
         list.add(firstChartEntity);
         lineGraph.setList(list);
-
-
 
         //bottom navigation par
         BottomNavigationView bottomNavigationView;
@@ -94,44 +70,35 @@ public  String resultofseverity =intentresultofseverity.getStringExtra("resultof
                     case R.id.nav_home:
                         Intent intenthome =new Intent(getApplicationContext(),HomePage.class);
                         startActivity(intenthome);
-                        //startActivities(new Intent(getApplicationContext(),Exercises.class));
                         overridePendingTransition(0,0);
                         return true;
 
                     case R.id.nav_exercises:
                         Intent intentexercises =new Intent(getApplicationContext(),Exercises.class);
                         startActivity(intentexercises);
-                        //startActivities(new Intent(getApplicationContext(),Exercises.class));
                         overridePendingTransition(0,0);
                         return true;
 
                     case R.id.nav_monitor:
                         Intent intentmonitor =new Intent(getApplicationContext(),MonitorThePerformance.class);
                         startActivity(intentmonitor);
-                        //startActivities(new Intent(getApplicationContext(),Exercises.class));
                         overridePendingTransition(0,0);
                         return true;
 
                     case R.id.nav_settings:
                         Intent intentSettings =new Intent(getApplicationContext(),Settings.class);
                         startActivity(intentSettings);
-                        //startActivities(new Intent(getApplicationContext(),Exercises.class));
                         overridePendingTransition(0,0);
                         return true;
 
                     case R.id.nav_profile:
                         Intent intentProfile =new Intent(getApplicationContext(),Profile.class);
                         startActivity(intentProfile);
-                        //startActivities(new Intent(getApplicationContext(),Exercises.class));
                         overridePendingTransition(0,0);
                         return true;
                 }
-
                 return false;
             }
         });
-
-
     }
-
 }

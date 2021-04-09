@@ -14,10 +14,8 @@ import java.util.Locale;
 public class ScenarioAtRestaurantInstructions extends AppCompatActivity {
     // start button
     TextView textViewStart;
-
     //previous button
     ImageView imageView;
-
     private TextToSpeech textToSpeech;
     private TextView textViewInstructions;
     private ImageView imageViewSpeaker;
@@ -43,8 +41,7 @@ public class ScenarioAtRestaurantInstructions extends AppCompatActivity {
             }
         });
 
-        //prev
-        //when user click on previous button this code will move them to the previous page
+        //when users click on the previous button, move them to the previous page
         imageView = findViewById(R.id.imageView3Previous);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,20 +65,14 @@ public class ScenarioAtRestaurantInstructions extends AppCompatActivity {
             public void onInit(int i) {
                 textToSpeech.setLanguage(Locale.US);
                 textToSpeech.setSpeechRate((float) 0.9);
-
             }
         });
         imageViewSpeaker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // textToSpeech.speak(textToRead, TextToSpeech.QUEUE_FLUSH, null,null);
-
                 textToSpeech.speak(textViewInstructions.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
             }
         });
-
         // ------------------End Text To Speech
-
-
     }
 }

@@ -21,18 +21,62 @@ import com.vishnusivadas.advanced_httpurlconnection.PutData;
 import static com.example.eloquent.Login.intent2;
 
 public class HomePage extends AppCompatActivity {
-    public static Intent intentresultofseverity;
-    public static Intent intentIndex;
-    int index;
-
+    public static Intent intentresultofseverity = new Intent();
+    public static Intent intentIndex = new Intent();
+    int index =0;
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+        String Email = intent2.getStringExtra("LoginEmailInfo");
+        //=====================================================================xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        //---------------------------------------performance
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                //Starting Write and Read data with URL
+                //Creating array for parameters
+                String[] field = new String[1];
+                field[0] = "Email";
+                System.out.println("=======Email===== "+Email);
+                //Creating array for data
+                String[] data = new String[1];
+                data[0] = Email;
+
+                PutData putData = new PutData("http://192.168.100.11/Users/getPerformanceSeverity.php", "POST", field, data);
+                if (putData.startPut()) {
+                    System.out.println("resut:1 ");
+                    if (putData.onComplete()) {
+                        System.out.println("resut:2 ");
+                        String resultofseverity = putData.getResult();
+                        System.out.println("resultofseverity: **************************** " + resultofseverity);
+
+                        String[] arrOfStr = resultofseverity.split(",");
+                        for (int i =0; i< arrOfStr.length;i++){
+                            index = i;
+
+                            System.out.println("arrOfStr["+i+"]" +arrOfStr[i]);
+                        }
+                        //intentresultofseverity = new Intent(HomePage.this, MonitorThePerformance.class);
+                        intentresultofseverity.putExtra("resultofseverity",resultofseverity);
+
+                        //intentIndex = new Intent(HomePage.this,HomePage.class);
+                        System.out.println("=======index===== "+index);
+                        intentIndex.putExtra("index",index);
+//                        startActivity(intentIndex);
+//                        startActivity(intentresultofseverity);
+                    }
+                }
+                //End Write and Read data with URL
+            }
+        });
+        //---------------------------------------performance
+        //===========================================================================xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
         //exercises button
         CardView cardViewExercises, cardViewMonitor;
-        String Email = intent2.getStringExtra("LoginEmailInfo");
 
 
         //bottom navigation par
@@ -49,75 +93,30 @@ public class HomePage extends AppCompatActivity {
                     case R.id.nav_home:
                         Intent intenthome =new Intent(getApplicationContext(),HomePage.class);
                         startActivity(intenthome);
-                        //startActivities(new Intent(getApplicationContext(),Exercises.class));
                         overridePendingTransition(0,0);
                         return true;
 
                     case R.id.nav_exercises:
                         Intent intentexercises =new Intent(getApplicationContext(),Exercises.class);
                         startActivity(intentexercises);
-                        //startActivities(new Intent(getApplicationContext(),Exercises.class));
                         overridePendingTransition(0,0);
                         return true;
 
                     case R.id.nav_monitor:
-                        Intent intentmonitor =new Intent(getApplicationContext(),MonitorThePerformance.class);
-                        startActivity(intentmonitor);
-                        //startActivities(new Intent(getApplicationContext(),Exercises.class));
+                        Intent intentMonitor =new Intent(getApplicationContext(),MonitorThePerformance.class);
+                        startActivity(intentMonitor);
                         overridePendingTransition(0,0);
                         return true;
 
                     case R.id.nav_settings:
                         Intent intentSettings =new Intent(getApplicationContext(),Settings.class);
                         startActivity(intentSettings);
-                        //startActivities(new Intent(getApplicationContext(),Exercises.class));
                         overridePendingTransition(0,0);
                         return true;
 
                     case R.id.nav_profile:
-                        //---------------------------------------performance
-                        Handler handler = new Handler(Looper.getMainLooper());
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                //Starting Write and Read data with URL
-                                //Creating array for parameters
-                                String[] field = new String[1];
-                                field[0] = "Email";
-
-                                //Creating array for data
-                                String[] data = new String[1];
-                                data[0] = Email;
-
-                                PutData putData = new PutData("http://192.168.100.11/Users/getPerformanceSeverity.php", "POST", field, data);
-
-                                if (putData.startPut()) {
-                                    System.out.println("resut:1 ");
-                                    if (putData.onComplete()) {
-                                        System.out.println("resut:2 ");
-                                        String resultofseverity = putData.getResult();
-                                        System.out.println("resut: **************************** " + resultofseverity);
-
-                                        String[] arrOfStr = resultofseverity.split(",");
-                                        for (int i =0; i< arrOfStr.length;i++){
-                                            index = i;
-
-                                            System.out.println("arrOfStr["+i+"]" +arrOfStr[i]);
-                                        }
-                                        intentresultofseverity = new Intent(HomePage.this, MonitorThePerformance.class);
-                                        intentresultofseverity.putExtra("resultofseverity",resultofseverity);
-
-                                        intentIndex = new Intent(HomePage.this,HomePage.class);
-                                        intentIndex.putExtra("index",index);
-                                        startActivity(intentIndex);
-                                        startActivity(intentresultofseverity);
-                                    }
-                                }
-                                //End Write and Read data with URL
-                            }
-                        });
-                        //---------------------------------------performance
-                        //startActivities(new Intent(getApplicationContext(),Exercises.class));
+                        Intent intentProfile =new Intent(getApplicationContext(),Profile.class);
+                        startActivity(intentProfile);
                         overridePendingTransition(0,0);
                         return true;
                 }
@@ -149,7 +148,6 @@ public class HomePage extends AppCompatActivity {
                     @Override
                     public void run() {
                         //Starting Write and Read data with URL
-                        //Creating array for parameters
                         String[] field = new String[1];
                         field[0] = "Email";
 
@@ -158,7 +156,6 @@ public class HomePage extends AppCompatActivity {
                         data[0] = Email;
 
                         PutData putData = new PutData("http://192.168.100.11/Users/getPerformanceSeverity.php", "POST", field, data);
-
                         if (putData.startPut()) {
                             System.out.println("resut:1 ");
                             if (putData.onComplete()) {
@@ -188,17 +185,6 @@ public class HomePage extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
-
-
-
     }
-
-
 
 }

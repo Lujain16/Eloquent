@@ -6,19 +6,31 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
 
-public class ForgetPassword1 extends AppCompatActivity {
+import org.json.JSONException;
+import org.json.JSONObject;
 
-    //login button
+import java.util.Random;
+
+import static com.example.eloquent.Login.intent2;
+
+public class ForgetPassword1 extends AppCompatActivity {
+    public static Intent intentCode;
+    public static Intent intentEmail;
     Button SendButton;
     EditText Emailtext;
     String Email;
+    String Code;
+    //prev button
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +38,14 @@ public class ForgetPassword1 extends AppCompatActivity {
         setContentView(R.layout.activity_forget_password1);
 
         SendButton =findViewById(R.id.button);
-        Emailtext =findViewById(R.id.editTextTextEmailAddress2);
-        Email= Emailtext.getText().toString();
-
+        Emailtext = (EditText) findViewById(R.id.editTextTextEmailAddress2);
         SendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Email = Emailtext.getText().toString();
+                //Generating random code number
+                final int random = new Random().nextInt((9999 - 1000) + 1) + 1000;
+                Code = String.valueOf(random);
                 //---------------------------------------------
                 Handler handler = new Handler(Looper.getMainLooper());
                 handler.post(new Runnable() {
@@ -39,22 +53,41 @@ public class ForgetPassword1 extends AppCompatActivity {
                     public void run() {
                         //Starting Write and Read data with URL
                         //Creating array for parameters
-                        String[] field = new String[1];
+                        String[] field = new String[2];
                         field[0] = "Email";
+                        field[1] = "Code";
 
                         //Creating array for data
-                        String[] data = new String[1];
+                        String[] data = new String[2];
                         data[0] = Email;
+                        data[1] = Code;
 
-
-                        PutData putData = new PutData("http://192.168.100.14/Users/forgot.php", "POST", field, data);
-
-
+                        PutData putData = new PutData("http://192.168.100.11/Users/ForgetPassword.php", "POST", field, data);
+                        if (putData.startPut()) {
+                            if (putData.onComplete()) {
+                                String result = putData.getResult();
+                            }
+                        }
                         //End Write and Read data with URL
                     }
                 });
                 //---------------------------------------------
+                intentCode = new Intent(ForgetPassword1.this, ForgetPassword2.class);
+                intentCode.putExtra("keyCode",Code);
+                intentEmail = new Intent(ForgetPassword1.this, ForgetPassword1.class);
+                intentEmail.putExtra("EmailForget",Email);
+                startActivity(intentEmail);
+                startActivity(intentCode);
+            }
+        });
 
+        //when users click on previous button, move them to the previous page
+        imageView = findViewById(R.id.imageView3Previous);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(ForgetPassword1.this, Login.class);
+                startActivity(intent);
             }
         });
     }

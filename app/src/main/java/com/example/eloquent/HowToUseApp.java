@@ -44,7 +44,6 @@ public class HowToUseApp extends AppCompatActivity {
             }
         });
 
-
         //close button on StutteringSeverity page
         //when user click on close button  this code will move them to the Home page
         imageView = findViewById(R.id.imageView3close);

@@ -12,13 +12,10 @@ import android.widget.TextView;
 import java.util.Locale;
 
 public class EasyOnsetBreathing extends AppCompatActivity {
-    // start button
     TextView textViewStart;
-
     private TextToSpeech textToSpeech;
     private TextView textViewBreathing;
     private ImageView imageViewSpeaker;
-
     // previous button
     ImageView imageView;
 
@@ -47,12 +44,9 @@ public class EasyOnsetBreathing extends AppCompatActivity {
                 textToSpeech.speak(textViewBreathing.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
             }
         });
-
         // ------------------End Text To Speech
 
-
-        //cardViewWord button
-        //when user click on cardViewWord button  this code will move them to the EasyOnsetBreathing page
+        //when user click on the Next button this code will move them to the EasyOnsetInstructions page
         textViewStart = findViewById(R.id.textViewStart);
         textViewStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,8 +62,7 @@ public class EasyOnsetBreathing extends AppCompatActivity {
             }
         });
 
-        //prev
-        //when user click on previous button this code will move them to the previous page
+        //when users click on the previous button, move them to the previous page
         imageView = findViewById(R.id.imageView3Previous);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +77,5 @@ public class EasyOnsetBreathing extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 }

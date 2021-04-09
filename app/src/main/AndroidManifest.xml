@@ -40,12 +40,9 @@
         <activity android:name=".EasyOnsetPhrases" />
         <activity android:name=".EasyOnsetWord" />
         <activity android:name=".EasyOnsetInstructions" />
-        <activity android:name=".Scenarios" />
         <activity android:name=".ScenariosSessions" />
-        <activity android:name=".ScenariosInstructions" />
         <activity android:name=".EasyOnsetBreathing" />
         <activity android:name=".EasyOnsetSessions" />
-        <activity android:name=".EasyOnset" />
         <activity android:name=".Profile" />
         <activity android:name=".Settings" />
         <activity android:name=".MonitorThePerformance" />

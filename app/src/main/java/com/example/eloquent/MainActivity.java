@@ -17,70 +17,54 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
-Button button_createAccount , button_Login;
+    Button button_createAccount , button_Login;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //when user click on create account this code will move them to the create account page
         button_createAccount = findViewById(R.id.buttonCreateAccount);
         button_Login = findViewById(R.id.buttonLogin);
 
         // If the user grants all permission the user can start using the program
         if (checkAndPermissionsRequest()) {
-
-        button_createAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            //when user click on create account this code will move them to the create account page
+            button_createAccount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                 Intent intent =new Intent(MainActivity.this, CreateAccount.class);
                 startActivity(intent);
-            }
-        });
-
-        //when user click on login this code will move them to the login page
-        button_Login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                }
+            });
+            //when user click on login this code will move them to the login page
+            button_Login.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                 Intent intent =new Intent(MainActivity.this, Login.class);
                 startActivity(intent);
-
-
-            }
-        });
+                }
+            });
         }
         else {
             Toast.makeText(getApplicationContext(), "Please grant permissions to access the app", Toast.LENGTH_LONG).show();
         }
-
     }
-    //--------------------------------------------------------jj
     // Method checkAndPermissionsRequest Check user permissions
-
-        private  boolean checkAndPermissionsRequest() {
-        int PermissionRecordAudio = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.RECORD_AUDIO);
+    private  boolean checkAndPermissionsRequest() {
+        int PermissionRecordAudio = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO);
         int StoragePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         List<String> listPermissionsNeeded = new ArrayList<>();
 
         if (PermissionRecordAudio != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.RECORD_AUDIO);
-            // Toast.makeText(getApplicationContext(), "PermissionRecordAudio ...",Toast.LENGTH_LONG).show();
         }
         if (StoragePermission != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            // Toast.makeText(getApplicationContext(), "StoragePermission ...",Toast.LENGTH_LONG).show();
         }
         if (!listPermissionsNeeded.isEmpty()) {
             ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), REQUEST_ID_MULTIPLE_PERMISSIONS);
-            // Toast.makeText(getApplicationContext(), "!listPermissionsNeeded ...",Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
-
-
     }
-
-
-    //--------------------------------------------------------jj
 }

@@ -12,11 +12,9 @@ import android.widget.TextView;
 import java.util.Locale;
 
 public class EasyOnsetInstructions extends AppCompatActivity {
-    // start button
     TextView textView;
     // previous button
     ImageView imageView;
-
     private TextToSpeech textToSpeech;
     private TextView textViewInstructions;
     private ImageView imageViewSpeaker;
@@ -26,8 +24,7 @@ public class EasyOnsetInstructions extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_easy_onset_instructions);
 
-        //cardViewWord button
-        //when user click on cardViewWord button  this code will move them to the EasyOnsetBreathing page
+        //when user click on the Start button this code will move them to the EasyOnsetWord page
         textView = findViewById(R.id.textViewStart);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,8 +40,8 @@ public class EasyOnsetInstructions extends AppCompatActivity {
             }
         });
 
-        //prev
-        //when user click on previous button this code will move them to the previous page
+
+        //when users click on the previous button, move them to the previous page
         imageView = findViewById(R.id.imageView3Previous);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,12 +72,9 @@ public class EasyOnsetInstructions extends AppCompatActivity {
         imageViewSpeaker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // textToSpeech.speak(textToRead, TextToSpeech.QUEUE_FLUSH, null,null);
-
                 textToSpeech.speak(textViewInstructions.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
             }
         });
-
         // ------------------End Text To Speech
     }
 }

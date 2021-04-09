@@ -18,10 +18,6 @@ import static com.example.eloquent.Login.intent2;
 
 
 public class StutteringSeverityWord extends AppCompatActivity {
-    //--------------
-//    int SeverityCount =Integer. parseInt(intentSeverityCount.getStringExtra("counter"));
-  //  String id = String.valueOf(SeverityCount);
-    //-------------
     String Email = intent2.getStringExtra("LoginEmailInfo");
     String severity;
     String result=" ";
@@ -36,23 +32,9 @@ public class StutteringSeverityWord extends AppCompatActivity {
         // Show the result from  python
         textViewResult = (TextView) findViewById(R.id.textViewSetStuttringResult);
         textViewResult.setText(intentWordResult.getStringExtra("KeyResultWord"));
-        //-----------
-
-        //-------------------------------------------------------------------performance
         severity = intentWordResult.getStringExtra("KeyResultWord");
-     //   System.out.println("id===================="+id);
-        System.out.println("Email===================="+Email);
-        System.out.println("severity===================="+severity);
-     //   intentSeverityCount.putExtra("counter",id);
-//        startActivity(intentSeverityCount);
-        //---------------------------------------------
 
-        //=========************************************************************* Get Severity of the user
-
-        //=========************************************************************* Get Severity of the user
-
-        //=========************************************************************* Get Severity of the user
-
+        //Retrieving the results of stuttering severity from the database
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override
@@ -66,86 +48,53 @@ public class StutteringSeverityWord extends AppCompatActivity {
                 String[] data = new String[1];
                 data[0] = Email;
 
-           PutData putData = new PutData("http://192.168.100.11/Users/getPerformanceSeverity.php", "POST", field, data);
-
+                PutData putData = new PutData("http://192.168.100.11/Users/getPerformanceSeverity.php", "POST", field, data);
                 if (putData.startPut()) {
                     System.out.println("resut:1 ");
                     if (putData.onComplete()) {
                         System.out.println("resut:2 ");
-                         String resultofseverity = putData.getResult();
+                        String resultofseverity = putData.getResult();
                         System.out.println("resut: **************************** " + resultofseverity);
-
-
-                       // String[] arrOfStr = result.split(",", 1);
-
-if (resultofseverity.equalsIgnoreCase("New severity")){
-
-    result = " ";
-
-}else{
-
-    result = resultofseverity +"";
-}
-                        //=========*************************************************************
+                        if (resultofseverity.equalsIgnoreCase("New severity")){
+                            result = " ";
+                        }else{
+                            result = resultofseverity +"";
+                        }
                         UpdatedStutter = result.concat(","+severity);
-                        System.out.println(UpdatedStutter+"()()()()()()()()()()()()");
-                        //*************************************************************
-
                     }
                 }
                 //End Write and Read data with URL
             }
         });
 
-//((((*************************************************************** set performance
-
-       handler = new Handler(Looper.getMainLooper());
+        //Updating the results of stuttering severity in the database
+        handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override
             public void run() {
                 //Starting Write and Read data with URL
                 //Creating array for parameters
                 String[] field = new String[2];
-              //  field[0] = "id";
                 field[0] = "Email";
                 field[1] = "severity";
 
                 //Creating array for data
                 String[] data = new String[2];
-              //  data[0] = id;
                 data[0] = Email;
                 data[1] = UpdatedStutter;
 
                 PutData putData = new PutData("http://192.168.100.11/Users/UpdateSeverity.php", "POST", field, data);
-
                 if (putData.startPut()) {
-                    System.out.println("resut:1 ");
+                    System.out.println("result:1 ");
                     if (putData.onComplete()) {
-                        System.out.println("resut:2 ");
-                          result = putData.getResult();
-                        System.out.println("resut:--------------- " + result);
-
-
-                     //   String[] arrOfStr = result.split(",", 2);
-//                        arrId = arrOfStr[1];
-//                        arrSeverity= arrOfStr[2];
-
-
-
+                        System.out.println("result:2 ");
+                        result = putData.getResult();
+                        System.out.println("result:--------------- " + result);
                     }
                 }
                 //End Write and Read data with URL
             }
         });
-        //-------------------------------------------------------performance
-
-        //=========************************************************************* END
-
-        //=========************************************************************* END
-
-        //=========************************************************************* END
-
-
 
         //close button on StutteringSeverity page
         //when user click on close button  this code will move them to the Home page

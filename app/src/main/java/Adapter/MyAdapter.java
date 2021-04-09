@@ -41,14 +41,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     private Context context;
     private List<Listitem> lisitems;
 
-    // private String outputFile = null;
-
     //Record in wav------------------
     public static Intent intentWordResult ; //intentResult save the Stuttring Severity result from python
-    // private ImageButton record_bt,play_bt,stop_bt;
-    //private String outputFile = null;
+
     private boolean recording_sta = false;
-    //    final static String RecordName = "Adapter.wav";
     public String RecordName = null;
     public String RecordNameAndPostion =null;
 
@@ -66,32 +62,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     Button DonButton;
 
     public static int position;
-
-    //public static String outputFile;
-    //-------------------
-
-    //==============
-//    public MediaRecorder myAudioRecorder;
-//    MediaPlayer mediaPlayer ;
     public TextToSpeech textToSpeech;
     int i =1;
-
-
-    //=============
 
     public MyAdapter(Context context, List listitem) {
         this.context = context;
         this.lisitems = listitem;
-
-
     }
 
     @NonNull
     @Override
     public MyAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_card,parent,false);
-
-
         return new ViewHolder(view);
     }
 
@@ -100,56 +82,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.ViewHolder holder, int position) {
         Listitem item = lisitems.get(position);
-//        String iteempostion =item.toString();
         holder.Question.setText(item.getQuestion());
         holder.Answer.setText(item.getAnswer());
-        //String iteempostion =item.getRecordPostion();
         holder.RecordPostion = item.getRecordPostion();
 
-        ArrayList<String> AuduioPathArrL = new ArrayList<>(); //jjjjj
-        //--
-
-
-
-//        Listitem listitem = null;
-//        listitem.setRecordPostion(iteempostion);
-
+        ArrayList<String> AuduioPathArrL = new ArrayList<>();
 
         //----------Record
         holder.play_bt.setEnabled(false);
         RecordNameAndPostion = holder.RecordPostion;
-        //System.out.println("|||||||||||||||||||||||||RecordNameAndPostion=  "+RecordNameAndPostion);
-
-
-        //holder.outputFile = context.getFilesDir() + "/" +RecordNameAndPostion+RecordName;///////////////////////////////////////////////
-        //Listitem listitempos =lisitems.get(position);
-
-        //_________________________________________________________________________________________________Jumana
-        //   if(lisitems.get(position))
-//        Listitem Adapterlistitem = lisitems.get(position);
-//        //RecordName= Adapterlistitem.getRecordPostion()+"Adapter.wav";
-        //RecordName= holder.RecordPostion.Adapterlistitem."Adapter.wav";
-
         Listitem Adapterlistitem = lisitems.get(position);
-//        RecordName= "Adapter.wav";
-
-        //RecordName= Adapterlistitem.getRecordPostion()+"Adapter.wav";
-
-//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>outputFile = "+outputFile);
-//
-////        holder.outputFile = context.getFilesDir() + "/" +RecordName;
-//        System.out.println("//////////////////////////////////outputFile= "+outputFile);
-
-        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-
-
-        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-        //_________________________________________________________________________________________________Jumana
-
-
         holder.record_bt.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -160,6 +102,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                     m = null;
                 }
                 //--------------------------------End Stop Playing the recording
+
                 //------------------------------Stop Text To Speech
                 if (textToSpeech != null) {
                     textToSpeech.stop();
@@ -172,29 +115,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                         if(Adapterlistitem.getRecordPostion().equals(holder.RecordPostion)){
                             RecordName= holder.RecordPostion+"Adapter.wav";
                             holder.outputFile = context.getFilesDir() + "/" +RecordName;
-                            System.out.println("|||||||||||||||||||||Adapterlistitem.getRecordPostion() = "+Adapterlistitem.getRecordPostion());
-                            System.out.println("|||||||||||||||||||||holder.RecordPostion= "+holder.RecordPostion);
-                            System.out.println("//////////////////////////////////if(Adapterlistitem.equals(holder.RecordPostion) holder.outputFile= "+holder.outputFile);
-
-
                             AuduioPathArrL.add(holder.outputFile);
-
                         }
-
-
                         startRecording();
                     } catch (IllegalStateException e) {
                         e.printStackTrace();
                     }
-
                     recording_sta = true;
                     holder.play_bt.setEnabled(false);
-
-
                     Toast.makeText(context, "Recording started", Toast.LENGTH_SHORT).show();
-
                 }
-
             }
         });
 
@@ -204,17 +134,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         holder.stop_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 recording_sta = false;
                 stopRecording();
-                //System.out.println("|||||||||||||||||||||||||outputFilestop_bt=  "+holder.outputFile);
                 holder.play_bt.setEnabled(true);
                 Toast.makeText(context, "Audio recorded successfully", Toast.LENGTH_SHORT).show();
-
-
             }
         });
-
 
         //play button
         holder.play_bt.setOnClickListener(new View.OnClickListener() {
@@ -223,19 +148,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                 //------------------------------Stop Text To Speech
                 if (textToSpeech != null) {
                     textToSpeech.stop();
-                    // textToSpeech.shutdown();
                 }
                 //------------------------------End Stop Text To Speech
                  m = new MediaPlayer();
                 try {
-
-//                    Listitem listitempos =lisitems.get(position);
-                    //System.out.println("|||||||||||||||||||||||||listitempos.getRecordPostion()=  "+listitempos.getRecordPostion());
-                    //System.out.println("|||||||||||||||||||||||||playyyyyyyyyyyyy=  "+context.getFilesDir() + "/" +listitempos.getRecordPostion()+RecordName);
-                    //System.out.println("|||||||||||||||||||||||||play and crach =  "+holder.outputFile);
                     m.reset();
                     m.setDataSource(holder.outputFile);
-                    //m.setDataSource(context.getFilesDir() + "/" +listitempos.getRecordPostion()+RecordName);///////////////////////////////////////lujain
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -245,22 +163,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                     e.printStackTrace();
                 }
 
-
                 m.start();  //play record
                 Toast.makeText(context, "Playing audio", Toast.LENGTH_LONG).show();
             }
         });
 
-
-
         // ------------------Start Text To Speech For Question
-
         textToSpeech=new TextToSpeech(context.getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int i) {
                 textToSpeech.setLanguage(Locale.US);
                 textToSpeech.setSpeechRate((float) 0.9);
-
             }
         });
         holder.imageViewSpeakerQ.setOnClickListener(new View.OnClickListener() {
@@ -272,15 +185,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                     m = null;
                 }
                 //--------------------------------End Stop Playing the recording
-
                 textToSpeech.speak(holder.Question.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
             }
         });
-
         // ------------------End Text To Speech For Question
 
         // ------------------Start Text To Speech For Answer
-
         textToSpeech=new TextToSpeech(context.getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int i) {
@@ -302,12 +212,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                 textToSpeech.speak(holder.Answer.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
             }
         });
-
         // ------------------End Text To Speech For Answer
-
-
-
-
     }
 
     @Override
@@ -323,77 +228,37 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         public String outputFile = null;
         public String RecordPostion;
         public String voiceLocation = Environment.getExternalStorageDirectory().getPath() +"Voice Recorder/";
-//        //------------------------------Text to Speech
-
         public ImageView imageViewSpeakerQ;
         public ImageView imageViewSpeakerA;
-//        //------------------------------Text to Speech
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            //-----------------Lujain
             itemView.setOnClickListener(this);
-            //record_bt.setOnClickListener(this);
-
-
-            //-----------------Lujain
-
             Question = itemView.findViewById(R.id.textQuestion);
             Answer = itemView.findViewById(R.id.textViewAnswer);
-
-            //----j
             record_bt = itemView.findViewById(R.id.imageButton_mic);
             stop_bt = itemView.findViewById(R.id.imageButton_stop);
             play_bt = itemView.findViewById(R.id.imageButton_play);
-
-            //  i = i+1;
-            //----j
-//           // textViewQuestion = Question;
             imageViewSpeakerQ = itemView.findViewById(R.id.imageViewQ);
             imageViewSpeakerA = itemView.findViewById(R.id.imageViewA);
-//            //------------------------------Text to Speech
-
-
         }
 
-        //-----------------Lujain
         @Override
         public void onClick(View v) {
-
             position = getAdapterPosition();
-//            Listitem Adapterlistitem = lisitems.get(position);
-//
-//            RecordName= Adapterlistitem.getRecordPostion()+"Adapter.wav";
-//            outputFile = context.getFilesDir() + "/" +RecordName;
-//            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>outputFile = "+outputFile);
-
-
-
-            //jjjjjjjjjjjjjjjjjj
-            //Listitem listitem = lisitems.get(position);
-            //outputFile = context.getFilesDir() + "/" +listitem.getRecordPostion()+RecordName;
-
-
-
-//            Toast.makeText(context, listitem.getRecordPostion(), Toast.LENGTH_LONG).show();
-//            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%outputFile=     "+outputFile);
-//            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%context.getFilesDir() + \"/\" +RecordNameAndPostion+RecordName"+context.getFilesDir() + "/" +listitem.getRecordPostion()+RecordName);
         }
-        //-----------------Lujain
     }
 
     //----------------------------------------------**************START WAV FORMAT*********************------------------------------------------------------
-//code for recording
+    //code for recording
     private String getFilename(){
         String filePath = context.getFilesDir().getPath().toString() + "/"+RecordName;
-        //  String filePath = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + "/"+RecordName;
         File file = new File(filePath);
         return (file.getAbsolutePath() );
     }
 
     private String getTempFilename(){
         String filePath = context.getFilesDir().getPath().toString() + "/" + AUDIO_RECORDER_TEMP_FILE;
-        // String filePath = Environment.getExternalStorageDirectory().getAbsolutePath().toString()+ "/" + AUDIO_RECORDER_TEMP_FILE;
         File file = new File(filePath);
         return (file.getAbsolutePath() );
     }
@@ -553,9 +418,5 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                 channelConfiguration, EncodingBitRate, recBufSize);
         System.out.println("AudioRecord Success");
     }
-
 //----------------------------------------------**************END WAV FORMAT*********************------------------------------------------------------
-
-
-
 }

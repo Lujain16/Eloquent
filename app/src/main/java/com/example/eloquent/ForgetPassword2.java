@@ -16,55 +16,54 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
-public class ForgetPassword2 extends AppCompatActivity {
 
+import static com.example.eloquent.ForgetPassword1.intentCode;
+import static com.example.eloquent.Login.intent2;
+//import static com.example.eloquent.ForgetPassword1.intentcode;
+
+public class ForgetPassword2 extends AppCompatActivity {
     Button SendButton;
     EditText code;
-  //  Intent emailIntent = new Intent(Intent.ACTION_SEND);
+    TextView wariningMsg;
+    String inputCode;
+    String verficationCode;
+    //prev button
+    ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget_password2);
-        SendButton =findViewById(R.id.button);
+        SendButton =findViewById(R.id.SendButton);
         code =findViewById(R.id.editTextcode);
-
-//        emailIntent.setData(Uri.parse("mailto:"));
-//        emailIntent.setType("text/plain");
-
+        wariningMsg =findViewById(R.id.textView12);
 
         SendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(ForgetPassword2.this, ForgetPassword3.class);
-//                startActivity(intent);
+                inputCode = code.getText().toString();
+                verficationCode = intentCode.getStringExtra("keyCode");
 
-
-                sendEmail();
+                if(inputCode.equals(verficationCode)){
+                    intentCode = new Intent(ForgetPassword2.this, ForgetPassword3.class);
+                    startActivity(intentCode);
+                }else{
+                    wariningMsg.setText("The verification code is not correct \nPlease enter the correct verification code");
+                }
             }
         });
+        //when users click on previous button, move them to the previous page
+        imageView = findViewById(R.id.imageView3Previous);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(ForgetPassword2.this, ForgetPassword1.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
-
-    protected void sendEmail() {
-        Log.i("Send email", "");
-        String[] TO = {""};
-        String[] CC = {""};
-        Intent emailIntent = new Intent(Intent.ACTION_SEND);
-
-        emailIntent.setData(Uri.parse("mailto:"));
-        emailIntent.setType("text/plain");
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-        emailIntent.putExtra(Intent.EXTRA_CC, CC);
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message goes here");
-
-        try {
-            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-            finish();
-            Log.i("Finished sending email...", "");
-        } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(ForgetPassword2.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
-        }
-    }
 }

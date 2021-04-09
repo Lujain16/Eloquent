@@ -6,14 +6,18 @@ import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.vishnusivadas.advanced_httpurlconnection.PutData;
+
+import static com.example.eloquent.Login.intent2;
 
 public class Exercises extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,11 +29,9 @@ public class Exercises extends AppCompatActivity {
 
         //bottom navigation par
         BottomNavigationView bottomNavigationView;
-
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         // set Exercises selected
         bottomNavigationView.setSelectedItemId(R.id.nav_exercises);
-
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -37,45 +39,38 @@ public class Exercises extends AppCompatActivity {
                     case R.id.nav_home:
                         Intent intenthome =new Intent(getApplicationContext(),HomePage.class);
                         startActivity(intenthome);
-                        //startActivities(new Intent(getApplicationContext(),Exercises.class));
                         overridePendingTransition(0,0);
                         return true;
 
                     case R.id.nav_exercises:
                         Intent intentexercises =new Intent(getApplicationContext(),Exercises.class);
                         startActivity(intentexercises);
-                        //startActivities(new Intent(getApplicationContext(),Exercises.class));
                         overridePendingTransition(0,0);
                         return true;
 
                     case R.id.nav_monitor:
-                        Intent intentmonitor =new Intent(getApplicationContext(),MonitorThePerformance.class);
-                        startActivity(intentmonitor);
-                        //startActivities(new Intent(getApplicationContext(),Exercises.class));
+                        Intent intentMonitor =new Intent(getApplicationContext(),MonitorThePerformance.class);
+                        startActivity(intentMonitor);
                         overridePendingTransition(0,0);
                         return true;
 
                     case R.id.nav_settings:
                         Intent intentSettings =new Intent(getApplicationContext(),Settings.class);
                         startActivity(intentSettings);
-                        //startActivities(new Intent(getApplicationContext(),Exercises.class));
                         overridePendingTransition(0,0);
                         return true;
 
                     case R.id.nav_profile:
                         Intent intentProfile =new Intent(getApplicationContext(),Profile.class);
                         startActivity(intentProfile);
-                        //startActivities(new Intent(getApplicationContext(),Exercises.class));
                         overridePendingTransition(0,0);
                         return true;
                 }
-
                 return false;
             }
         });
 
-        //prev
-        //when user click on previous button this code will move them to the previous page
+        //when users click on the previous button, move them to the previous page
         imageView = findViewById(R.id.imageView3Previous);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +81,7 @@ public class Exercises extends AppCompatActivity {
         });
 
         //easy onset button
-        //when user click on easy onset button  this code will move them to the EasyOnsetSessions page
+        //when user click on easy onset button this code will move them to the EasyOnsetSessions page
         cardViewEasyOnset = findViewById(R.id.cardeasyonset);
         cardViewEasyOnset.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +101,5 @@ public class Exercises extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
     }
 }

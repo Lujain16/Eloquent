@@ -39,11 +39,11 @@ import java.util.Locale;
 public class DiagnosticTest extends AppCompatActivity {
 
     //Record in wav------------------
-    public static Intent intentResult ; //intentResult save the Stuttring Severity result from python
+    public static Intent intentResult = new Intent() ; //intentResult save the Stuttring Severity result from python
     private ImageButton record_bt,play_bt,stop_bt;
     private String outputFile = null;
     private boolean recording_sta = false;
-    final static String RecordName = "Jumana_speaker.wav";
+    final static String RecordName = "Eloquent_speaker.wav";
     private static final int RECORDER_BPP = 16;
     private static final String AUDIO_RECORDER_TEMP_FILE = "record_temp.raw";
     private static int frequency = 44100;
@@ -55,26 +55,18 @@ public class DiagnosticTest extends AppCompatActivity {
     private Thread recordingThread = null;
     private boolean isRecording = false;
     Button DonButton;
-    //-------------------
-
-    //Button Donebutton;
     private TextToSpeech textToSpeech;
     private TextView textViewDT;
     private ImageView imageViewSpeaker;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diagnostic_test);
-
-
         //--------------------------------------****START Recorder*****--------------------------------------------------
         record_bt = (ImageButton) findViewById(R.id.imageButton_mic);
         play_bt = (ImageButton) findViewById(R.id.imageButton_play);
         stop_bt= (ImageButton) findViewById(R.id.imageButton_stop);
-
 
         play_bt.setEnabled(false);
         outputFile = getFilesDir() + "/" + RecordName;
@@ -95,14 +87,10 @@ public class DiagnosticTest extends AppCompatActivity {
                     } catch (IllegalStateException e) {
                         e.printStackTrace();
                     }
-
                     recording_sta = true;
                     play_bt.setEnabled(false);
-
                     Toast.makeText(getApplicationContext(), "Recording started", Toast.LENGTH_SHORT).show();
-
                 }
-
             }
         });
 
@@ -111,11 +99,8 @@ public class DiagnosticTest extends AppCompatActivity {
             public void onClick(View v) {
                 recording_sta = false;
                 stopRecording();
-
                 play_bt.setEnabled(true);
                 Toast.makeText(getApplicationContext(), "Audio recorded successfully", Toast.LENGTH_SHORT).show();
-
-
             }
         });
 
@@ -147,6 +132,7 @@ public class DiagnosticTest extends AppCompatActivity {
         });
 
         //----------------------------------*************End Recorder**********------------------------------------------------------
+
         //----------------------------***********************SEND AUDIO PATH TO PYTHON****************************---------------------
         String voieNotePath = outputFile;
         Log.d("Main", "PATH : " + voieNotePath);
@@ -164,6 +150,8 @@ public class DiagnosticTest extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                //When the user clicks the done button message will display.
+                Toast.makeText(getApplicationContext(), "Please wait until display your stuttering severity.", Toast.LENGTH_LONG).show();
                 //--------------------------------Stop Playing the recording
                 if(m != null) {
                     m.release();
@@ -173,39 +161,40 @@ public class DiagnosticTest extends AppCompatActivity {
                 //------------------------------Stop Text To Speech
                 if (textToSpeech != null) {
                     textToSpeech.stop();
-                    // textToSpeech.shutdown();
+                    textToSpeech.shutdown();
                 }
                 //------------------------------End Stop Text To Speech
+                if (file.exists() ) {
+                    if (! Python.isStarted()) {
+                        Python.start(new AndroidPlatform(DiagnosticTest.this));
+                    }
+                    //When the user clicks the done button message will display.
+                    Toast.makeText(getApplicationContext(), "Please wait until display your stuttering severity.", Toast.LENGTH_LONG).show();
 
-                if (! Python.isStarted()) {
-                    Python.start(new AndroidPlatform(DiagnosticTest.this));
+                    Python py = Python.getInstance();
+
+                    //create python object
+                    PyObject pyobj = py.getModule("myscript");
+
+                    // call the function
+                    PyObject obj = pyobj.callAttr("main",voieNotePath);
+
+                    // return text from python to textview
+                    String PthythonResult =obj.toString();
+                    file.delete();
+                    //intentResult sent the output from python to Stuttring Severity interface
+                    intentResult = new Intent(getApplicationContext(),StutteringSeverity.class);
+                    intentResult.putExtra("KeyResult",PthythonResult);
+                    startActivity(intentResult);
+                }else{
+                    Toast.makeText(getApplicationContext(), "Please record your voice.", Toast.LENGTH_SHORT).show();
                 }
-
-                Python py = Python.getInstance();
-
-                //create python object
-                PyObject pyobj = py.getModule("myscript");
-
-                // call the function
-                PyObject obj = pyobj.callAttr("main",voieNotePath);
-
-                // return text from python to textview
-                String PthythonResult =obj.toString();
-
-                //intentResult sent the output from python to Stuttring Severity interface
-                intentResult = new Intent(getApplicationContext(),StutteringSeverity.class);
-                intentResult.putExtra("KeyResult",PthythonResult);
-                startActivity(intentResult);
-
-                //---------------------------------
 
             }
         });
         //----------------------------***********************END PYTHON MODEL****************************-------------------------------------
 
-
-
-        // Text To Speech
+        // ------------------Text To Speech
         textViewDT = findViewById(R.id.textViewDT);
         imageViewSpeaker = findViewById(R.id.imageViewSpeaker);
 
@@ -228,15 +217,11 @@ public class DiagnosticTest extends AppCompatActivity {
                 textToSpeech.speak(textViewDT.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
             }
         });
-
         // ------------------End Text To Speech
-
-
     }
 
-
     //----------------------------------------------**************START WAV FORMAT*********************------------------------------------------------------
-//code for recording
+    // code for recording
     private String getFilename(){
         String filePath = getFilesDir().getPath().toString() + "/"+RecordName;
         //  String filePath = Environment.getExternalStorageDirectory().getAbsolutePath().toString() + "/"+RecordName;
@@ -406,8 +391,5 @@ public class DiagnosticTest extends AppCompatActivity {
                 channelConfiguration, EncodingBitRate, recBufSize);
         System.out.println("AudioRecord Success");
     }
-
 //----------------------------------------------**************END WAV FORMAT*********************------------------------------------------------------
-
-
 }

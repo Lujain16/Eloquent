@@ -15,10 +15,8 @@ import java.util.Locale;
 public class ScenarioAtSchoolInstructions extends AppCompatActivity {
     // start button
     TextView textViewStart;
-
     //previous button
     ImageView imageView;
-
     private TextToSpeech textToSpeech;
     private TextView textViewInstructions;
     private ImageView imageViewSpeaker;
@@ -29,7 +27,7 @@ public class ScenarioAtSchoolInstructions extends AppCompatActivity {
         setContentView(R.layout.activity_scenario_at_school_instructions);
 
         //start button
-        //when user click on start button  this code will move them to the Scenarios page
+        //when user click on start button  this code will move them to the ScenariosAtSchool page
         textViewStart = findViewById(R.id.textViewStart);
         textViewStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,8 +43,7 @@ public class ScenarioAtSchoolInstructions extends AppCompatActivity {
             }
         });
 
-        //prev
-        //when user click on previous button this code will move them to the previous page
+        //when users click on the previous button, move them to the previous page
         imageView = findViewById(R.id.imageView3Previous);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,14 +73,9 @@ public class ScenarioAtSchoolInstructions extends AppCompatActivity {
         imageViewSpeaker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // textToSpeech.speak(textToRead, TextToSpeech.QUEUE_FLUSH, null,null);
-
                 textToSpeech.speak(textViewInstructions.getText().toString(), TextToSpeech.QUEUE_FLUSH, null,null);
             }
         });
-
         // ------------------End Text To Speech
-
-
     }
 }
