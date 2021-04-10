@@ -50,7 +50,7 @@ public class ForgetPassword2 extends AppCompatActivity {
                     intentCode = new Intent(ForgetPassword2.this, ForgetPassword3.class);
                     startActivity(intentCode);
                 }else{
-                    wariningMsg.setText("The verification code is not correct \nPlease enter the correct verification code");
+                    wariningMsg.setText("The verification code is not correct.");
                 }
             }
         });

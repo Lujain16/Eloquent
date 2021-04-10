@@ -61,6 +61,7 @@ public class EasyOnsetPhrases extends AppCompatActivity {
     String category ="phrase";
     String result;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -235,7 +236,6 @@ public class EasyOnsetPhrases extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-
                 //--------------------------------Stop Playing the recording
                 if(m != null) {
                     m.release();
@@ -249,6 +249,7 @@ public class EasyOnsetPhrases extends AppCompatActivity {
                 }
                 //------------------------------End Stop Text To Speech
                 if (file.exists() ) {
+
                     if (! Python.isStarted()) {
                         Python.start(new AndroidPlatform(EasyOnsetPhrases.this));
                     }
@@ -277,8 +278,6 @@ public class EasyOnsetPhrases extends AppCompatActivity {
                 }else{
                     Toast.makeText(getApplicationContext(), "Please record your voice.", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
         //----------------------------***********************END PYTHON MODEL****************************-------------------------------------
